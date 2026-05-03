@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "motion/react";
 import {
   Star,
   ChevronRight,
+  ChevronLeft,
   ArrowRight,
   RefreshCcw,
   Clipboard,
@@ -17,6 +18,15 @@ import {
   MapPin,
   Check,
   Languages,
+  Flame,
+  Heart,
+  Crown,
+  HandHeart,
+  Smile,
+  Music,
+  Coffee,
+  Leaf,
+  type LucideIcon,
 } from "lucide-react";
 import { generateReview, SurveyResults } from "./services/gemini";
 
@@ -32,25 +42,98 @@ type Step =
 interface Option {
   label: string;
   value: string;
+  description: string;
+  icon: LucideIcon;
 }
 
-const SURVEY_OPTIONS: Record<string, Option[]> = {
-  food: [
-    { label: "Outstanding", value: "outstanding" },
-    { label: "Delicious", value: "delicious" },
-    { label: "Tasty", value: "tasty" },
-  ],
-  service: [
-    { label: "Excellent", value: "excellent" },
-    { label: "Attentive", value: "attentive" },
-    { label: "Friendly", value: "friendly" },
-  ],
-  atmosphere: [
-    { label: "Vibrant", value: "vibrant" },
-    { label: "Cozy", value: "cozy" },
-    { label: "Relaxing", value: "relaxing" },
-  ],
-};
+interface SurveyQuestion {
+  key: "food" | "service" | "atmosphere";
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  options: Option[];
+}
+
+const SURVEY_QUESTIONS: SurveyQuestion[] = [
+  {
+    key: "food",
+    eyebrow: "Course One",
+    title: "How was the food?",
+    subtitle: "From the first bite to the last — how did the flavors land?",
+    options: [
+      {
+        label: "Outstanding",
+        value: "outstanding",
+        description: "Truly memorable, every bite a highlight.",
+        icon: Flame,
+      },
+      {
+        label: "Delicious",
+        value: "delicious",
+        description: "Loved the dishes, would order again.",
+        icon: Heart,
+      },
+      {
+        label: "Tasty",
+        value: "tasty",
+        description: "Solid, satisfying, hit the spot.",
+        icon: UtensilsCrossed,
+      },
+    ],
+  },
+  {
+    key: "service",
+    eyebrow: "Course Two",
+    title: "How was the service?",
+    subtitle: "Tell us about the team that took care of your table.",
+    options: [
+      {
+        label: "Excellent",
+        value: "excellent",
+        description: "Polished, attentive, and a step ahead.",
+        icon: Crown,
+      },
+      {
+        label: "Attentive",
+        value: "attentive",
+        description: "Always there when we needed something.",
+        icon: HandHeart,
+      },
+      {
+        label: "Friendly",
+        value: "friendly",
+        description: "Warm, welcoming, easy to chat with.",
+        icon: Smile,
+      },
+    ],
+  },
+  {
+    key: "atmosphere",
+    eyebrow: "Course Three",
+    title: "How was the vibe?",
+    subtitle: "The energy of the room can make a great meal even better.",
+    options: [
+      {
+        label: "Vibrant",
+        value: "vibrant",
+        description: "Lively, energetic, full of buzz.",
+        icon: Music,
+      },
+      {
+        label: "Cozy",
+        value: "cozy",
+        description: "Warm, intimate, inviting.",
+        icon: Coffee,
+      },
+      {
+        label: "Relaxing",
+        value: "relaxing",
+        description: "Calm, easy-going, unhurried.",
+        icon: Leaf,
+      },
+    ],
+  },
+];
 
 const SUGGESTIONS = [
   "e.g., The Black Fungus With Wild Pepper was delicious...",
@@ -89,6 +172,8 @@ export default function App() {
   const [randomPlaceholder, setRandomPlaceholder] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [bgIndex, setBgIndex] = useState(0);
+  const [surveyIndex, setSurveyIndex] = useState(0);
+  const [surveyDirection, setSurveyDirection] = useState<1 | -1>(1);
 
   const MAX_REFRESH = 5;
 
@@ -117,6 +202,30 @@ export default function App() {
 
   const handleOptionSelect = (key: keyof SurveyResults, value: any) => {
     setResults((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const goToSurvey = () => {
+    setSurveyIndex(0);
+    setSurveyDirection(1);
+    setStep("survey");
+  };
+
+  const handleSurveyNext = () => {
+    if (surveyIndex < SURVEY_QUESTIONS.length - 1) {
+      setSurveyDirection(1);
+      setSurveyIndex((idx) => idx + 1);
+    } else {
+      setStep("rating");
+    }
+  };
+
+  const handleSurveyBack = () => {
+    if (surveyIndex === 0) {
+      setStep("welcome");
+    } else {
+      setSurveyDirection(-1);
+      setSurveyIndex((idx) => idx - 1);
+    }
   };
 
   const handleGenerate = async () => {
@@ -278,7 +387,7 @@ export default function App() {
               {/* Buttons */}
               <div className="pt-4 flex w-full">
                 <button
-                  onClick={() => setStep("survey")}
+                  onClick={goToSurvey}
                   className="relative overflow-hidden w-full rounded-full bg-[#111111] text-white py-5 sm:py-6 transition-all duration-500 active:scale-[0.98] group font-bold uppercase tracking-[0.2em] text-xs sm:text-sm flex items-center justify-center gap-3 border border-white/5"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#E60000] to-[#CC0000] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
@@ -297,78 +406,229 @@ export default function App() {
             </motion.div>
           )}
 
-          {/* Survey Step */}
+          {/* Survey Step — one question per screen */}
           {step === "survey" && (
             <motion.div
               key="survey"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="flex-1 flex flex-col py-4 justify-between max-w-xl mx-auto w-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex-1 flex flex-col py-2 max-w-xl mx-auto w-full"
             >
-              <header className="space-y-4">
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A] text-center mt-4">
-                  How was it?
-                </h2>
-                <div className="h-1.5 bg-[#E7E5E4] rounded-full overflow-hidden max-w-xs mx-auto w-full">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: results.atmosphere ? "100%" : "50%" }}
-                    className="h-full bg-[#E60000]"
-                  />
-                </div>
-              </header>
-
-              <div className="space-y-6 sm:space-y-8 my-auto py-2">
-                {["food", "service", "atmosphere"].map((key) => (
-                  <div
-                    key={key}
-                    className="bg-white/60 backdrop-blur-xl border border-white/80 p-5 rounded-3xl shadow-lg shadow-black/5 space-y-4"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#E60000]/10 flex items-center justify-center text-[#E60000] font-bold text-sm">
-                        {key === "food" ? "1" : key === "service" ? "2" : "3"}
-                      </div>
-                      <label className="text-lg font-bold tracking-tight text-[#1A1A1A] capitalize">
-                        {key === "food" ? "Food Quality" : key}
-                      </label>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {SURVEY_OPTIONS[key].map((opt) => (
-                        <button
-                          key={opt.value}
-                          onClick={() =>
-                            handleOptionSelect(
-                              key as keyof SurveyResults,
-                              opt.value,
-                            )
-                          }
-                          className={`flex-1 min-w-[30%] h-12 px-3 rounded-2xl text-sm font-semibold transition-all duration-300 active:scale-95 flex items-center justify-center text-center leading-tight border-2 ${
-                            results[key as keyof SurveyResults] === opt.value
-                              ? "bg-[#E60000] border-[#E60000] text-white shadow-md shadow-[#E60000]/20"
-                              : "bg-white/50 border-white hover:border-[#E60000]/30 hover:bg-white text-[#57534E]"
-                          }`}
-                        >
-                          {opt.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+              {/* Progress segments */}
+              <div className="flex items-center justify-center gap-2 pt-2">
+                {SURVEY_QUESTIONS.map((q, idx) => {
+                  const isActive = idx === surveyIndex;
+                  const isComplete = !!results[q.key] && idx < surveyIndex;
+                  return (
+                    <motion.div
+                      key={q.key}
+                      animate={{
+                        width: isActive ? 36 : 10,
+                        backgroundColor:
+                          isActive || isComplete ? "#E60000" : "#E7E5E4",
+                      }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="h-1.5 rounded-full"
+                    />
+                  );
+                })}
               </div>
 
-              <div className="pt-4 mt-auto">
-                <button
-                  disabled={
-                    !results.food || !results.service || !results.atmosphere
-                  }
-                  onClick={() => setStep("rating")}
-                  className="w-full bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.15em] text-xs sm:text-sm hover:shadow-2xl hover:shadow-[#E60000]/20 disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-2 transition-all duration-500 hover:bg-[#E60000]"
+              {/* Animated question pane */}
+              <AnimatePresence mode="wait" custom={surveyDirection}>
+                <motion.div
+                  key={surveyIndex}
+                  custom={surveyDirection}
+                  variants={{
+                    initial: (dir: number) => ({
+                      opacity: 0,
+                      x: dir * 40,
+                    }),
+                    animate: { opacity: 1, x: 0 },
+                    exit: (dir: number) => ({
+                      opacity: 0,
+                      x: -dir * 40,
+                    }),
+                  }}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                  className="flex-1 flex flex-col"
                 >
-                  Next Step
-                </button>
-              </div>
+                  {(() => {
+                    const question = SURVEY_QUESTIONS[surveyIndex];
+                    const selectedValue = results[question.key];
+                    const isLast =
+                      surveyIndex === SURVEY_QUESTIONS.length - 1;
+                    return (
+                      <>
+                        {/* Question heading */}
+                        <div className="text-center pt-8 pb-6">
+                          <motion.p
+                            initial={{ opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.05 }}
+                            className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-[#E60000] font-bold mb-3"
+                          >
+                            {question.eyebrow}
+                          </motion.p>
+                          <motion.h2
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                            className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A] leading-tight"
+                          >
+                            {question.title}
+                          </motion.h2>
+                          <motion.p
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.18 }}
+                            className="text-sm sm:text-base text-[#78716C] mt-3 max-w-sm mx-auto leading-relaxed"
+                          >
+                            {question.subtitle}
+                          </motion.p>
+                        </div>
+
+                        {/* Option cards */}
+                        <div className="flex-1 flex flex-col justify-center gap-3 my-2">
+                          {question.options.map((opt, idx) => {
+                            const Icon = opt.icon;
+                            const isSelected = selectedValue === opt.value;
+                            return (
+                              <motion.button
+                                key={opt.value}
+                                initial={{ opacity: 0, y: 24 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                  delay: 0.25 + idx * 0.08,
+                                  duration: 0.4,
+                                  ease: "easeOut",
+                                }}
+                                whileTap={{ scale: 0.97 }}
+                                onClick={() =>
+                                  handleOptionSelect(question.key, opt.value)
+                                }
+                                className={`relative overflow-hidden flex items-center gap-4 p-4 sm:p-5 rounded-3xl border-2 text-left transition-colors duration-300 ${
+                                  isSelected
+                                    ? "bg-[#1A1A1A] border-[#1A1A1A] text-white shadow-2xl shadow-[#1A1A1A]/25"
+                                    : "bg-white/70 backdrop-blur-md border-white hover:border-[#E60000]/40 hover:bg-white text-[#1A1A1A]"
+                                }`}
+                              >
+                                {/* Subtle red glow when selected */}
+                                <AnimatePresence>
+                                  {isSelected && (
+                                    <motion.span
+                                      initial={{ opacity: 0 }}
+                                      animate={{ opacity: 1 }}
+                                      exit={{ opacity: 0 }}
+                                      className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-[#E60000]/40 via-transparent to-transparent"
+                                    />
+                                  )}
+                                </AnimatePresence>
+
+                                <motion.div
+                                  animate={{
+                                    rotate: isSelected ? [0, -8, 8, 0] : 0,
+                                    scale: isSelected ? 1.05 : 1,
+                                  }}
+                                  transition={{ duration: 0.4 }}
+                                  className={`relative z-10 shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center transition-colors duration-300 ${
+                                    isSelected
+                                      ? "bg-[#E60000] text-white shadow-lg shadow-[#E60000]/40"
+                                      : "bg-[#E60000]/10 text-[#E60000]"
+                                  }`}
+                                >
+                                  <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
+                                </motion.div>
+
+                                <div className="relative z-10 flex-1 min-w-0">
+                                  <p className="text-base sm:text-lg font-bold leading-tight">
+                                    {opt.label}
+                                  </p>
+                                  <p
+                                    className={`text-xs sm:text-sm mt-1 leading-snug ${
+                                      isSelected
+                                        ? "text-white/70"
+                                        : "text-[#78716C]"
+                                    }`}
+                                  >
+                                    {opt.description}
+                                  </p>
+                                </div>
+
+                                <AnimatePresence>
+                                  {isSelected && (
+                                    <motion.div
+                                      initial={{ scale: 0, rotate: -90, opacity: 0 }}
+                                      animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                                      exit={{ scale: 0, opacity: 0 }}
+                                      transition={{
+                                        type: "spring",
+                                        stiffness: 500,
+                                        damping: 25,
+                                      }}
+                                      className="relative z-10 shrink-0 w-7 h-7 rounded-full bg-white text-[#E60000] flex items-center justify-center shadow-md"
+                                    >
+                                      <Check
+                                        className="w-4 h-4"
+                                        strokeWidth={3}
+                                      />
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              </motion.button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Navigation footer */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 16 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.55 }}
+                          className="flex items-center gap-3 pt-4"
+                        >
+                          <button
+                            onClick={handleSurveyBack}
+                            className="shrink-0 w-14 h-14 rounded-full border-2 border-[#1A1A1A]/10 bg-white/70 backdrop-blur-md flex items-center justify-center text-[#1A1A1A] hover:border-[#1A1A1A]/40 hover:bg-white active:scale-95 transition-all"
+                            aria-label="Back"
+                          >
+                            <ChevronLeft className="w-5 h-5" />
+                          </button>
+                          <button
+                            disabled={!selectedValue}
+                            onClick={handleSurveyNext}
+                            className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.15em] text-xs sm:text-sm disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#E60000]/30"
+                          >
+                            <span className="absolute inset-0 bg-gradient-to-r from-[#E60000] to-[#CC0000] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <span className="relative z-10">
+                              {isLast ? "Continue" : "Next"}
+                            </span>
+                            <motion.div
+                              animate={
+                                selectedValue
+                                  ? { x: [0, 4, 0] }
+                                  : { x: 0 }
+                              }
+                              transition={{
+                                duration: 1.4,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                              }}
+                              className="relative z-10"
+                            >
+                              <ChevronRight className="w-4 h-4" />
+                            </motion.div>
+                          </button>
+                        </motion.div>
+                      </>
+                    );
+                  })()}
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
           )}
 
