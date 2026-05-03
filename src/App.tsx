@@ -46,7 +46,6 @@ interface Option {
 
 interface SurveyQuestion {
   key: "food" | "service" | "atmosphere";
-  eyebrow: string;
   title: string;
   subtitle: string;
   options: Option[];
@@ -55,7 +54,6 @@ interface SurveyQuestion {
 const SURVEY_QUESTIONS: SurveyQuestion[] = [
   {
     key: "food",
-    eyebrow: "Course One",
     title: "How was the food?",
     subtitle: "From the first bite to the last — how did the flavors land?",
     options: [
@@ -81,7 +79,6 @@ const SURVEY_QUESTIONS: SurveyQuestion[] = [
   },
   {
     key: "service",
-    eyebrow: "Course Two",
     title: "How was the service?",
     subtitle: "Tell us about the team that took care of your table.",
     options: [
@@ -107,7 +104,6 @@ const SURVEY_QUESTIONS: SurveyQuestion[] = [
   },
   {
     key: "atmosphere",
-    eyebrow: "Course Three",
     title: "How was the vibe?",
     subtitle: "The energy of the room can make a great meal even better.",
     options: [
@@ -141,6 +137,14 @@ const SURVEY_SLIDE_VARIANTS = {
   animate: {opacity: 1, x: 0},
   exit: (dir: number) => ({opacity: 0, x: -dir * 40}),
 };
+
+function getQualityLabel(rating: number): string {
+  if (rating >= 4.5) return "Outstanding";
+  if (rating >= 3.5) return "Excellent";
+  if (rating >= 2.5) return "Great";
+  if (rating >= 1.5) return "Good";
+  return "Needs Work";
+}
 
 const SUGGESTIONS = [
   "e.g., The Black Fungus With Wild Pepper was delicious...",
@@ -217,6 +221,12 @@ export default function App() {
       setSurveyDirection(-1);
       setSurveyIndex((idx) => idx - 1);
     }
+  };
+
+  const handleRatingBack = () => {
+    setSurveyIndex(SURVEY_QUESTIONS.length - 1);
+    setSurveyDirection(-1);
+    setStep("survey");
   };
 
   const handleGenerate = async () => {
@@ -437,19 +447,11 @@ export default function App() {
                     return (
                       <>
                         {/* Question heading */}
-                        <div className="text-center pt-8 pb-6">
-                          <motion.p
-                            initial={{ opacity: 0, y: -8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.05 }}
-                            className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-[#E60000] font-bold mb-3"
-                          >
-                            {question.eyebrow}
-                          </motion.p>
+                        <div className="text-center pt-10 pb-6">
                           <motion.h2
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
+                            transition={{ delay: 0.05 }}
                             className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A] leading-tight"
                           >
                             {question.title}
@@ -457,8 +459,8 @@ export default function App() {
                           <motion.p
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.18 }}
-                            className="text-sm sm:text-base text-[#78716C] mt-3 max-w-sm mx-auto leading-relaxed"
+                            transition={{ delay: 0.13 }}
+                            className="text-sm sm:text-base text-[#1A1A1A] mt-3 max-w-sm mx-auto leading-relaxed"
                           >
                             {question.subtitle}
                           </motion.p>
@@ -605,68 +607,191 @@ export default function App() {
           )}
 
           {/* Rating Step */}
-          {step === "rating" && (
-            <motion.div
-              key="rating"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="flex-1 flex flex-col py-4 justify-between max-w-xl mx-auto w-full"
-            >
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A] text-center mt-4">
-                Overall Rating
-              </h2>
-
-              <div className="my-auto w-full flex flex-col justify-center items-center space-y-12">
-                <div className="flex gap-2 sm:gap-4">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      onClick={() => handleOptionSelect("rating", star)}
-                      className="p-1 sm:p-2 transition-transform active:scale-125 hover:scale-110 relative"
-                    >
-                      <Star className="w-12 h-12 sm:w-16 sm:h-16 md:w-16 md:h-16 text-[#E7E5E4]" />
-                      <div
-                        className="absolute inset-0 p-1 sm:p-2 pointer-events-none"
-                        style={{
-                          clipPath: `inset(0 ${100 - Math.max(0, Math.min(100, (Number(results.rating) - (star - 1)) * 100))}% 0 0)`,
-                        }}
-                      >
-                        <Star className="w-12 h-12 sm:w-16 sm:h-16 md:w-16 md:h-16 text-[#F59E0B] fill-[#F59E0B] drop-shadow-md" />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                <div className="w-full max-w-md mx-auto space-y-4">
-                  <input
-                    type="range"
-                    min="1"
-                    max="5"
-                    step="0.01"
-                    value={results.rating}
-                    onChange={(e) =>
-                      handleOptionSelect("rating", parseFloat(e.target.value))
-                    }
-                    className="w-full h-3 bg-white border border-white/50 shadow-inner rounded-full appearance-none cursor-pointer accent-[#E60000]"
-                  />
-                  <div className="flex justify-between text-xs text-[#78716C] font-semibold uppercase tracking-widest">
-                    <span>Needs Work</span>
-                    <span>Excellent</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4 mt-auto">
-                <button
-                  onClick={() => setStep("comments")}
-                  className="w-full bg-[#1A1A1A] text-white py-4 rounded-full font-semibold text-lg hover:shadow-xl hover:shadow-[#E60000]/20 transition-all duration-500 hover:bg-[#E60000]"
+          {step === "rating" &&
+            (() => {
+              const rating = Number(results.rating);
+              const qualityLabel = getQualityLabel(rating);
+              const fillPct = ((rating - 1) / 4) * 100;
+              return (
+                <motion.div
+                  key="rating"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="flex-1 flex flex-col py-2 max-w-xl mx-auto w-full"
                 >
-                  Add Details
-                </button>
-              </div>
-            </motion.div>
-          )}
+                  {/* Heading */}
+                  <div className="text-center pt-10 pb-2">
+                    <motion.h2
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 }}
+                      className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A] leading-tight"
+                    >
+                      Overall Rating
+                    </motion.h2>
+                    <motion.p
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.13 }}
+                      className="text-sm sm:text-base text-[#1A1A1A] mt-3 max-w-sm mx-auto leading-relaxed"
+                    >
+                      How was your visit overall?
+                    </motion.p>
+                  </div>
+
+                  <div className="flex-1 flex flex-col justify-center items-center gap-8 sm:gap-10 my-2">
+                    {/* Stars row */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2, duration: 0.4 }}
+                      className="flex items-center justify-center gap-2 sm:gap-3"
+                    >
+                      {[1, 2, 3, 4, 5].map((star) => {
+                        const fillPercent = Math.max(
+                          0,
+                          Math.min(100, (rating - (star - 1)) * 100),
+                        );
+                        return (
+                          <motion.button
+                            key={star}
+                            onClick={() =>
+                              handleOptionSelect("rating", star)
+                            }
+                            whileTap={{ scale: 1.25 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 18,
+                            }}
+                            className="p-1 relative"
+                            aria-label={`Rate ${star} out of 5`}
+                          >
+                            <Star
+                              className="w-11 h-11 sm:w-14 sm:h-14 text-[#E7E5E4]"
+                              strokeWidth={1.5}
+                            />
+                            <div
+                              className="absolute inset-0 p-1 pointer-events-none"
+                              style={{
+                                clipPath: `inset(0 ${100 - fillPercent}% 0 0)`,
+                              }}
+                            >
+                              <Star
+                                className="w-11 h-11 sm:w-14 sm:h-14 text-[#F59E0B] fill-[#F59E0B] drop-shadow-md"
+                                strokeWidth={1.5}
+                              />
+                            </div>
+                          </motion.button>
+                        );
+                      })}
+                    </motion.div>
+
+                    {/* Glass card with big numeric + quality label */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3, duration: 0.4 }}
+                      className="bg-white/70 backdrop-blur-md border-2 border-white shadow-lg shadow-black/5 rounded-3xl px-10 py-6 flex flex-col items-center min-w-[220px]"
+                    >
+                      <span className="text-6xl sm:text-7xl font-bold text-[#1A1A1A] tabular-nums leading-none tracking-tight">
+                        {rating.toFixed(1)}
+                      </span>
+                      <AnimatePresence mode="wait">
+                        <motion.p
+                          key={qualityLabel}
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -6 }}
+                          transition={{ duration: 0.25 }}
+                          className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-[#E60000] mt-3"
+                        >
+                          {qualityLabel}
+                        </motion.p>
+                      </AnimatePresence>
+                    </motion.div>
+
+                    {/* Custom slider */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4, duration: 0.4 }}
+                      className="w-full max-w-md mx-auto px-2"
+                    >
+                      <div className="relative h-7 flex items-center">
+                        {/* Background track */}
+                        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-3 bg-white/60 backdrop-blur-sm border border-white rounded-full" />
+                        {/* Filled track */}
+                        <motion.div
+                          className="absolute left-0 top-1/2 -translate-y-1/2 h-3 bg-gradient-to-r from-[#E60000] to-[#CC0000] rounded-full shadow-md shadow-[#E60000]/30"
+                          style={{ width: `${fillPct}%` }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 30,
+                          }}
+                        />
+                        {/* Native input on top — only the thumb is visible (CSS) */}
+                        <input
+                          type="range"
+                          min="1"
+                          max="5"
+                          step="0.1"
+                          value={rating}
+                          onChange={(e) =>
+                            handleOptionSelect(
+                              "rating",
+                              parseFloat(e.target.value),
+                            )
+                          }
+                          aria-label="Overall rating slider"
+                          className="rating-slider absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer"
+                        />
+                      </div>
+                      <div className="flex justify-between text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] mt-4">
+                        <span>Needs Work</span>
+                        <span>Excellent</span>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Footer nav */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.55 }}
+                    className="flex items-center gap-3 pt-4"
+                  >
+                    <button
+                      onClick={handleRatingBack}
+                      className="shrink-0 w-14 h-14 rounded-full border-2 border-[#1A1A1A]/10 bg-white/70 backdrop-blur-md flex items-center justify-center text-[#1A1A1A] hover:border-[#1A1A1A]/40 hover:bg-white active:scale-95 transition-all"
+                      aria-label="Back"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => setStep("comments")}
+                      className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#E60000]/30"
+                    >
+                      <span className="absolute inset-0 bg-gradient-to-r from-[#E60000] to-[#CC0000] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <span className="relative z-10">Add Details</span>
+                      <motion.div
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{
+                          duration: 1.4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        className="relative z-10"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </motion.div>
+                    </button>
+                  </motion.div>
+                </motion.div>
+              );
+            })()}
 
           {/* Comments Step */}
           {step === "comments" && (

@@ -7,21 +7,22 @@
 }
 
 html {
-  background-color: #eaeaeb;
+  /* Dark backdrop so the iOS safe-area zones (notch / home indicator) and any
+     rubber-band overscroll show as an intentional dark frame instead of the
+     off-white the user perceived as "white borders". The actual page content
+     is painted in App.tsx via a fixed-position #eaeaeb backdrop on top. */
+  background-color: #1A1A1A;
   min-height: 100vh;
   min-height: 100dvh;
-  /* Fill the iOS safe-area zones (notch / home indicator) with the page color
-     so the browser doesn't render its default white bars there. */
   height: -webkit-fill-available;
 }
 
 body {
-  background-color: #eaeaeb;
+  background-color: #1A1A1A;
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
   min-height: -webkit-fill-available;
-  /* Prevent overscroll background (rubber-banding on iOS) from showing white. */
   overscroll-behavior: none;
 }
 
@@ -33,4 +34,83 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+/* Rating slider — visible track is rendered as siblings in JSX; here we only
+   style the native thumb so it sits on top of the visual track. */
+.rating-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  outline: none;
+}
+
+.rating-slider::-webkit-slider-runnable-track {
+  height: 12px;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+}
+
+.rating-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 3px solid #e60000;
+  box-shadow:
+    0 6px 16px rgba(230, 0, 0, 0.4),
+    0 0 0 4px rgba(230, 0, 0, 0.08);
+  cursor: pointer;
+  margin-top: -7px;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.rating-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.08);
+  box-shadow:
+    0 8px 20px rgba(230, 0, 0, 0.5),
+    0 0 0 6px rgba(230, 0, 0, 0.12);
+}
+
+.rating-slider:active::-webkit-slider-thumb,
+.rating-slider:focus::-webkit-slider-thumb {
+  transform: scale(1.18);
+  box-shadow:
+    0 8px 22px rgba(230, 0, 0, 0.55),
+    0 0 0 8px rgba(230, 0, 0, 0.18);
+}
+
+.rating-slider::-moz-range-track {
+  height: 12px;
+  background: transparent;
+  border: none;
+}
+
+.rating-slider::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 3px solid #e60000;
+  box-shadow:
+    0 6px 16px rgba(230, 0, 0, 0.4),
+    0 0 0 4px rgba(230, 0, 0, 0.08);
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.rating-slider:hover::-moz-range-thumb {
+  transform: scale(1.08);
+}
+
+.rating-slider:active::-moz-range-thumb,
+.rating-slider:focus::-moz-range-thumb {
+  transform: scale(1.18);
 }
