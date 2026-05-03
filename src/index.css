@@ -15,6 +15,13 @@ html {
   min-height: 100vh;
   min-height: 100dvh;
   height: -webkit-fill-available;
+  /* Promote html to its own GPU compositing layer. iOS Safari often leaves
+     painted gaps at the safe-area edges (the "white borders" bug, see
+     https://gist.github.com/domske/b66047671c780a238b51c51ffde8d3a0) when a
+     descendant uses overflow + transform; forcing translateZ(0) on the root
+     gives the compositor a clean stacking context and the gaps disappear. */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 body {
@@ -24,6 +31,8 @@ body {
   min-height: 100dvh;
   min-height: -webkit-fill-available;
   overscroll-behavior: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 @layer utilities {

@@ -452,7 +452,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.05 }}
-                            className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A] leading-tight"
+                            className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight [text-shadow:_0_2px_12px_rgba(0,0,0,0.35)]"
                           >
                             {question.title}
                           </motion.h2>
@@ -626,7 +626,7 @@ export default function App() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.05 }}
-                      className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A] leading-tight"
+                      className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight [text-shadow:_0_2px_12px_rgba(0,0,0,0.35)]"
                     >
                       Overall Rating
                     </motion.h2>
