@@ -16,22 +16,11 @@ import {
   Star,
   ChevronRight,
   ChevronLeft,
-  Plus,
   RefreshCcw,
   Clipboard,
   ExternalLink,
-  UtensilsCrossed,
   Check,
   Languages,
-  Flame,
-  Heart,
-  Crown,
-  HandHeart,
-  Smile,
-  Music,
-  Coffee,
-  Leaf,
-  type LucideIcon,
 } from "lucide-react";
 import { generateReview, SurveyResults } from "./services/gemini";
 
@@ -58,7 +47,6 @@ interface Option {
   label: string;
   value: string;
   description: string;
-  icon: LucideIcon;
 }
 
 interface SurveyQuestion {
@@ -78,19 +66,16 @@ const SURVEY_QUESTIONS: SurveyQuestion[] = [
         label: "Outstanding",
         value: "outstanding",
         description: "Truly memorable, every bite a highlight.",
-        icon: Flame,
       },
       {
         label: "Delicious",
         value: "delicious",
         description: "Loved the dishes, would order again.",
-        icon: Heart,
       },
       {
         label: "Tasty",
         value: "tasty",
         description: "Solid, satisfying, hit the spot.",
-        icon: UtensilsCrossed,
       },
     ],
   },
@@ -103,19 +88,16 @@ const SURVEY_QUESTIONS: SurveyQuestion[] = [
         label: "Excellent",
         value: "excellent",
         description: "Polished, attentive, and a step ahead.",
-        icon: Crown,
       },
       {
         label: "Attentive",
         value: "attentive",
         description: "Always there when we needed something.",
-        icon: HandHeart,
       },
       {
         label: "Friendly",
         value: "friendly",
         description: "Warm, welcoming, easy to chat with.",
-        icon: Smile,
       },
     ],
   },
@@ -128,19 +110,16 @@ const SURVEY_QUESTIONS: SurveyQuestion[] = [
         label: "Vibrant",
         value: "vibrant",
         description: "Lively, energetic, full of buzz.",
-        icon: Music,
       },
       {
         label: "Cozy",
         value: "cozy",
         description: "Warm, intimate, inviting.",
-        icon: Coffee,
       },
       {
         label: "Relaxing",
         value: "relaxing",
         description: "Calm, easy-going, unhurried.",
-        icon: Leaf,
       },
     ],
   },
@@ -371,15 +350,7 @@ const SUGGESTIONS = [
   "e.g., The chili oil wontons were soft, delicate, and packed a great punch...",
 ];
 
-const EMBERS = Array.from({ length: 20 }).map(() => ({
-  x: `${Math.random() * 100}%`,
-  y: `${Math.random() * 100}%`,
-  tx: `${(Math.random() - 0.5) * 100}px`,
-  ty: `-${Math.random() * 200 + 100}px`,
-  size: `${Math.random() * 6 + 4}px`,
-  duration: `${Math.random() * 5 + 5}s`,
-  delay: `${Math.random() * 5}s`,
-}));
+
 
 // --- Main App ---
 export default function App() {

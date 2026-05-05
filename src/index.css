@@ -94,13 +94,3 @@ body {
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
-/* Loading Chili Animation */
-@keyframes chili-wiggle {
-  0%, 100% { transform: rotate(-5deg) scale(1); }
-  50% { transform: rotate(5deg) scale(1.05); }
-}
-
-.chili-loader {
-  animation: chili-wiggle 1s ease-in-out infinite;
-  filter: drop-shadow(0 4px 12px rgba(220, 38, 38, 0.3));
-}
