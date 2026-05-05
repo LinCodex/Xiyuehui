@@ -517,7 +517,7 @@ export default function App() {
     <div className="relative min-h-[100dvh] text-[#1A1A1A] font-sans selection:bg-[#E60000] selection:text-white overflow-x-hidden w-full">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <img
-          src="/venue-6-CGLo10ys.png"
+          src="/venue-6-CGLo10ys.webp"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-cover"
@@ -525,10 +525,11 @@ export default function App() {
           decoding="async"
         />
       </div>
-      <div className="fixed inset-0 z-0 bg-black/35 pointer-events-none" />
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-[#1A0904]/55 via-[#2A0D07]/45 to-[#140704]/70 pointer-events-none" />
+      <div className="fixed inset-0 z-0 opacity-[0.18] pointer-events-none [background-image:linear-gradient(rgba(212,175,55,0.28)_1px,transparent_1px),linear-gradient(90deg,rgba(212,175,55,0.22)_1px,transparent_1px)] [background-size:36px_36px]" />
 
       <main
-        className="relative z-10 max-w-md sm:max-w-lg md:max-w-2xl mx-auto h-[100dvh] flex flex-col"
+        className="relative z-10 max-w-md sm:max-w-lg md:max-w-2xl mx-auto h-[100dvh] flex flex-col sm:rounded-[2.2rem] sm:border sm:border-[#D4AF37]/35 sm:bg-[#1A0D07]/20 sm:backdrop-blur-[2px]"
         style={MAIN_PADDING}
       >
         <AnimatePresence mode="wait">
@@ -543,7 +544,7 @@ export default function App() {
             >
               {/* Header */}
               <div className="flex justify-between items-start w-full">
-                <div className="font-semibold tracking-[0.2em] leading-snug text-[10px] sm:text-xs uppercase pt-2 text-white">
+                <div className="font-semibold tracking-[0.23em] leading-snug text-[10px] sm:text-xs uppercase pt-2 text-white [text-shadow:_0_2px_6px_rgba(0,0,0,0.4)]">
                   <p>Chuan Bistro</p>
                   <p>Review</p>
                 </div>
@@ -557,7 +558,7 @@ export default function App() {
                   <div className="text-[10px] sm:text-xs font-semibold tracking-widest text-white/80 pb-3">
                     {new Date().getFullYear()}
                   </div>
-                  <h1 className="text-[40px] sm:text-[56px] md:text-[64px] tracking-tight text-white leading-[1.05]">
+                  <h1 className="text-[40px] sm:text-[56px] md:text-[64px] tracking-tight text-white leading-[1.05] [text-shadow:_0_3px_18px_rgba(0,0,0,0.6)]">
                     <span className="block font-medium">CRAFT</span>
                     <span className="block font-medium">YOUR PERFECT</span>
                     <span className="block font-bold">REVIEW</span>
@@ -565,7 +566,7 @@ export default function App() {
                 </div>
                 <button
                   onClick={goToSurvey}
-                  className="w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-white text-[#D4AF37] text-3xl sm:text-4xl font-bold uppercase tracking-[0.08em] flex items-center justify-center shadow-2xl shadow-black/25 border border-[#D4AF37]/20 transition-transform duration-300 hover:scale-105 active:scale-95"
+                  className="w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-gradient-to-br from-white via-[#FFF6DE] to-[#F2D184] text-[#A66A00] text-3xl sm:text-4xl font-bold uppercase tracking-[0.08em] flex items-center justify-center shadow-2xl shadow-black/35 border-2 border-[#E3B23C]/60 transition-transform duration-300 hover:scale-105 active:scale-95"
                 >
                   <span className="leading-none">Review</span>
                 </button>
@@ -632,7 +633,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.13 }}
-                            className="text-sm sm:text-base text-[#1A1A1A] mt-3 max-w-sm mx-auto leading-relaxed"
+                            className="text-sm sm:text-base text-[#F7E7C0] mt-3 max-w-sm mx-auto leading-relaxed [text-shadow:_0_2px_8px_rgba(0,0,0,0.45)]"
                           >
                             {question.subtitle}
                           </m.p>
@@ -656,14 +657,14 @@ export default function App() {
                                 }}
                                 className={`card-enter relative overflow-hidden flex items-center gap-4 p-4 sm:p-5 rounded-3xl border-2 text-left transition-all duration-300 active:scale-[0.97] ${
                                   isSelected
-                                    ? "bg-[#1A1A1A] border-[#1A1A1A] text-white shadow-2xl shadow-[#1A1A1A]/25"
-                                    : "bg-white/85 border-white hover:border-[#E60000]/40 hover:bg-white text-[#1A1A1A]"
+                                    ? "bg-[#4A120B]/95 border-[#D4AF37]/45 text-white shadow-2xl shadow-[#230B07]/45"
+                                    : "bg-white/88 border-[#F6E7BE]/40 hover:border-[#D4AF37]/45 hover:bg-white text-[#1A1A1A]"
                                 }`}
                               >
                                 {/* Selected glow ??? single span, opacity
                                     transitions live on the compositor. */}
                                 <span
-                                  className={`pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-[#E60000]/40 via-transparent to-transparent transition-opacity duration-300 ${
+                                  className={`pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-[#D4AF37]/35 via-transparent to-transparent transition-opacity duration-300 ${
                                     isSelected ? "opacity-100" : "opacity-0"
                                   }`}
                                 />
@@ -671,8 +672,8 @@ export default function App() {
                                 <div
                                   className={`relative z-10 shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${
                                     isSelected
-                                      ? "bg-[#E60000] text-white shadow-lg shadow-[#E60000]/40 scale-105"
-                                      : "bg-[#E60000]/10 text-[#E60000]"
+                                      ? "bg-gradient-to-br from-[#E60000] to-[#8E0F07] text-white shadow-lg shadow-[#8E0F07]/45 scale-105"
+                                      : "bg-[#B21F0F]/10 text-[#9A1B0D]"
                                   }`}
                                 >
                                   <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
@@ -766,7 +767,7 @@ export default function App() {
               className="flex-1 flex flex-col py-4 justify-between max-w-xl mx-auto w-full space-y-4"
             >
               <div className="space-y-2 mt-2">
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A] text-center mt-4">
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white text-center mt-4 [text-shadow:_0_3px_14px_rgba(0,0,0,0.5)]">
                   Anything else?
                 </h2>
                 <p className="text-sm text-[#78716C] text-center">
@@ -826,7 +827,7 @@ export default function App() {
                           <button
                             type="button"
                             onClick={addCurrentSuggestion}
-                            className="shrink-0 w-7 h-7 rounded-full bg-[#E60000] text-white flex items-center justify-center hover:bg-[#CC0000] active:scale-90 transition-all shadow-sm shadow-[#E60000]/30"
+                            className="shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-[#E60000] to-[#8E0F07] text-white flex items-center justify-center hover:brightness-110 active:scale-90 transition-all shadow-sm shadow-[#8E0F07]/35"
                             aria-label={`Add suggestion: ${currentSuggestion}`}
                           >
                             <Plus className="w-4 h-4" strokeWidth={3} />
@@ -841,7 +842,7 @@ export default function App() {
               <div className="pt-2 mt-auto">
                 <button
                   onClick={handleGenerate}
-                  className="w-full bg-[#E60000] text-white py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-2 hover:bg-[#CC0000] hover:shadow-2xl hover:shadow-[#E60000]/30 transition-all duration-500 shadow-lg shadow-[#E60000]/20 hover:-translate-y-0.5"
+                  className="w-full bg-gradient-to-r from-[#B51508] via-[#D82410] to-[#8C0F06] text-white py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-2 border border-[#D4AF37]/35 hover:shadow-2xl hover:shadow-[#8E0F07]/40 transition-all duration-500 shadow-lg shadow-[#8E0F07]/30 hover:-translate-y-0.5"
                 >
                   Generate Review
                 </button>
@@ -867,7 +868,7 @@ export default function App() {
               </div>
               <div className="text-center space-y-2">
                 <p className="text-xl font-medium">Crafting your review...</p>
-                <p className="text-sm text-[#78716C]">
+                <p className="text-sm text-[#F7E7C0]">
                   Personalizing based on your feedback
                 </p>
               </div>
@@ -883,7 +884,7 @@ export default function App() {
               className="flex-1 flex flex-col py-4 justify-between space-y-4 max-w-2xl mx-auto w-full"
             >
               <div className="flex justify-between items-center mt-2">
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1A1A1A]">
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white [text-shadow:_0_3px_12px_rgba(0,0,0,0.45)]">
                   Your Review
                 </h2>
                 <button
@@ -939,7 +940,7 @@ export default function App() {
                 <button
                   onClick={handleRefresh}
                   disabled={refreshCount >= MAX_REFRESH}
-                  className="w-full flex items-center justify-center gap-2 font-medium text-base sm:text-lg text-[#78716C] hover:text-[#E60000] disabled:opacity-30 p-2 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 font-medium text-base sm:text-lg text-[#EED7AB] hover:text-[#F8E7C4] disabled:opacity-30 p-2 transition-colors"
                 >
                   <RefreshCcw
                     className={`w-4 h-4 sm:w-5 ${refreshCount < MAX_REFRESH && "group-hover:rotate-180 transition-transform duration-500"}`}
@@ -950,7 +951,7 @@ export default function App() {
                 <div className="w-full pt-2 mt-auto">
                   <button
                     onClick={handleRedirect}
-                    className="w-full bg-[#E60000] text-white py-4 rounded-full font-semibold text-lg flex items-center justify-center gap-3 shadow-xl shadow-[#E60000]/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="w-full bg-gradient-to-r from-[#B51508] via-[#D82410] to-[#8C0F06] text-white py-4 rounded-full font-semibold text-lg flex items-center justify-center gap-3 border border-[#D4AF37]/35 shadow-xl shadow-[#8E0F07]/35 hover:scale-[1.02] active:scale-[0.98] transition-all"
                   >
                     Post to Google Maps
                     <ExternalLink className="w-5 h-5" />
