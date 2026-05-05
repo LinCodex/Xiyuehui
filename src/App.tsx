@@ -491,10 +491,12 @@ export default function App() {
             >
               {/* Full-bleed Video Background for top half (no curved edges) */}
               <div 
-                className="absolute left-1/2 -translate-x-1/2 w-screen z-0 overflow-hidden shadow-2xl bg-[#111]"
+                className="absolute left-1/2 -translate-x-1/2 w-screen z-0"
                 style={{ 
                   top: "calc(-1 * max(1.5rem, env(safe-area-inset-top)))",
-                  height: "50dvh"
+                  height: "55dvh",
+                  maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)'
                 }}
               >
                 <m.video
@@ -517,9 +519,6 @@ export default function App() {
                   }}
                 />
                 <div className="absolute top-0 inset-x-0 h-[40%] bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
-
-                {/* Seamless bottom blend into the cream background */}
-                <div className="absolute bottom-[-1px] inset-x-0 h-[20%] bg-gradient-to-t from-[#FAF5ED] via-[#FAF5ED]/70 to-transparent pointer-events-none" />
               </div>
 
               <div className="absolute top-6 inset-x-0 px-6 sm:top-8 sm:px-8 z-20 flex items-baseline gap-2">
