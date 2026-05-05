@@ -415,7 +415,7 @@ export default function App() {
   // Auto-rotate welcome screen images
   useEffect(() => {
     const id = setInterval(() => {
-      setImageIndex((i) => (i + 1) % 2);
+      setImageIndex((i) => (i + 1) % 4);
     }, 4500);
     return () => clearInterval(id);
   }, []);
@@ -527,43 +527,28 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col h-full overflow-hidden"
             >
-              <div className="absolute top-6 left-6 z-20 font-serif font-bold text-[#111] tracking-wider text-xl bg-white/80 backdrop-blur-md px-5 py-2 rounded-full shadow-sm border border-[#111]/5">
+              <div className="absolute top-8 left-8 z-20 font-serif font-extrabold text-[#111] tracking-widest text-2xl uppercase">
                 Chuan Bistro
               </div>
-              <div className="relative h-[45dvh] w-full mt-6">
-                {['/dish1.png', '/dish3.png'].map((src, i) => (
+              <div className="relative h-[55dvh] w-full pt-20 px-6 pb-2 mt-4">
+                {['/dish1.png', '/dish2.png', '/dish3.png', '/dish4.png'].map((src, i) => (
                   <m.img
                     key={src}
                     src={src}
                     alt="Signature Dish"
-                    className="absolute top-2 left-6 w-[55%] h-[75%] object-cover rounded-[2rem] shadow-xl"
-                    initial={{ y: 20, opacity: 0 }}
+                    className="absolute inset-x-6 top-24 bottom-2 object-cover rounded-[2.5rem] shadow-2xl w-[calc(100%-3rem)] h-[calc(100%-6rem)]"
+                    initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ 
-                      y: i === imageIndex ? 0 : 10, 
+                      scale: i === imageIndex ? 1 : 0.95, 
                       opacity: i === imageIndex ? 1 : 0 
                     }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    style={{ pointerEvents: i === imageIndex ? "auto" : "none" }}
-                  />
-                ))}
-                {['/dish2.png', '/dish4.png'].map((src, i) => (
-                  <m.img
-                    key={src}
-                    src={src}
-                    alt="Signature Drink"
-                    className="absolute bottom-2 right-6 w-[50%] h-[70%] object-cover rounded-[2rem] shadow-2xl"
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ 
-                      y: i === imageIndex ? 0 : -10, 
-                      opacity: i === imageIndex ? 1 : 0 
-                    }}
-                    transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+                    transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
                     style={{ pointerEvents: i === imageIndex ? "auto" : "none" }}
                   />
                 ))}
               </div>
 
-              <div className="px-6 py-8 flex-1 flex flex-col justify-end pb-12">
+              <div className="px-8 py-8 flex-1 flex flex-col justify-end pb-12">
                 <m.h1 
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}
                   className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.15] text-[#111]"
