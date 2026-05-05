@@ -536,7 +536,6 @@ export default function App() {
         />
       </div>
       <div className="fixed inset-0 z-0 bg-gradient-to-b from-[#0B0201]/70 via-[#1A0301]/60 to-[#0A0101]/85 pointer-events-none" />
-      <div className="fixed inset-0 z-0 opacity-[0.22] pointer-events-none [background-image:linear-gradient(rgba(212,175,55,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(212,175,55,0.4)_1px,transparent_1px)] [background-size:36px_36px]" />
       
       {/* Background Embers & Dark Pulses */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -575,8 +574,8 @@ export default function App() {
                   <p>Chuan Bistro</p>
                   <p>Review</p>
                 </div>
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg border-2 border-[#D4AF37] bg-[#8E0F07] flex items-center justify-center text-[#FFD700] shadow-lg shadow-[#8E0F07]/40 z-20 transform rotate-3">
-                  <span className="text-2xl sm:text-3xl font-bold font-serif">川</span>
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-[#D4AF37] bg-[#8E0F07] flex items-center justify-center text-[#FFD700] shadow-lg shadow-[#8E0F07]/40 z-20">
+                  <span className="text-2xl sm:text-3xl font-bold font-serif">叙</span>
                 </div>
               </div>
 
