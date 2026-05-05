@@ -548,19 +548,13 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="px-8 py-8 flex-1 flex flex-col justify-end pb-12">
+              <div className="px-6 sm:px-8 py-8 flex-1 flex flex-col justify-end pb-12">
                 <m.h1 
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}
-                  className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.15] text-[#111]"
+                  className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-[#111]"
                 >
-                  Craft your <br/>perfect review
+                  Craft your <br/>perfect review.
                 </m.h1>
-                <m.p 
-                  initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}
-                  className="mt-4 text-sm sm:text-base text-[#555] max-w-[85%] leading-relaxed"
-                >
-                  An unrivaled selection of phrases to capture the essence of our dining experience.
-                </m.p>
                 
                 <m.div 
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}
