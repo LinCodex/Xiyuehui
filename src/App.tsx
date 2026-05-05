@@ -352,7 +352,7 @@ export default function App() {
 
   const handleSurveyNext = useCallback(() => {
     setSurveyIndex((idx) => {
-      if (idx < SURVEY_QUESTIONS.length - 1) {
+      if (idx < 3 - 1) {
         setSurveyDirection(1);
         return idx + 1;
       }
@@ -373,7 +373,7 @@ export default function App() {
   }, []);
 
   const handleRatingBack = useCallback(() => {
-    setSurveyIndex(SURVEY_QUESTIONS.length - 1);
+    setSurveyIndex(3 - 1);
     setSurveyDirection(-1);
     setStep("survey");
   }, []);
@@ -406,8 +406,8 @@ export default function App() {
     setStep("generating");
     try {
       const [en, cn] = await Promise.all([
-        generateReview(results, "en"),
-        generateReview(results, "cn"),
+        generateReview(results, "en", reviews?.en),
+        generateReview(results, "cn", reviews?.cn),
       ]);
       setReviews({ en, cn });
       setRefreshCount((prev) => prev + 1);
@@ -440,6 +440,17 @@ export default function App() {
 
   return (
     <div className="relative min-h-[100dvh] text-[#111] font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-[#FAF5ED]">
+      {/* Global Language Toggle */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
+        <button
+          onClick={() => setLang(lang === "en" ? "cn" : "en")}
+          className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md rounded-full text-sm font-bold text-[#111] hover:bg-white transition-colors shadow-md border border-white/40"
+        >
+          <Languages className="w-4 h-4 sm:w-5" />
+          {lang === "en" ? "中文" : "English"}
+        </button>
+      </div>
+
       <main
         className="relative z-10 max-w-md sm:max-w-lg md:max-w-2xl mx-auto min-h-[100dvh] flex flex-col"
         style={MAIN_PADDING}
@@ -564,10 +575,9 @@ export default function App() {
                   className="flex-1 flex flex-col px-6"
                 >
                   {(() => {
-                    const question = SURVEY_QUESTIONS[surveyIndex];
+                    const question = getSurveyQuestions(lang)[surveyIndex];
                     const selectedValue = results[question.key];
-                    const isLast =
-                      surveyIndex === SURVEY_QUESTIONS.length - 1;
+                    const isLast = surveyIndex === 3 - 1;
                     return (
                       <>
                         {/* Question heading */}
@@ -800,13 +810,6 @@ export default function App() {
                 <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#111]">
                   {t[lang].resultTitle}
                 </h2>
-                <button
-                  onClick={() => setLang(lang === "en" ? "cn" : "en")}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#F0EBE1] rounded-full text-sm font-bold text-[#111] hover:bg-[#E5E5E5] transition-colors shadow-sm"
-                >
-                  <Languages className="w-4 h-4 sm:w-5" />
-                  {lang === "en" ? "中文" : "English"}
-                </button>
               </div>
 
               <div className="relative group flex-1 flex flex-col">
