@@ -63,7 +63,8 @@ Critical rules you MUST follow:
     );
   } catch (error: any) {
     console.error("Gemini Error:", error);
-    // Temporary debug: output the exact error message so we can see why Vercel is failing
-    return `Debug Error: ${error?.message || String(error)}`;
+    return language === "en"
+      ? "Error generating review. Please try again."
+      : "生成评论时出错，请重试。";
   }
 }
