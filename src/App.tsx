@@ -530,9 +530,9 @@ export default function App() {
               <div className="px-6 sm:px-8 py-8 flex-1 flex flex-col justify-end pb-12 z-10 relative">
                 <m.h1 
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}
-                  className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-[#111]"
+                  className="text-4xl min-[400px]:text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-[#111]"
                 >
-                  Craft your perfect<br/>review.
+                  <span className="whitespace-nowrap">Craft your perfect</span><br/>review.
                 </m.h1>
                 
                 <m.div 
