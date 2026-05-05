@@ -376,6 +376,16 @@ const SUGGESTIONS = [
   "e.g., The service was incredibly fast...",
 ];
 
+const EMBERS = Array.from({ length: 20 }).map(() => ({
+  x: `${Math.random() * 100}%`,
+  y: `${Math.random() * 100}%`,
+  tx: `${(Math.random() - 0.5) * 100}px`,
+  ty: `-${Math.random() * 200 + 100}px`,
+  size: `${Math.random() * 6 + 4}px`,
+  duration: `${Math.random() * 5 + 5}s`,
+  delay: `${Math.random() * 5}s`,
+}));
+
 // --- Main App ---
 export default function App() {
   const [step, setStep] = useState<Step>("welcome");
@@ -517,16 +527,33 @@ export default function App() {
     <div className="relative min-h-[100dvh] text-[#1A1A1A] font-sans selection:bg-[#E60000] selection:text-white overflow-x-hidden w-full">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <img
-          src="/venue-6-CGLo10ys.webp"
+          src="/sichuan_bg.png"
           alt=""
           aria-hidden="true"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-90"
           loading="eager"
           decoding="async"
         />
       </div>
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-[#1A0904]/55 via-[#2A0D07]/45 to-[#140704]/70 pointer-events-none" />
-      <div className="fixed inset-0 z-0 opacity-[0.18] pointer-events-none [background-image:linear-gradient(rgba(212,175,55,0.28)_1px,transparent_1px),linear-gradient(90deg,rgba(212,175,55,0.22)_1px,transparent_1px)] [background-size:36px_36px]" />
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-[#0B0201]/70 via-[#1A0301]/60 to-[#0A0101]/85 pointer-events-none" />
+      <div className="fixed inset-0 z-0 opacity-[0.22] pointer-events-none [background-image:linear-gradient(rgba(212,175,55,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(212,175,55,0.4)_1px,transparent_1px)] [background-size:36px_36px]" />
+      
+      {/* Background Embers & Dark Pulses */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="bg-blob bg-blob-1" />
+        <div className="bg-blob bg-blob-2" />
+        {EMBERS.map((style, i) => (
+          <div key={i} className="ember" style={{
+            '--x': style.x,
+            '--y': style.y,
+            '--tx': style.tx,
+            '--ty': style.ty,
+            '--size': style.size,
+            '--duration': style.duration,
+            '--delay': style.delay,
+          } as any} />
+        ))}
+      </div>
 
       <main
         className="relative z-10 max-w-md sm:max-w-lg md:max-w-2xl mx-auto h-[100dvh] flex flex-col sm:rounded-[2.2rem] sm:border sm:border-[#D4AF37]/35 sm:bg-[#1A0D07]/20 sm:backdrop-blur-[2px]"
@@ -548,8 +575,8 @@ export default function App() {
                   <p>Chuan Bistro</p>
                   <p>Review</p>
                 </div>
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border border-[#D4AF37]/20 bg-white flex items-center justify-center text-[#D4AF37] shadow-lg z-20">
-                  <span className="text-xl sm:text-2xl font-semibold">叙</span>
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg border-2 border-[#D4AF37] bg-[#8E0F07] flex items-center justify-center text-[#FFD700] shadow-lg shadow-[#8E0F07]/40 z-20 transform rotate-3">
+                  <span className="text-2xl sm:text-3xl font-bold font-serif">川</span>
                 </div>
               </div>
 
@@ -566,9 +593,9 @@ export default function App() {
                 </div>
                 <button
                   onClick={goToSurvey}
-                  className="w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-gradient-to-br from-white via-[#FFF6DE] to-[#F2D184] text-[#A66A00] text-3xl sm:text-4xl font-bold uppercase tracking-[0.08em] flex items-center justify-center shadow-2xl shadow-black/35 border-2 border-[#E3B23C]/60 transition-transform duration-300 hover:scale-105 active:scale-95"
+                  className="w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-gradient-to-br from-[#E60000] via-[#B51508] to-[#4A0301] text-[#FFD700] text-3xl sm:text-4xl font-bold uppercase tracking-[0.08em] flex items-center justify-center shadow-2xl shadow-[#E60000]/40 border-2 border-[#FFD700]/60 transition-transform duration-300 hover:scale-105 active:scale-95"
                 >
-                  <span className="leading-none">Review</span>
+                  <span className="leading-none drop-shadow-md">Review</span>
                 </button>
               </div>
             </m.div>

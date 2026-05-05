@@ -46,38 +46,49 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   GPU-only background blobs.
-   The previous Framer Motion blobs ran scale + x + y + rotate animations on
-   four 100vw blurred elements (blur radius 90-130px) every frame. That work
-   happened on the JS thread and forced the compositor to re-blur ~46 million
-   pixels per layer per frame, which is the main reason the page felt laggy.
-   These keyframes only animate transform + opacity so they live entirely on
-   the compositor thread, no React or main-thread work in the loop.
+   GPU-only Background Embers & Dark Blobs (Sichuan Vibe)
    --------------------------------------------------------------------------- */
 
-@keyframes blob-drift-1 {
-  0%,
-  100% {
+@keyframes ember-float {
+  0% {
     transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0;
   }
-  33% {
-    transform: translate3d(-40px, 50px, 0) scale(1.06);
+  20% {
+    opacity: 0.8;
   }
-  66% {
-    transform: translate3d(30px, -30px, 0) scale(0.96);
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(var(--tx, -40px), var(--ty, -250px), 0) scale(0.5);
+    opacity: 0;
   }
 }
 
-@keyframes blob-drift-2 {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
+.ember {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffeb3b, #ff5722 40%, transparent 70%);
+  pointer-events: none;
+  filter: blur(2px) drop-shadow(0 0 8px rgba(255, 87, 34, 0.8));
+  will-change: transform, opacity;
+  animation: ember-float var(--duration, 8s) ease-in infinite;
+  animation-delay: var(--delay, 0s);
+  width: var(--size, 8px);
+  height: var(--size, 8px);
+  left: var(--x, 50%);
+  bottom: var(--y, 0%);
+}
+
+@keyframes dark-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
   }
-  33% {
-    transform: translate3d(50px, -40px, 0) scale(1.08);
-  }
-  66% {
-    transform: translate3d(-30px, 40px, 0) scale(0.95);
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
   }
 }
 
@@ -86,45 +97,42 @@ body {
   aspect-ratio: 1;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(40px);
-  will-change: transform;
+  filter: blur(80px);
+  will-change: transform, opacity;
 }
 
 @media (min-width: 640px) {
   .bg-blob {
-    filter: blur(60px);
+    filter: blur(100px);
   }
 }
 
 .bg-blob-1 {
-  top: -20%;
-  right: -25%;
-  width: 80vw;
-  /* Combines the old "Maroon Blob 1" and the deep dark spot into one
-     radial gradient, removing two extra compositing layers. */
+  top: -10%;
+  right: -15%;
+  width: 70vw;
   background: radial-gradient(
-    circle at 35% 35%,
-    #4d0000 0%,
-    #cc0000 35%,
-    #990000 60%,
-    transparent 75%
+    circle at 50% 50%,
+    #5c0000 0%,
+    #2a0000 50%,
+    transparent 80%
   );
-  opacity: 0.85;
-  animation: blob-drift-1 24s ease-in-out infinite;
+  opacity: 0.7;
+  animation: dark-pulse 18s ease-in-out infinite;
 }
 
 .bg-blob-2 {
-  bottom: -25%;
-  left: -25%;
+  bottom: -20%;
+  left: -20%;
   width: 80vw;
   background: radial-gradient(
-    circle at 60% 60%,
-    #d6cdc8 0%,
-    rgba(214, 205, 200, 0.3) 50%,
+    circle at 50% 50%,
+    #8e0f07 0%,
+    #4a0301 40%,
     transparent 70%
   );
-  opacity: 0.65;
-  animation: blob-drift-2 30s ease-in-out infinite;
+  opacity: 0.5;
+  animation: dark-pulse 22s ease-in-out infinite reverse;
 }
 
 /* Loading-screen chili — replaces motion.img with CSS keyframes. */
