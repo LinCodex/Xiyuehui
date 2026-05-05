@@ -7,6 +7,8 @@ import {
   memo,
   useCallback,
   useEffect,
+  useMemo,
+  useRef,
   useState,
   type ChangeEvent,
   type CSSProperties,
@@ -329,13 +331,23 @@ export default function App() {
   const [surveyIndex, setSurveyIndex] = useState(0);
   const [surveyDirection, setSurveyDirection] = useState<1 | -1>(1);
 
+  // TEAM_001: Guard against duplicate API calls from double-taps.
+  const isGenerating = useRef(false);
+
+  // TEAM_001: Memoize survey questions so we don't allocate 18 new objects
+  // every render — only recompute when the language changes.
+  const surveyQuestions = useMemo(() => getSurveyQuestions(lang), [lang]);
+
   // Auto-rotate the placeholder suggestion every 4s.
+  // TEAM_001: `lang` in deps so the interval resets on language switch.
   useEffect(() => {
     const id = setInterval(() => {
       setSuggestionIdx((i) => (i + 1) % t[lang].suggestions.length);
     }, 4000);
+    // Clamp index immediately when lang changes in case arrays differ in length.
+    setSuggestionIdx((i) => Math.min(i, t[lang].suggestions.length - 1));
     return () => clearInterval(id);
-  }, []);
+  }, [lang]);
 
   const handleOptionSelect = useCallback(
     (key: keyof SurveyResults, value: any) => {
@@ -387,6 +399,9 @@ export default function App() {
   }, []);
 
   const handleGenerate = async () => {
+    // TEAM_001: Prevent duplicate API calls from double-taps.
+    if (isGenerating.current) return;
+    isGenerating.current = true;
     setStep("generating");
     try {
       const [en, cn] = await Promise.all([
@@ -396,13 +411,18 @@ export default function App() {
       setReviews({ en, cn });
       setStep("result");
     } catch (error) {
-      console.error(error);
+      if (import.meta.env.DEV) console.error(error);
       setStep("error");
+    } finally {
+      isGenerating.current = false;
     }
   };
 
   const handleRefresh = async () => {
     if (refreshCount >= MAX_REFRESH) return;
+    // TEAM_001: Prevent duplicate API calls from double-taps.
+    if (isGenerating.current) return;
+    isGenerating.current = true;
     setStep("generating");
     try {
       const [en, cn] = await Promise.all([
@@ -413,15 +433,32 @@ export default function App() {
       setRefreshCount((prev) => prev + 1);
       setStep("result");
     } catch (error) {
-      console.error(error);
+      if (import.meta.env.DEV) console.error(error);
       setStep("error");
+    } finally {
+      isGenerating.current = false;
     }
   };
 
-  const copyToClipboard = () => {
+  // TEAM_001: Await clipboard API with legacy fallback for HTTP origins or
+  // browsers that deny clipboard permission.
+  const copyToClipboard = async () => {
     const text = reviews ? (lang === "en" ? reviews.en : reviews.cn) : "";
-    navigator.clipboard.writeText(text);
-    setIsCopying(true);
+    try {
+      await navigator.clipboard.writeText(text);
+      setIsCopying(true);
+    } catch {
+      // Fallback: select a hidden textarea and use execCommand.
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      setIsCopying(true);
+    }
     setTimeout(() => setIsCopying(false), 2000);
   };
 
@@ -547,7 +584,7 @@ export default function App() {
             >
               {/* Progress segments */}
               <div className="flex items-center justify-center gap-2 pt-6">
-                {getSurveyQuestions(lang).map((q, idx) => {
+                {surveyQuestions.map((q, idx) => {
                   const isActive = idx === surveyIndex;
                   const isFilled = isActive || (!!results[q.key] && idx < surveyIndex);
                   return (
@@ -575,7 +612,7 @@ export default function App() {
                   className="flex-1 flex flex-col px-6"
                 >
                   {(() => {
-                    const question = getSurveyQuestions(lang)[surveyIndex];
+                    const question = surveyQuestions[surveyIndex];
                     const selectedValue = results[question.key];
                     const isLast = surveyIndex === 3 - 1;
                     return (
