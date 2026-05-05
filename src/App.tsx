@@ -402,12 +402,21 @@ export default function App() {
   const [suggestionIdx, setSuggestionIdx] = useState(0);
   const [surveyIndex, setSurveyIndex] = useState(0);
   const [surveyDirection, setSurveyDirection] = useState<1 | -1>(1);
+  const [imageIndex, setImageIndex] = useState(0);
 
   // Auto-rotate the placeholder suggestion every 4s.
   useEffect(() => {
     const id = setInterval(() => {
       setSuggestionIdx((i) => (i + 1) % SUGGESTIONS.length);
     }, 4000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Auto-rotate welcome screen images
+  useEffect(() => {
+    const id = setInterval(() => {
+      setImageIndex((i) => (i + 1) % 2);
+    }, 4500);
     return () => clearInterval(id);
   }, []);
 
@@ -504,15 +513,6 @@ export default function App() {
 
   return (
     <div className="relative min-h-[100dvh] text-[#111] font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-[#FAF5ED]">
-      {/* Background Vector Lines */}
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.05] overflow-hidden">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path d="M0,20 Q40,40 100,10" fill="none" stroke="#111" strokeWidth="0.1" />
-          <path d="M0,70 Q60,90 100,50" fill="none" stroke="#111" strokeWidth="0.15" />
-          <path d="M-20,90 Q50,110 120,70" fill="none" stroke="#111" strokeWidth="0.1" />
-        </svg>
-      </div>
-
       <main
         className="relative z-10 max-w-md sm:max-w-lg md:max-w-2xl mx-auto min-h-[100dvh] flex flex-col"
         style={MAIN_PADDING}
@@ -531,20 +531,36 @@ export default function App() {
                 Chuan Bistro
               </div>
               <div className="relative h-[45dvh] w-full mt-6">
-                <m.img 
-                  src="/dish1.png" 
-                  alt="Sichuan Dish"
-                  className="absolute top-2 left-6 w-[55%] h-[75%] object-cover rounded-[2rem] shadow-xl"
-                  initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.1, duration: 0.6 }}
-                />
-                <m.img 
-                  src="/dish2.png" 
-                  alt="Sichuan Cocktail"
-                  className="absolute bottom-2 right-6 w-[50%] h-[70%] object-cover rounded-[2rem] shadow-2xl"
-                  initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                />
+                {['/dish1.png', '/dish3.png'].map((src, i) => (
+                  <m.img
+                    key={src}
+                    src={src}
+                    alt="Signature Dish"
+                    className="absolute top-2 left-6 w-[55%] h-[75%] object-cover rounded-[2rem] shadow-xl"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ 
+                      y: i === imageIndex ? 0 : 10, 
+                      opacity: i === imageIndex ? 1 : 0 
+                    }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    style={{ pointerEvents: i === imageIndex ? "auto" : "none" }}
+                  />
+                ))}
+                {['/dish2.png', '/dish4.png'].map((src, i) => (
+                  <m.img
+                    key={src}
+                    src={src}
+                    alt="Signature Drink"
+                    className="absolute bottom-2 right-6 w-[50%] h-[70%] object-cover rounded-[2rem] shadow-2xl"
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ 
+                      y: i === imageIndex ? 0 : -10, 
+                      opacity: i === imageIndex ? 1 : 0 
+                    }}
+                    transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+                    style={{ pointerEvents: i === imageIndex ? "auto" : "none" }}
+                  />
+                ))}
               </div>
 
               <div className="px-6 py-8 flex-1 flex flex-col justify-end pb-12">
@@ -558,7 +574,7 @@ export default function App() {
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}
                   className="mt-4 text-sm sm:text-base text-[#555] max-w-[85%] leading-relaxed"
                 >
-                  An unrivaled selection of phrases to capture the essence of Sichuan dining.
+                  An unrivaled selection of phrases to capture the essence of our dining experience.
                 </m.p>
                 
                 <m.div 
