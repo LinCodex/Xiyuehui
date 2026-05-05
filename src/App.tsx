@@ -278,7 +278,7 @@ const RatingStep = memo(function RatingStep({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.4 }}
-          className="bg-white/85 border-2 border-white shadow-lg shadow-black/5 rounded-3xl px-10 py-6 flex flex-col items-center min-w-[220px]"
+          className="bg-white/85 border-2 border-white shadow-lg shadow-black/5 rounded-sm px-10 py-6 flex flex-col items-center min-w-[220px]"
         >
           <span className="text-6xl sm:text-7xl font-bold text-[#1A1A1A] tabular-nums leading-none tracking-tight">
             {rating.toFixed(1)}
@@ -340,14 +340,14 @@ const RatingStep = memo(function RatingStep({
       >
         <button
           onClick={onBack}
-          className="shrink-0 w-14 h-14 rounded-full border-2 border-[#1A1A1A]/10 bg-white/85 flex items-center justify-center text-[#1A1A1A] hover:border-[#1A1A1A]/40 hover:bg-white active:scale-95 transition-all"
+          className="shrink-0 w-14 h-14 rounded-sm border-2 border-[#1A1A1A]/10 bg-white/85 flex items-center justify-center text-[#1A1A1A] hover:border-[#1A1A1A]/40 hover:bg-white active:scale-95 transition-all"
           aria-label="Back"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
         <button
           onClick={handleContinue}
-          className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#E60000]/30"
+          className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#E60000]/30"
         >
           <span className="absolute inset-0 bg-gradient-to-r from-[#E60000] to-[#CC0000] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <span className="relative z-10">Add Details</span>
@@ -555,7 +555,7 @@ export default function App() {
       </div>
 
       <main
-        className="relative z-10 max-w-md sm:max-w-lg md:max-w-2xl mx-auto h-[100dvh] flex flex-col sm:rounded-[2.2rem] sm:border sm:border-[#D4AF37]/35 sm:bg-[#1A0D07]/20 sm:backdrop-blur-[2px]"
+        className="relative z-10 max-w-md sm:max-w-lg md:max-w-2xl mx-auto h-[100dvh] flex flex-col sm:rounded-sm sm:border-2 sm:border-[#D4AF37]/40 sm:bg-[#0A0101]/95 sm:backdrop-blur-none"
         style={MAIN_PADDING}
       >
         <AnimatePresence mode="wait">
@@ -584,15 +584,15 @@ export default function App() {
                   <div className="text-[10px] sm:text-xs font-semibold tracking-widest text-white/80 pb-3">
                     {new Date().getFullYear()}
                   </div>
-                  <h1 className="text-[40px] sm:text-[56px] md:text-[64px] tracking-tight text-white leading-[1.05] [text-shadow:_0_3px_18px_rgba(0,0,0,0.6)]">
-                    <span className="block font-medium">CRAFT</span>
-                    <span className="block font-medium">YOUR PERFECT</span>
-                    <span className="block font-bold">REVIEW</span>
+                  <h1 className="text-[40px] sm:text-[56px] md:text-[64px] font-serif tracking-normal text-white leading-[1.05] [text-shadow:_0_3px_18px_rgba(0,0,0,0.6)]">
+                    <span className="block font-normal">CRAFT</span>
+                    <span className="block font-normal">YOUR PERFECT</span>
+                    <span className="block font-bold italic text-[#FFD700]">REVIEW</span>
                   </h1>
                 </div>
                 <button
                   onClick={goToSurvey}
-                  className="w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-gradient-to-br from-[#E60000] via-[#B51508] to-[#4A0301] text-[#FFD700] text-3xl sm:text-4xl font-bold uppercase tracking-[0.08em] flex items-center justify-center shadow-2xl shadow-[#E60000]/40 border-2 border-[#FFD700]/60 transition-transform duration-300 hover:scale-105 active:scale-95"
+                  className="w-48 h-16 sm:w-56 sm:h-20 rounded-sm bg-gradient-to-r from-[#E60000] via-[#B51508] to-[#4A0301] text-[#FFD700] text-xl sm:text-2xl font-serif font-bold uppercase tracking-[0.1em] flex items-center justify-center shadow-xl shadow-[#E60000]/30 border border-[#FFD700]/50 transition-all duration-300 hover:-translate-y-1 active:scale-95"
                 >
                   <span className="leading-none drop-shadow-md">Review</span>
                 </button>
@@ -617,7 +617,7 @@ export default function App() {
                   return (
                     <div
                       key={q.key}
-                      className={`h-1.5 rounded-full transition-all duration-400 ease-out ${
+                      className={`h-1.5 rounded-none transition-all duration-400 ease-out ${
                         isFilled ? "bg-[#E60000]" : "bg-[#E7E5E4]"
                       }`}
                       style={{ width: isActive ? 36 : 10 }}
@@ -681,7 +681,7 @@ export default function App() {
                                 style={{
                                   animationDelay: `${0.25 + idx * 0.08}s`,
                                 }}
-                                className={`card-enter relative overflow-hidden flex items-center gap-4 p-4 sm:p-5 rounded-3xl border-2 text-left transition-all duration-300 active:scale-[0.97] ${
+                                className={`card-enter relative overflow-hidden flex items-center gap-4 p-4 sm:p-5 rounded-sm border-2 text-left transition-all duration-300 active:scale-[0.97] ${
                                   isSelected
                                     ? "bg-[#4A120B]/95 border-[#D4AF37]/45 text-white shadow-2xl shadow-[#230B07]/45"
                                     : "bg-white/88 border-[#F6E7BE]/40 hover:border-[#D4AF37]/45 hover:bg-white text-[#1A1A1A]"
@@ -690,13 +690,13 @@ export default function App() {
                                 {/* Selected glow ??? single span, opacity
                                     transitions live on the compositor. */}
                                 <span
-                                  className={`pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-[#D4AF37]/35 via-transparent to-transparent transition-opacity duration-300 ${
+                                  className={`pointer-events-none absolute -inset-px rounded-sm bg-gradient-to-br from-[#D4AF37]/35 via-transparent to-transparent transition-opacity duration-300 ${
                                     isSelected ? "opacity-100" : "opacity-0"
                                   }`}
                                 />
 
                                 <div
-                                  className={`relative z-10 shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                                  className={`relative z-10 shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-sm flex items-center justify-center transition-all duration-300 ${
                                     isSelected
                                       ? "bg-gradient-to-br from-[#E60000] to-[#8E0F07] text-white shadow-lg shadow-[#8E0F07]/45 scale-105"
                                       : "bg-[#B21F0F]/10 text-[#9A1B0D]"
@@ -721,7 +721,7 @@ export default function App() {
                                 </div>
 
                                 {isSelected && (
-                                  <div className="check-badge relative z-10 shrink-0 w-7 h-7 rounded-full bg-white text-[#E60000] flex items-center justify-center shadow-md">
+                                  <div className="check-badge relative z-10 shrink-0 w-7 h-7 rounded-sm bg-white text-[#E60000] flex items-center justify-center shadow-md">
                                     <Check className="w-4 h-4" strokeWidth={3} />
                                   </div>
                                 )}
@@ -739,7 +739,7 @@ export default function App() {
                         >
                           <button
                             onClick={handleSurveyBack}
-                            className="shrink-0 w-14 h-14 rounded-full border-2 border-[#1A1A1A]/10 bg-white/85 flex items-center justify-center text-[#1A1A1A] hover:border-[#1A1A1A]/40 hover:bg-white active:scale-95 transition-all"
+                            className="shrink-0 w-14 h-14 rounded-sm border-2 border-[#1A1A1A]/10 bg-white/85 flex items-center justify-center text-[#1A1A1A] hover:border-[#1A1A1A]/40 hover:bg-white active:scale-95 transition-all"
                             aria-label="Back"
                           >
                             <ChevronLeft className="w-5 h-5" />
@@ -747,7 +747,7 @@ export default function App() {
                           <button
                             disabled={!selectedValue}
                             onClick={handleSurveyNext}
-                            className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.15em] text-xs sm:text-sm disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#E60000]/30"
+                            className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#E60000]/30"
                           >
                             <span className="absolute inset-0 bg-gradient-to-r from-[#E60000] to-[#CC0000] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             <span className="relative z-10">
@@ -825,7 +825,7 @@ export default function App() {
                         handleOptionSelect("comments", e.target.value)
                       }
                       placeholder={randomPlaceholder}
-                      className="flex-1 w-full p-6 pb-16 sm:pb-20 bg-white/90 border-2 border-white focus:bg-white rounded-[2rem] outline-none focus:border-[#E60000]/50 transition-all duration-300 resize-none text-lg shadow-sm focus:shadow-md"
+                      className="flex-1 w-full p-6 pb-16 sm:pb-20 bg-white/90 border-2 border-white focus:bg-white rounded-sm outline-none focus:border-[#E60000]/50 transition-all duration-300 resize-none text-lg shadow-sm focus:shadow-md font-serif"
                     />
 
                     {/* Inline shuffling suggestion pill — pinned to the
@@ -845,7 +845,7 @@ export default function App() {
                             duration: 0.28,
                             ease: [0.4, 0, 0.2, 1],
                           }}
-                          className="inline-flex items-center gap-2 max-w-full pl-3 pr-1 py-1 bg-white border border-[#E60000]/20 rounded-full shadow-sm pointer-events-auto"
+                          className="inline-flex items-center gap-2 max-w-full pl-3 pr-1 py-1 bg-white border border-[#E60000]/20 rounded-sm shadow-sm pointer-events-auto"
                         >
                           <span className="text-[12px] sm:text-[13px] text-[#57534E] font-medium truncate min-w-0">
                             {currentSuggestion}
@@ -853,7 +853,7 @@ export default function App() {
                           <button
                             type="button"
                             onClick={addCurrentSuggestion}
-                            className="shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-[#E60000] to-[#8E0F07] text-white flex items-center justify-center hover:brightness-110 active:scale-90 transition-all shadow-sm shadow-[#8E0F07]/35"
+                            className="shrink-0 w-7 h-7 rounded-sm bg-gradient-to-br from-[#E60000] to-[#8E0F07] text-white flex items-center justify-center hover:brightness-110 active:scale-90 transition-all shadow-sm shadow-[#8E0F07]/35"
                             aria-label={`Add suggestion: ${currentSuggestion}`}
                           >
                             <Plus className="w-4 h-4" strokeWidth={3} />
@@ -868,7 +868,7 @@ export default function App() {
               <div className="pt-2 mt-auto">
                 <button
                   onClick={handleGenerate}
-                  className="w-full bg-gradient-to-r from-[#B51508] via-[#D82410] to-[#8C0F06] text-white py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-2 border border-[#D4AF37]/35 hover:shadow-2xl hover:shadow-[#8E0F07]/40 transition-all duration-500 shadow-lg shadow-[#8E0F07]/30 hover:-translate-y-0.5"
+                  className="w-full bg-gradient-to-r from-[#B51508] via-[#D82410] to-[#8C0F06] text-[#FFD700] font-serif py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-2 border border-[#D4AF37]/35 hover:shadow-2xl hover:shadow-[#8E0F07]/40 transition-all duration-500 shadow-lg shadow-[#8E0F07]/30 hover:-translate-y-0.5"
                 >
                   Generate Review
                 </button>
@@ -915,7 +915,7 @@ export default function App() {
                 </h2>
                 <button
                   onClick={() => setLang(lang === "en" ? "cn" : "en")}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#F3F2F1] rounded-full text-sm font-medium hover:bg-[#E7E5E4] transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-[#F3F2F1] rounded-sm text-sm font-medium hover:bg-[#E7E5E4] transition-colors"
                 >
                   <Languages className="w-4 h-4 sm:w-5" />
                   {lang === "en" ? "中文" : "English"}
@@ -930,11 +930,11 @@ export default function App() {
                       setReviews({ ...reviews, [lang]: e.target.value });
                     }
                   }}
-                  className="flex-1 bg-white/90 p-6 sm:p-8 pr-14 sm:pr-16 rounded-[2rem] border-2 border-white focus:bg-white shadow-lg leading-relaxed text-[#44403C] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#E60000]/50 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-xl"
+                  className="flex-1 bg-white/90 p-6 sm:p-8 pr-14 sm:pr-16 rounded-sm border-2 border-white focus:bg-white shadow-lg leading-relaxed text-[#44403C] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#E60000]/50 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-xl font-serif"
                 />
                 <button
                   onClick={copyToClipboard}
-                  className="absolute bottom-4 right-4 bg-white/95 p-3 rounded-2xl shadow-md border hover:border-[#E60000] hover:bg-[#E60000] hover:text-white transition-all active:scale-95 text-[#57534E]"
+                  className="absolute bottom-4 right-4 bg-white/95 p-3 rounded-sm shadow-md border hover:border-[#E60000] hover:bg-[#E60000] hover:text-white transition-all active:scale-95 text-[#57534E]"
                 >
                   {isCopying ? (
                     <Check className="w-5 h-5 text-green-500 hover:text-white" />
@@ -957,7 +957,7 @@ export default function App() {
                     </span>
                   </p>
                   {refreshCount >= MAX_REFRESH && (
-                    <p className="text-[10px] uppercase tracking-tighter text-red-500 font-bold bg-red-50 px-2 py-1 rounded-full">
+                    <p className="text-[10px] uppercase tracking-tighter text-red-500 font-bold bg-red-50 px-2 py-1 rounded-sm">
                       Limit reached
                     </p>
                   )}
@@ -977,7 +977,7 @@ export default function App() {
                 <div className="w-full pt-2 mt-auto">
                   <button
                     onClick={handleRedirect}
-                    className="w-full bg-gradient-to-r from-[#B51508] via-[#D82410] to-[#8C0F06] text-white py-4 rounded-full font-semibold text-lg flex items-center justify-center gap-3 border border-[#D4AF37]/35 shadow-xl shadow-[#8E0F07]/35 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="w-full bg-gradient-to-r from-[#B51508] via-[#D82410] to-[#8C0F06] text-[#FFD700] py-4 rounded-sm font-serif font-semibold text-lg flex items-center justify-center gap-3 border border-[#D4AF37]/35 shadow-xl shadow-[#8E0F07]/35 hover:scale-[1.02] active:scale-[0.98] transition-all"
                   >
                     Post to Google Maps
                     <ExternalLink className="w-5 h-5" />
