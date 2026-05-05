@@ -290,7 +290,7 @@ const RatingStep = memo(function RatingStep({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.25 }}
-              className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-[#E60000] mt-3"
+              className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-[#0F766E] mt-3"
             >
               {qualityLabel}
             </m.p>
@@ -309,7 +309,7 @@ const RatingStep = memo(function RatingStep({
           <div className="relative h-7 flex items-center">
             <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-3 bg-white/75 border border-white rounded-full" />
             <div
-              className="absolute left-0 top-1/2 -translate-y-1/2 h-3 bg-gradient-to-r from-[#E60000] to-[#CC0000] rounded-full shadow-md shadow-[#E60000]/30"
+              className="absolute left-0 top-1/2 -translate-y-1/2 h-3 bg-gradient-to-r from-[#0F766E] to-[#042F2E] rounded-full shadow-md shadow-[#0F766E]/30"
               style={{ width: `${fillPct}%` }}
             />
             <input
@@ -347,9 +347,9 @@ const RatingStep = memo(function RatingStep({
         </button>
         <button
           onClick={handleContinue}
-          className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#E60000]/30"
+          className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#0F766E]/30"
         >
-          <span className="absolute inset-0 bg-gradient-to-r from-[#E60000] to-[#CC0000] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <span className="absolute inset-0 bg-gradient-to-r from-[#0F766E] to-[#042F2E] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <span className="relative z-10">Add Details</span>
           <div className="relative z-10 arrow-nudge">
             <ChevronRight className="w-4 h-4" />
@@ -524,10 +524,10 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] text-[#1A1A1A] font-sans selection:bg-[#E60000] selection:text-white overflow-x-hidden w-full">
+    <div className="relative min-h-[100dvh] text-[#1A1A1A] font-sans selection:bg-[#0F766E] selection:text-white overflow-x-hidden w-full">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <img
-          src="/sichuan_bg.png"
+          src="/venue-6-CGLo10ys.webp"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-cover opacity-90"
@@ -535,7 +535,7 @@ export default function App() {
           decoding="async"
         />
       </div>
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-[#0B0201]/70 via-[#1A0301]/60 to-[#0A0101]/85 pointer-events-none" />
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-[#0F172A]/70 via-[#020617]/60 to-[#020617]/85 pointer-events-none" />
       
       {/* Background Embers & Dark Pulses */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -574,7 +574,7 @@ export default function App() {
                   <p>Chuan Bistro</p>
                   <p>Review</p>
                 </div>
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-[#D4AF37] bg-[#8E0F07] flex items-center justify-center text-[#FFD700] shadow-lg shadow-[#8E0F07]/40 z-20">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-[#D4AF37] bg-[#0F766E] flex items-center justify-center text-[#FFD700] shadow-lg shadow-[#0F766E]/40 z-20">
                   <span className="text-2xl sm:text-3xl font-bold font-serif">叙</span>
                 </div>
               </div>
@@ -592,7 +592,7 @@ export default function App() {
                 </div>
                 <button
                   onClick={goToSurvey}
-                  className="w-48 h-16 sm:w-56 sm:h-20 rounded-sm bg-gradient-to-r from-[#E60000] via-[#B51508] to-[#4A0301] text-[#FFD700] text-xl sm:text-2xl font-serif font-bold uppercase tracking-[0.1em] flex items-center justify-center shadow-xl shadow-[#E60000]/30 border border-[#FFD700]/50 transition-all duration-300 hover:-translate-y-1 active:scale-95"
+                  className="w-48 h-16 sm:w-56 sm:h-20 rounded-sm bg-gradient-to-r from-[#0F766E] via-[#0D5953] to-[#042F2E] text-[#FFD700] text-xl sm:text-2xl font-serif font-bold uppercase tracking-[0.1em] flex items-center justify-center shadow-xl shadow-[#0F766E]/30 border border-[#FFD700]/50 transition-all duration-300 hover:-translate-y-1 active:scale-95"
                 >
                   <span className="leading-none drop-shadow-md">Review</span>
                 </button>
@@ -618,7 +618,7 @@ export default function App() {
                     <div
                       key={q.key}
                       className={`h-1.5 rounded-none transition-all duration-400 ease-out ${
-                        isFilled ? "bg-[#E60000]" : "bg-[#E7E5E4]"
+                        isFilled ? "bg-[#0F766E]" : "bg-[#E7E5E4]"
                       }`}
                       style={{ width: isActive ? 36 : 10 }}
                     />
@@ -683,7 +683,7 @@ export default function App() {
                                 }}
                                 className={`card-enter relative overflow-hidden flex items-center gap-4 p-4 sm:p-5 rounded-sm border-2 text-left transition-all duration-300 active:scale-[0.97] ${
                                   isSelected
-                                    ? "bg-[#4A120B]/95 border-[#D4AF37]/45 text-white shadow-2xl shadow-[#230B07]/45"
+                                    ? "bg-[#022C22]/95 border-[#D4AF37]/45 text-white shadow-2xl shadow-[#020617]/45"
                                     : "bg-white/88 border-[#F6E7BE]/40 hover:border-[#D4AF37]/45 hover:bg-white text-[#1A1A1A]"
                                 }`}
                               >
@@ -698,8 +698,8 @@ export default function App() {
                                 <div
                                   className={`relative z-10 shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-sm flex items-center justify-center transition-all duration-300 ${
                                     isSelected
-                                      ? "bg-gradient-to-br from-[#E60000] to-[#8E0F07] text-white shadow-lg shadow-[#8E0F07]/45 scale-105"
-                                      : "bg-[#B21F0F]/10 text-[#9A1B0D]"
+                                      ? "bg-gradient-to-br from-[#0F766E] to-[#042F2E] text-white shadow-lg shadow-[#042F2E]/45 scale-105"
+                                      : "bg-[#0F766E]/10 text-[#0D9488]"
                                   }`}
                                 >
                                   <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
@@ -721,7 +721,7 @@ export default function App() {
                                 </div>
 
                                 {isSelected && (
-                                  <div className="check-badge relative z-10 shrink-0 w-7 h-7 rounded-sm bg-white text-[#E60000] flex items-center justify-center shadow-md">
+                                  <div className="check-badge relative z-10 shrink-0 w-7 h-7 rounded-sm bg-white text-[#0F766E] flex items-center justify-center shadow-md">
                                     <Check className="w-4 h-4" strokeWidth={3} />
                                   </div>
                                 )}
@@ -747,9 +747,9 @@ export default function App() {
                           <button
                             disabled={!selectedValue}
                             onClick={handleSurveyNext}
-                            className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#E60000]/30"
+                            className="group relative overflow-hidden flex-1 bg-[#1A1A1A] text-white py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-3 transition-all duration-500 hover:shadow-2xl hover:shadow-[#0F766E]/30"
                           >
-                            <span className="absolute inset-0 bg-gradient-to-r from-[#E60000] to-[#CC0000] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <span className="absolute inset-0 bg-gradient-to-r from-[#0F766E] to-[#042F2E] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             <span className="relative z-10">
                               {isLast ? "Continue" : "Next"}
                             </span>
@@ -825,7 +825,7 @@ export default function App() {
                         handleOptionSelect("comments", e.target.value)
                       }
                       placeholder={randomPlaceholder}
-                      className="flex-1 w-full p-6 pb-16 sm:pb-20 bg-white/90 border-2 border-white focus:bg-white rounded-sm outline-none focus:border-[#E60000]/50 transition-all duration-300 resize-none text-lg shadow-sm focus:shadow-md font-serif"
+                      className="flex-1 w-full p-6 pb-16 sm:pb-20 bg-white/90 border-2 border-white focus:bg-white rounded-sm outline-none focus:border-[#0F766E]/50 transition-all duration-300 resize-none text-lg shadow-sm focus:shadow-md font-serif"
                     />
 
                     {/* Inline shuffling suggestion pill — pinned to the
@@ -845,7 +845,7 @@ export default function App() {
                             duration: 0.28,
                             ease: [0.4, 0, 0.2, 1],
                           }}
-                          className="inline-flex items-center gap-2 max-w-full pl-3 pr-1 py-1 bg-white border border-[#E60000]/20 rounded-sm shadow-sm pointer-events-auto"
+                          className="inline-flex items-center gap-2 max-w-full pl-3 pr-1 py-1 bg-white border border-[#0F766E]/20 rounded-sm shadow-sm pointer-events-auto"
                         >
                           <span className="text-[12px] sm:text-[13px] text-[#57534E] font-medium truncate min-w-0">
                             {currentSuggestion}
@@ -853,7 +853,7 @@ export default function App() {
                           <button
                             type="button"
                             onClick={addCurrentSuggestion}
-                            className="shrink-0 w-7 h-7 rounded-sm bg-gradient-to-br from-[#E60000] to-[#8E0F07] text-white flex items-center justify-center hover:brightness-110 active:scale-90 transition-all shadow-sm shadow-[#8E0F07]/35"
+                            className="shrink-0 w-7 h-7 rounded-sm bg-gradient-to-br from-[#0F766E] to-[#042F2E] text-white flex items-center justify-center hover:brightness-110 active:scale-90 transition-all shadow-sm shadow-[#042F2E]/35"
                             aria-label={`Add suggestion: ${currentSuggestion}`}
                           >
                             <Plus className="w-4 h-4" strokeWidth={3} />
@@ -868,7 +868,7 @@ export default function App() {
               <div className="pt-2 mt-auto">
                 <button
                   onClick={handleGenerate}
-                  className="w-full bg-gradient-to-r from-[#B51508] via-[#D82410] to-[#8C0F06] text-[#FFD700] font-serif py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-2 border border-[#D4AF37]/35 hover:shadow-2xl hover:shadow-[#8E0F07]/40 transition-all duration-500 shadow-lg shadow-[#8E0F07]/30 hover:-translate-y-0.5"
+                  className="w-full bg-gradient-to-r from-[#0F766E] via-[#0D5953] to-[#042F2E] text-[#FFD700] font-serif py-4 sm:py-5 rounded-sm font-bold uppercase tracking-[0.15em] text-xs sm:text-sm flex items-center justify-center gap-2 border border-[#D4AF37]/35 hover:shadow-2xl hover:shadow-[#042F2E]/40 transition-all duration-500 shadow-lg shadow-[#042F2E]/30 hover:-translate-y-0.5"
                 >
                   Generate Review
                 </button>
@@ -930,11 +930,11 @@ export default function App() {
                       setReviews({ ...reviews, [lang]: e.target.value });
                     }
                   }}
-                  className="flex-1 bg-white/90 p-6 sm:p-8 pr-14 sm:pr-16 rounded-sm border-2 border-white focus:bg-white shadow-lg leading-relaxed text-[#44403C] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#E60000]/50 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-xl font-serif"
+                  className="flex-1 bg-white/90 p-6 sm:p-8 pr-14 sm:pr-16 rounded-sm border-2 border-white focus:bg-white shadow-lg leading-relaxed text-[#44403C] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#0F766E]/50 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-xl font-serif"
                 />
                 <button
                   onClick={copyToClipboard}
-                  className="absolute bottom-4 right-4 bg-white/95 p-3 rounded-sm shadow-md border hover:border-[#E60000] hover:bg-[#E60000] hover:text-white transition-all active:scale-95 text-[#57534E]"
+                  className="absolute bottom-4 right-4 bg-white/95 p-3 rounded-sm shadow-md border hover:border-[#0F766E] hover:bg-[#0F766E] hover:text-white transition-all active:scale-95 text-[#57534E]"
                 >
                   {isCopying ? (
                     <Check className="w-5 h-5 text-green-500 hover:text-white" />
@@ -977,7 +977,7 @@ export default function App() {
                 <div className="w-full pt-2 mt-auto">
                   <button
                     onClick={handleRedirect}
-                    className="w-full bg-gradient-to-r from-[#B51508] via-[#D82410] to-[#8C0F06] text-[#FFD700] py-4 rounded-sm font-serif font-semibold text-lg flex items-center justify-center gap-3 border border-[#D4AF37]/35 shadow-xl shadow-[#8E0F07]/35 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="w-full bg-gradient-to-r from-[#0F766E] via-[#0D5953] to-[#042F2E] text-[#FFD700] py-4 rounded-sm font-serif font-semibold text-lg flex items-center justify-center gap-3 border border-[#D4AF37]/35 shadow-xl shadow-[#042F2E]/35 hover:scale-[1.02] active:scale-[0.98] transition-all"
                   >
                     Post to Google Maps
                     <ExternalLink className="w-5 h-5" />

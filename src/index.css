@@ -46,7 +46,7 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   GPU-only Background Embers & Dark Blobs (Sichuan Vibe)
+   GPU-only Background Embers & Dark Blobs (Midnight Jade Vibe)
    --------------------------------------------------------------------------- */
 
 @keyframes ember-float {
@@ -69,9 +69,9 @@ body {
 .ember {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #ffeb3b, #ff5722 40%, transparent 70%);
+  background: radial-gradient(circle at 30% 30%, #fef08a, #d4af37 40%, transparent 70%);
   pointer-events: none;
-  filter: blur(2px) drop-shadow(0 0 8px rgba(255, 87, 34, 0.8));
+  filter: blur(2px) drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
   will-change: transform, opacity;
   animation: ember-float var(--duration, 8s) ease-in infinite;
   animation-delay: var(--delay, 0s);
@@ -113,11 +113,11 @@ body {
   width: 70vw;
   background: radial-gradient(
     circle at 50% 50%,
-    #5c0000 0%,
-    #2a0000 50%,
+    #064e3b 0%,
+    #022c22 50%,
     transparent 80%
   );
-  opacity: 0.7;
+  opacity: 0.6;
   animation: dark-pulse 18s ease-in-out infinite;
 }
 
@@ -127,11 +127,11 @@ body {
   width: 80vw;
   background: radial-gradient(
     circle at 50% 50%,
-    #8e0f07 0%,
-    #4a0301 40%,
+    #0f172a 0%,
+    #020617 40%,
     transparent 70%
   );
-  opacity: 0.5;
+  opacity: 0.4;
   animation: dark-pulse 22s ease-in-out infinite reverse;
 }
 
@@ -249,10 +249,10 @@ body {
   height: 26px;
   border-radius: 9999px;
   background: #ffffff;
-  border: 3px solid #e60000;
+  border: 3px solid #0F766E;
   box-shadow:
-    0 6px 16px rgba(230, 0, 0, 0.4),
-    0 0 0 4px rgba(230, 0, 0, 0.08);
+    0 6px 16px rgba(15, 118, 110, 0.4),
+    0 0 0 4px rgba(15, 118, 110, 0.08);
   cursor: pointer;
   margin-top: -7px;
   transition:
@@ -263,16 +263,16 @@ body {
 .rating-slider:hover::-webkit-slider-thumb {
   transform: scale(1.08);
   box-shadow:
-    0 8px 20px rgba(230, 0, 0, 0.5),
-    0 0 0 6px rgba(230, 0, 0, 0.12);
+    0 8px 20px rgba(15, 118, 110, 0.5),
+    0 0 0 6px rgba(15, 118, 110, 0.12);
 }
 
 .rating-slider:active::-webkit-slider-thumb,
 .rating-slider:focus::-webkit-slider-thumb {
   transform: scale(1.18);
   box-shadow:
-    0 8px 22px rgba(230, 0, 0, 0.55),
-    0 0 0 8px rgba(230, 0, 0, 0.18);
+    0 8px 22px rgba(15, 118, 110, 0.55),
+    0 0 0 8px rgba(15, 118, 110, 0.18);
 }
 
 .rating-slider::-moz-range-track {
@@ -286,10 +286,10 @@ body {
   height: 26px;
   border-radius: 9999px;
   background: #ffffff;
-  border: 3px solid #e60000;
+  border: 3px solid #0F766E;
   box-shadow:
-    0 6px 16px rgba(230, 0, 0, 0.4),
-    0 0 0 4px rgba(230, 0, 0, 0.08);
+    0 6px 16px rgba(15, 118, 110, 0.4),
+    0 0 0 4px rgba(15, 118, 110, 0.08);
   cursor: pointer;
   transition:
     transform 0.18s ease,
