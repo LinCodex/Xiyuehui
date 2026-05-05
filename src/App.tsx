@@ -808,26 +808,26 @@ export default function App() {
                         short suggestions — short pill, the + sits right
                         after the text; long suggestions — pill widens up
                         to the textarea width before the text truncates. */}
-                    <div className="absolute bottom-3 sm:bottom-4 left-4 right-4 flex justify-start pointer-events-none">
+                    <div className="absolute bottom-3 sm:bottom-4 left-6 right-6 flex justify-start pointer-events-none">
                       <AnimatePresence mode="wait">
                         <m.div
                           key={suggestionIdx}
-                          initial={{ opacity: 0, x: 16 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -16 }}
+                          initial={{ opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -4 }}
                           transition={{
-                            duration: 0.28,
-                            ease: [0.4, 0, 0.2, 1],
+                            duration: 0.2,
+                            ease: "easeOut",
                           }}
-                          className="inline-flex items-center gap-2 max-w-full pl-3 pr-1 py-1 bg-[#F0EBE1] rounded-full shadow-sm pointer-events-auto"
+                          className="inline-flex items-center gap-1.5 max-w-full pointer-events-auto"
                         >
-                          <span className="text-[12px] sm:text-[13px] text-[#57534E] font-medium truncate min-w-0">
+                          <span className="text-[13px] sm:text-[14px] text-[#A8A29E] font-medium truncate min-w-0">
                             {currentSuggestion}
                           </span>
                           <button
                             type="button"
                             onClick={addCurrentSuggestion}
-                            className="shrink-0 w-7 h-7 rounded-full bg-[#111] text-white flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                            className="shrink-0 text-[#A8A29E] hover:text-[#111] transition-colors p-1 active:scale-90"
                             aria-label={`Add suggestion: ${currentSuggestion}`}
                           >
                             <Plus className="w-4 h-4" strokeWidth={3} />
