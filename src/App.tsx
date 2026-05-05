@@ -519,7 +519,7 @@ export default function App() {
                 <div className="absolute top-0 inset-x-0 h-[40%] bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
               </div>
 
-              <div className="absolute top-6 left-6 sm:top-8 sm:left-8 z-20 flex items-baseline gap-2">
+              <div className="absolute top-6 inset-x-0 px-6 sm:top-8 sm:px-8 z-20 flex items-baseline gap-2">
                 <span className="font-serif font-extrabold text-white tracking-widest text-xl sm:text-2xl uppercase drop-shadow-md">Chuan Bistro</span>
                 <span className="font-serif font-bold text-[#C5A254] text-lg sm:text-xl tracking-wide drop-shadow-md">三杯叙</span>
               </div>
