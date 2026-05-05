@@ -23,6 +23,7 @@ import {
   Languages,
 } from "lucide-react";
 import { generateReview, SurveyResults } from "./services/gemini";
+import { t, Lang, getInitialLang } from "./translations";
 
 // Stable inline style for <main> so React doesn't allocate a fresh object on
 // every render. The `max(...)` keeps a 1.5rem default on devices without
@@ -57,71 +58,35 @@ interface SurveyQuestion {
   options: Option[];
 }
 
-const SURVEY_QUESTIONS: SurveyQuestion[] = [
+const getSurveyQuestions = (lang: Lang): SurveyQuestion[] => [
   {
     key: "food",
-    title: "How was the food?",
-    subtitle: "From the first bite to the last ? how did the flavors land?",
+    title: t[lang].surveyFoodTitle,
+    subtitle: t[lang].surveyFoodSub,
     options: [
-      {
-        label: "Outstanding",
-        value: "outstanding",
-        description: "Truly memorable, every bite a highlight.",
-      },
-      {
-        label: "Delicious",
-        value: "delicious",
-        description: "Loved the dishes, would order again.",
-      },
-      {
-        label: "Tasty",
-        value: "tasty",
-        description: "Solid, satisfying, hit the spot.",
-      },
+      { label: t[lang].foodOptions[0].label, value: "outstanding", description: t[lang].foodOptions[0].description },
+      { label: t[lang].foodOptions[1].label, value: "delicious", description: t[lang].foodOptions[1].description },
+      { label: t[lang].foodOptions[2].label, value: "tasty", description: t[lang].foodOptions[2].description },
     ],
   },
   {
     key: "service",
-    title: "How was the service?",
-    subtitle: "Tell us about the team that took care of your table.",
+    title: t[lang].surveyServiceTitle,
+    subtitle: t[lang].surveyServiceSub,
     options: [
-      {
-        label: "Excellent",
-        value: "excellent",
-        description: "Polished, attentive, and a step ahead.",
-      },
-      {
-        label: "Attentive",
-        value: "attentive",
-        description: "Always there when we needed something.",
-      },
-      {
-        label: "Friendly",
-        value: "friendly",
-        description: "Warm, welcoming, easy to chat with.",
-      },
+      { label: t[lang].serviceOptions[0].label, value: "excellent", description: t[lang].serviceOptions[0].description },
+      { label: t[lang].serviceOptions[1].label, value: "attentive", description: t[lang].serviceOptions[1].description },
+      { label: t[lang].serviceOptions[2].label, value: "friendly", description: t[lang].serviceOptions[2].description },
     ],
   },
   {
     key: "atmosphere",
-    title: "How was the vibe?",
-    subtitle: "The energy of the room can make a great meal even better.",
+    title: t[lang].surveyAtmoTitle,
+    subtitle: t[lang].surveyAtmoSub,
     options: [
-      {
-        label: "Vibrant",
-        value: "vibrant",
-        description: "Lively, energetic, full of buzz.",
-      },
-      {
-        label: "Cozy",
-        value: "cozy",
-        description: "Warm, intimate, inviting.",
-      },
-      {
-        label: "Relaxing",
-        value: "relaxing",
-        description: "Calm, easy-going, unhurried.",
-      },
+      { label: t[lang].atmoOptions[0].label, value: "vibrant", description: t[lang].atmoOptions[0].description },
+      { label: t[lang].atmoOptions[1].label, value: "cozy", description: t[lang].atmoOptions[1].description },
+      { label: t[lang].atmoOptions[2].label, value: "relaxing", description: t[lang].atmoOptions[2].description },
     ],
   },
 ];
@@ -135,16 +100,17 @@ const SURVEY_SLIDE_VARIANTS = {
   exit: (dir: number) => ({opacity: 0, x: -dir * 40}),
 };
 
-function getQualityLabel(rating: number): string {
-  if (rating >= 4.5) return "Outstanding";
-  if (rating >= 3.5) return "Excellent";
-  if (rating >= 2.5) return "Great";
-  if (rating >= 1.5) return "Good";
-  return "Needs Work";
+function getQualityLabel(rating: number, lang: Lang): string {
+  if (rating >= 4.5) return t[lang].qualityLabels[4];
+  if (rating >= 3.5) return t[lang].qualityLabels[3];
+  if (rating >= 2.5) return t[lang].qualityLabels[2];
+  if (rating >= 1.5) return t[lang].qualityLabels[1];
+  return t[lang].qualityLabels[0];
 }
 
 interface RatingStepProps {
   initial: number;
+  lang: Lang;
   onCommit: (rating: number) => void;
   onBack: () => void;
   onContinue: () => void;
@@ -158,12 +124,13 @@ interface RatingStepProps {
  */
 const RatingStep = memo(function RatingStep({
   initial,
+  lang,
   onCommit,
   onBack,
   onContinue,
 }: RatingStepProps) {
   const [rating, setRating] = useState(initial);
-  const qualityLabel = getQualityLabel(rating);
+  const qualityLabel = getQualityLabel(rating, lang);
   const fillPct = ((rating - 1) / 4) * 100;
 
   const handleStarClick = useCallback(
@@ -202,7 +169,7 @@ const RatingStep = memo(function RatingStep({
           transition={{ delay: 0.05 }}
           className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#111] leading-[1.1]"
         >
-          Overall Rating
+          {t[lang].overallRating}
         </m.h2>
         <m.p
           initial={{ opacity: 0, y: 12 }}
@@ -210,7 +177,7 @@ const RatingStep = memo(function RatingStep({
           transition={{ delay: 0.13 }}
           className="text-sm sm:text-base text-[#555] mt-4 max-w-sm mx-auto leading-relaxed"
         >
-          How was your visit overall?
+          {t[lang].overallSub}
         </m.p>
       </div>
 
@@ -306,8 +273,8 @@ const RatingStep = memo(function RatingStep({
             />
           </div>
           <div className="flex justify-between text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] mt-4">
-            <span>Needs Work</span>
-            <span>Excellent</span>
+            <span>{t[lang].ratingLabels[0]}</span>
+            <span>{t[lang].ratingLabels[1]}</span>
           </div>
         </m.div>
       </div>
@@ -326,7 +293,7 @@ const RatingStep = memo(function RatingStep({
           <ChevronLeft className="w-6 h-6" />
         </button>
         <div className="flex items-center gap-4">
-          <span className="font-bold text-sm text-[#111]">Next</span>
+          <span className="font-bold text-sm text-[#111]">{t[lang].next}</span>
           <button
             onClick={handleContinue}
             className="w-16 h-16 bg-[#111] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
@@ -338,19 +305,6 @@ const RatingStep = memo(function RatingStep({
     </m.div>
   );
 });
-
-const SUGGESTIONS = [
-  "e.g., The Mapo Tofu had the perfect amount of numbing spice...",
-  "e.g., Service was incredibly fast despite being a busy Friday night...",
-  "e.g., The Dan Dan Noodles were rich, savory, and perfectly chewy...",
-  "e.g., I highly recommend the Chongqing Spicy Chicken...",
-  "e.g., The atmosphere was energetic but not too loud...",
-  "e.g., We were seated immediately and the waiter gave great recommendations...",
-  "e.g., The Garlic Pork Belly was thinly sliced and beautifully balanced...",
-  "e.g., Don't miss out on the Brown Sugar Glutinous Rice Cake for dessert...",
-  "e.g., The chili oil wontons were soft, delicate, and packed a great punch...",
-];
-
 
 
 // --- Main App ---
@@ -367,7 +321,7 @@ export default function App() {
   const [reviews, setReviews] = useState<{ en: string; cn: string } | null>(
     null,
   );
-  const [lang, setLang] = useState<"en" | "cn">("en");
+  const [lang, setLang] = useState<Lang>(getInitialLang());
   const [refreshCount, setRefreshCount] = useState(0);
   const [isCopying, setIsCopying] = useState(false);
   const [showRedirectModal, setShowRedirectModal] = useState(false);
@@ -378,7 +332,7 @@ export default function App() {
   // Auto-rotate the placeholder suggestion every 4s.
   useEffect(() => {
     const id = setInterval(() => {
-      setSuggestionIdx((i) => (i + 1) % SUGGESTIONS.length);
+      setSuggestionIdx((i) => (i + 1) % t[lang].suggestions.length);
     }, 4000);
     return () => clearInterval(id);
   }, []);
@@ -545,7 +499,7 @@ export default function App() {
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}
                   className="text-[clamp(2.2rem,8.5vw,3rem)] min-[400px]:text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-[#111]"
                 >
-                  Craft your perfect<br/>review.
+                  {t[lang].welcomeTitle1}<br/>{t[lang].welcomeTitle2}
                 </m.h1>
                 
                 <m.div 
@@ -558,7 +512,7 @@ export default function App() {
                     <div className="w-1.5 h-1.5 rounded-full bg-[#ccc]"></div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="font-bold text-sm text-[#111]">Start</span>
+                    <span className="font-bold text-sm text-[#111]">{t[lang].startBtn}</span>
                     <button 
                       onClick={goToSurvey} 
                       className="w-16 h-16 bg-[#111] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
@@ -582,7 +536,7 @@ export default function App() {
             >
               {/* Progress segments */}
               <div className="flex items-center justify-center gap-2 pt-6">
-                {SURVEY_QUESTIONS.map((q, idx) => {
+                {getSurveyQuestions(lang).map((q, idx) => {
                   const isActive = idx === surveyIndex;
                   const isFilled = isActive || (!!results[q.key] && idx < surveyIndex);
                   return (
@@ -697,7 +651,7 @@ export default function App() {
                             <ChevronLeft className="w-6 h-6" />
                           </button>
                           <div className={`flex items-center gap-4 transition-opacity duration-300 ${!selectedValue ? "opacity-30 pointer-events-none" : "opacity-100"}`}>
-                            <span className="font-bold text-sm text-[#111]">{isLast ? "Continue" : "Next"}</span>
+                            <span className="font-bold text-sm text-[#111]">{t[lang].next}</span>
                             <button
                               disabled={!selectedValue}
                               onClick={handleSurveyNext}
@@ -722,6 +676,7 @@ export default function App() {
             <RatingStep
               key="rating"
               initial={Number(results.rating)}
+              lang={lang}
               onCommit={handleRatingCommit}
               onBack={handleRatingBack}
               onContinue={handleRatingContinue}
@@ -739,10 +694,10 @@ export default function App() {
             >
               <div className="pt-8 pb-4 px-6 text-left">
                 <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#111] leading-[1.1]">
-                  Anything else?
+                  {t[lang].commentsTitle}
                 </h2>
                 <p className="text-sm sm:text-base text-[#555] mt-3 max-w-[85%] leading-relaxed">
-                  Mention specific dishes or staff members (optional)
+                  {t[lang].commentsSub}
                 </p>
               </div>
 
@@ -752,7 +707,7 @@ export default function App() {
                       onChange={(e) =>
                         handleOptionSelect("comments", e.target.value)
                       }
-                      placeholder={SUGGESTIONS[suggestionIdx]}
+                      placeholder={t[lang].suggestions[suggestionIdx]}
                       className="flex-1 w-full p-6 sm:p-8 bg-white border border-[#E5E5E5] rounded-2xl outline-none focus:border-[#111] transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-md text-[#111] placeholder-[#A8A29E]"
                     />
                   </div>
@@ -762,7 +717,7 @@ export default function App() {
                   onClick={handleGenerate}
                   className="w-full bg-[#111] text-white py-4 sm:py-5 rounded-[1.25rem] font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition-all duration-300 shadow-lg"
                 >
-                  Create Review
+                  {t[lang].createBtn}
                 </button>
               </div>
             </m.div>
@@ -790,9 +745,9 @@ export default function App() {
                 />
               </div>
               <div className="text-center space-y-2">
-                <p className="text-xl font-bold text-[#111]">Crafting your review...</p>
+                <p className="text-xl font-bold text-[#111]">{t[lang].generatingTitle}</p>
                 <p className="text-sm text-[#555]">
-                  Personalizing based on your feedback
+                  {t[lang].generatingSub}
                 </p>
               </div>
             </m.div>
@@ -810,9 +765,9 @@ export default function App() {
               <div className="w-20 h-20 bg-red-100 rounded-[2rem] flex items-center justify-center mb-8 shadow-inner">
                 <span className="text-red-500 text-4xl">⚠️</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-black mb-4 tracking-tight">Oops, something went wrong.</h2>
+              <h2 className="text-3xl sm:text-4xl font-black mb-4 tracking-tight">{t[lang].errorTitle}</h2>
               <p className="text-gray-600 mb-10 text-lg leading-relaxed max-w-sm mx-auto">
-                There was an issue generating your review. This might be a temporary network error. Please ask our staff for help if this persists.
+                {t[lang].errorSub}
               </p>
               
               <div className="w-full space-y-4">
@@ -821,13 +776,13 @@ export default function App() {
                   className="w-full bg-[#111] text-white py-4 rounded-2xl font-bold text-lg hover:bg-[#333] transition-colors shadow-lg flex items-center justify-center gap-2"
                 >
                   <RefreshCcw className="w-5 h-5" />
-                  Try Again
+                  {t[lang].tryAgain}
                 </button>
                 <button
                   onClick={confirmRedirect}
                   className="w-full bg-white text-[#111] py-4 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-colors shadow-sm border border-gray-200"
                 >
-                  Skip & Write Review Manually
+                  {t[lang].skipBtn}
                 </button>
               </div>
             </m.div>
@@ -843,7 +798,7 @@ export default function App() {
             >
               <div className="flex justify-between items-center px-6 mt-4">
                 <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#111]">
-                  Your Review
+                  {t[lang].resultTitle}
                 </h2>
                 <button
                   onClick={() => setLang(lang === "en" ? "cn" : "en")}
@@ -879,7 +834,7 @@ export default function App() {
               <div className="space-y-4 px-6 pb-6 mt-4">
                 <div className="flex justify-between items-center">
                   <p className="text-sm font-medium text-[#777]">
-                    Refreshes:{" "}
+                    {t[lang].refreshes}:{" "}
                     <span
                       className={
                         refreshCount >= MAX_REFRESH ? "text-[#DC2626]" : ""
@@ -890,7 +845,7 @@ export default function App() {
                   </p>
                   {refreshCount >= MAX_REFRESH && (
                     <p className="text-[10px] uppercase tracking-tighter text-[#DC2626] font-bold bg-red-50 px-2 py-1 rounded-full">
-                      Limit reached
+                      {t[lang].limitReached}
                     </p>
                   )}
                 </div>
@@ -903,7 +858,7 @@ export default function App() {
                   <RefreshCcw
                     className={`w-4 h-4 sm:w-5 ${refreshCount < MAX_REFRESH ? "hover:rotate-180 transition-transform duration-500" : ""}`}
                   />
-                  Not quite right? Regenerate
+                  {t[lang].regenerate}
                 </button>
 
                 <div className="w-full pt-2 mt-auto">
@@ -911,7 +866,7 @@ export default function App() {
                     onClick={handleRedirect}
                     className="w-full bg-[#111] text-white py-4 rounded-[1.25rem] font-bold text-lg flex items-center justify-center gap-3 active:scale-95 transition-all shadow-lg"
                   >
-                    Post to Google Maps
+                    {t[lang].postBtn}
                     <ExternalLink className="w-5 h-5" />
                   </button>
                 </div>
@@ -935,17 +890,16 @@ export default function App() {
                 <Check className="w-8 h-8 text-green-600" />
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold">Review Copied!</h3>
+                <h3 className="text-xl font-semibold">{t[lang].modalTitle}</h3>
                 <p className="text-[#78716C]">
-                  We're opening Google Maps for you. Simply paste your review in
-                  the comment box.
+                  {t[lang].modalSub}
                 </p>
               </div>
               <button
                 onClick={confirmRedirect}
                 className="w-full bg-[#1A1A1A] text-white py-4 rounded-full font-medium"
               >
-                Go to Google Maps
+                {t[lang].modalGo}
               </button>
             </m.div>
           </div>

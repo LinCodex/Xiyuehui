@@ -1,0 +1,135 @@
+export type Lang = "en" | "cn";
+
+export const getInitialLang = (): Lang => {
+  if (typeof navigator !== "undefined" && navigator.language.toLowerCase().startsWith("zh")) {
+    return "cn";
+  }
+  return "en";
+};
+
+export const t = {
+  en: {
+    welcomeTitle1: "Craft your perfect",
+    welcomeTitle2: "review.",
+    startBtn: "Start",
+    surveyFoodTitle: "How was the food?",
+    surveyFoodSub: "From the first bite to the last — how did the flavors land?",
+    surveyServiceTitle: "How was the service?",
+    surveyServiceSub: "Tell us about the team that took care of your table.",
+    surveyAtmoTitle: "How was the vibe?",
+    surveyAtmoSub: "The energy of the room can make a great meal even better.",
+    foodOptions: [
+      { label: "Outstanding", description: "Truly memorable, every bite a highlight." },
+      { label: "Delicious", description: "Loved the dishes, would order again." },
+      { label: "Tasty", description: "Solid, satisfying, hit the spot." }
+    ],
+    serviceOptions: [
+      { label: "Excellent", description: "Polished, attentive, and a step ahead." },
+      { label: "Attentive", description: "Always there when we needed something." },
+      { label: "Friendly", description: "Warm, welcoming, easy to chat with." }
+    ],
+    atmoOptions: [
+      { label: "Vibrant", description: "Lively, energetic, full of buzz." },
+      { label: "Cozy", description: "Warm, intimate, inviting." },
+      { label: "Relaxing", description: "Calm, easy-going, unhurried." }
+    ],
+    overallRating: "Overall Rating",
+    overallSub: "How was your visit overall?",
+    ratingLabels: ["Needs Work", "Excellent"],
+    qualityLabels: ["Needs Work", "Good", "Great", "Excellent", "Outstanding"],
+    next: "Next",
+    commentsTitle: "Anything else?",
+    commentsSub: "Tell us about a specific dish you loved, or a server who made your night.",
+    placeholder: "e.g., Don't miss out on the...",
+    createBtn: "Create Review",
+    suggestions: [
+      "e.g., The Mapo Tofu had the perfect amount of numbing spice...",
+      "e.g., Service was incredibly fast despite being a busy Friday night...",
+      "e.g., The Dan Dan Noodles were rich, savory, and perfectly chewy...",
+      "e.g., I highly recommend the Chongqing Spicy Chicken...",
+      "e.g., The atmosphere was energetic but not too loud...",
+      "e.g., We were seated immediately and the waiter gave great recommendations...",
+      "e.g., The Garlic Pork Belly was thinly sliced and beautifully balanced...",
+      "e.g., Don't miss out on the Brown Sugar Glutinous Rice Cake for dessert...",
+      "e.g., The chili oil wontons were soft, delicate, and packed a great punch...",
+    ],
+    generatingTitle: "Crafting your review...",
+    generatingSub: "Personalizing based on your feedback",
+    errorTitle: "Oops, something went wrong.",
+    errorSub: "There was an issue generating your review. This might be a temporary network error. Please ask our staff for help if this persists.",
+    tryAgain: "Try Again",
+    skipBtn: "Skip & Write Review Manually",
+    resultTitle: "Your Review",
+    copyBtn: "Copy to Clipboard",
+    copiedBtn: "Copied!",
+    refreshes: "Refreshes",
+    limitReached: "Limit reached",
+    regenerate: "Not quite right? Regenerate",
+    postBtn: "Post to Google Maps",
+    modalTitle: "Review Copied!",
+    modalSub: "We're opening Google Maps for you. Simply paste your review in the comment box.",
+    modalGo: "Go to Google Maps"
+  },
+  cn: {
+    welcomeTitle1: "定制您的完美",
+    welcomeTitle2: "评价。",
+    startBtn: "开始",
+    surveyFoodTitle: "菜品口味如何？",
+    surveyFoodSub: "从第一口到最后一口，味道符合您的期待吗？",
+    surveyServiceTitle: "服务体验如何？",
+    surveyServiceSub: "跟我们说说照顾您这桌的团队表现吧。",
+    surveyAtmoTitle: "用餐环境如何？",
+    surveyAtmoSub: "好的氛围能让美味加分。",
+    foodOptions: [
+      { label: "惊艳绝伦", description: "令人难忘，每一口都是享受。" },
+      { label: "非常美味", description: "很喜欢这里的菜，下次还会点。" },
+      { label: "好吃", description: "味道扎实，令人满意。" }
+    ],
+    serviceOptions: [
+      { label: "卓越", description: "专业、贴心，服务超前。" },
+      { label: "周到", description: "有求必应，随叫随到。" },
+      { label: "友好", description: "热情好客，沟通轻松。" }
+    ],
+    atmoOptions: [
+      { label: "充满活力", description: "生机勃勃，热闹非凡。" },
+      { label: "温馨", description: "温暖、私密，让人想亲近。" },
+      { label: "令人放松", description: "宁静、从容，不急不躁。" }
+    ],
+    overallRating: "总体评价",
+    overallSub: "您这次的整体体验如何？",
+    ratingLabels: ["有待提高", "极佳"],
+    qualityLabels: ["有待提高", "不错", "很好", "优秀", "极佳"],
+    next: "下一步",
+    commentsTitle: "还有其他想补充的吗？",
+    commentsSub: "跟我们分享您特别喜欢的某道菜，或者让您开心的某位服务员。",
+    placeholder: "例如：千万别错过这里的...",
+    createBtn: "生成评价",
+    suggestions: [
+      "例如：麻婆豆腐的花椒麻味恰到好处...",
+      "例如：尽管是周五晚上，服务依然非常快...",
+      "例如：担担面浓郁鲜香，非常有嚼劲...",
+      "例如：强烈推荐重庆辣子鸡...",
+      "例如：餐厅氛围很热闹，但又不会太吵...",
+      "例如：我们一到就入座了，服务员推荐的菜都很棒...",
+      "例如：蒜泥白肉切得很薄，味道搭配得刚刚好...",
+      "例如：饭后甜点一定要尝尝红糖糍粑...",
+      "例如：红油抄手皮薄馅嫩，辣味十足...",
+    ],
+    generatingTitle: "正在定制您的评价...",
+    generatingSub: "根据您的反馈个性化生成中",
+    errorTitle: "哎呀，出错了。",
+    errorSub: "生成评价时遇到问题，可能是暂时性的网络错误。如果问题仍然存在，请联系我们的工作人员。",
+    tryAgain: "重试",
+    skipBtn: "跳过并手动撰写评价",
+    resultTitle: "您的评价",
+    copyBtn: "复制到剪贴板",
+    copiedBtn: "已复制！",
+    refreshes: "重置次数",
+    limitReached: "达到上限",
+    regenerate: "不太满意？重新生成",
+    postBtn: "发布到谷歌地图",
+    modalTitle: "评价已复制！",
+    modalSub: "正在为您打开谷歌地图。只需将评价粘贴到评论框中即可。",
+    modalGo: "前往谷歌地图"
+  }
+};
