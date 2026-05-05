@@ -489,26 +489,43 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col h-full relative"
             >
-              {/* Full-bleed Black Background for top half separator */}
-              <div className="absolute top-[-10dvh] left-1/2 -translate-x-1/2 w-[150vw] h-[70dvh] bg-[#000] rounded-b-[4rem] sm:rounded-b-[6rem] z-0 shadow-2xl" />
-
-              <div className="absolute top-8 left-8 z-20 flex items-baseline gap-2">
-                <span className="font-serif font-extrabold text-white tracking-widest text-2xl uppercase">Chuan Bistro</span>
-                <span className="font-serif font-bold text-[#C5A254] text-xl tracking-wide">三杯叙</span>
-              </div>
-              <div className="relative h-[55dvh] w-full pt-20 px-6 pb-2 mt-4 z-10">
+              {/* Full-bleed Video Background for top half */}
+              <div 
+                className="absolute left-1/2 -translate-x-1/2 w-screen z-0 overflow-hidden rounded-b-[2rem] sm:rounded-b-[3.5rem] shadow-2xl bg-[#111]"
+                style={{ 
+                  top: "calc(-1 * max(1.5rem, env(safe-area-inset-top)))",
+                  height: "50dvh"
+                }}
+              >
                 <m.video
                   src="https://chuanbistro.com/wp-content/themes/chuan-bistro/assets/Hero%20Video-C9Qrq4r7.mp4"
                   autoPlay
                   muted
                   loop
                   playsInline
-                  className="absolute inset-x-6 top-24 bottom-2 object-cover rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl w-[calc(100%-3rem)] h-[calc(100%-6rem)]"
-                  initial={{ scale: 0.95, opacity: 0 }}
+                  className="w-full h-full object-cover"
+                  initial={{ scale: 1.05, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
                 />
+                {/* Gradual blur for top 1/4 */}
+                <div 
+                  className="absolute top-0 inset-x-0 h-[40%] pointer-events-none backdrop-blur-md" 
+                  style={{ 
+                    maskImage: 'linear-gradient(to bottom, black 10%, transparent 100%)', 
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 100%)' 
+                  }}
+                />
+                <div className="absolute top-0 inset-x-0 h-[40%] bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
               </div>
+
+              <div className="absolute top-6 left-6 sm:top-8 sm:left-8 z-20 flex items-baseline gap-2">
+                <span className="font-serif font-extrabold text-white tracking-widest text-xl sm:text-2xl uppercase drop-shadow-md">Chuan Bistro</span>
+                <span className="font-serif font-bold text-[#C5A254] text-lg sm:text-xl tracking-wide drop-shadow-md">三杯叙</span>
+              </div>
+              
+              {/* Spacer matching video height to push text down */}
+              <div className="relative w-full shrink-0 z-10 pointer-events-none" style={{ height: "calc(50dvh - max(1.5rem, env(safe-area-inset-top)))" }} />
 
               <div className="px-6 sm:px-8 py-8 flex-1 flex flex-col justify-end pb-12 z-10 relative">
                 <m.h1 
