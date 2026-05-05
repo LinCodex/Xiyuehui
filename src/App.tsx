@@ -770,7 +770,7 @@ export default function App() {
                   onClick={handleGenerate}
                   className="w-full bg-[#111] text-white py-4 sm:py-5 rounded-[1.25rem] font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition-all duration-300 shadow-lg"
                 >
-                  Generate Review
+                  Create Review
                 </button>
               </div>
             </m.div>
