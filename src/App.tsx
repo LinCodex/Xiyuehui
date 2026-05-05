@@ -524,22 +524,29 @@ export default function App() {
                   WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)'
                 }}
               >
-                {/* TEAM_001: WeChat in-app browser (X5 on Android, WKWebView
-                    on iOS) blocks standard autoPlay. We add:
-                    - x5-video-player-type / x5-playsinline for Tencent X5 engine
-                    - webkit-playsinline for older iOS WebViews
-                    - poster fallback so the hero isn't blank if play fails
-                    - programmatic .play() via ref as a last resort */}
-                <m.video
+                {/* TEAM_001: WeChat in-app browser blocks cross-origin video
+                    entirely. Solution: always show a static image, layer the
+                    video on top, and only reveal it once it actually starts
+                    playing. The hero is never blank regardless of browser. */}
+                <m.img
+                  src="https://chuanbistro.com/wp-content/themes/chuan-bistro/assets/bg-1.jpg"
+                  alt="Chuan Bistro"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  initial={{ scale: 1.05, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+                />
+                <video
                   ref={(el: HTMLVideoElement | null) => {
                     if (el) {
-                      // Try programmatic play on mount — catches WeChat/restrictive
-                      // browsers where the autoPlay attribute alone is ignored.
                       el.play().catch(() => {});
                     }
                   }}
+                  onPlaying={(e) => {
+                    // Video confirmed playing — fade it in over the static image.
+                    (e.target as HTMLVideoElement).style.opacity = "1";
+                  }}
                   src="https://chuanbistro.com/wp-content/themes/chuan-bistro/assets/Hero%20Video-C9Qrq4r7.mp4"
-                  poster="https://chuanbistro.com/wp-content/themes/chuan-bistro/assets/bg-1.jpg"
                   autoPlay
                   muted
                   loop
@@ -549,10 +556,8 @@ export default function App() {
                   x5-video-player-type="h5-page"
                   x5-playsinline=""
                   x5-video-player-fullscreen="false"
-                  className="w-full h-full object-cover"
-                  initial={{ scale: 1.05, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+                  style={{ opacity: 0 }}
                 />
                 {/* Gradual blur for top 1/4 (Logo readability) */}
                 <div 
