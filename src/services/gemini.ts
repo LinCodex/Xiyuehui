@@ -86,11 +86,14 @@ Critical rules you MUST follow:
       }
       return text;
     } catch (error: any) {
-      const is429 = error?.status === 429
+      const isRetryable = error?.status === 429
+        || error?.status === 503
         || error?.message?.includes("429")
-        || error?.message?.includes("RESOURCE_EXHAUSTED");
+        || error?.message?.includes("503")
+        || error?.message?.includes("RESOURCE_EXHAUSTED")
+        || error?.message?.includes("UNAVAILABLE");
 
-      if (is429 && attempt < MAX_RETRIES) {
+      if (isRetryable && attempt < MAX_RETRIES) {
         // Exponential backoff: 2s, 4s, 8s
         await new Promise((r) => setTimeout(r, 2000 * Math.pow(2, attempt)));
         continue;

@@ -529,7 +529,7 @@ export default function App() {
                     video on top, and only reveal it once it actually starts
                     playing. The hero is never blank regardless of browser. */}
                 <m.img
-                  src="https://chuanbistro.com/wp-content/themes/chuan-bistro/assets/bg-1.jpg"
+                  src="/hero-bg.png"
                   alt="Chuan Bistro"
                   className="absolute inset-0 w-full h-full object-cover"
                   initial={{ scale: 1.05, opacity: 0 }}
