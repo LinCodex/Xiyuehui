@@ -24,7 +24,7 @@ import {
   Check,
   Languages,
 } from "lucide-react";
-import { generateReview, SurveyResults } from "./services/gemini";
+import { generateAllReviews, SurveyResults } from "./services/gemini";
 import { t, Lang, getInitialLang } from "./translations";
 
 const GoogleIcon = ({ className }: { className?: string }) => (
@@ -335,11 +335,10 @@ export default function App() {
     comments: "",
   });
 
-  const [reviews, setReviews] = useState<Partial<Record<Lang, string>> | null>(
-    null,
-  );
+  // TEAM_005: All three language versions are generated in a single call,
+  // so this is always populated for every locale once a generation succeeds.
+  const [reviews, setReviews] = useState<Record<Lang, string> | null>(null);
   const [lang, setLang] = useState<Lang>(getInitialLang());
-  const [isTranslating, setIsTranslating] = useState(false);
   const [refreshCount, setRefreshCount] = useState(0);
   const [isCopying, setIsCopying] = useState(false);
   const [showRedirectModal, setShowRedirectModal] = useState(false);
@@ -423,9 +422,10 @@ export default function App() {
     isGenerating.current = true;
     setStep("generating");
     try {
-      // TEAM_003: Generate active language only.
-      const primary = await generateReview(results, lang);
-      setReviews({ [lang]: primary });
+      // TEAM_005: Single API call returns all three languages, so language
+      // switching on the result screen is instant (no extra requests).
+      const all = await generateAllReviews(results);
+      setReviews(all);
       setStep("result");
     } catch (error) {
       if (import.meta.env.DEV) console.error(error);
@@ -443,9 +443,11 @@ export default function App() {
     setStep("generating");
     try {
       const prevReview = reviews ? reviews[lang] : undefined;
-      const primary = await generateReview(results, lang, prevReview || undefined);
-      // Reset translations when refreshing so they match the newly generated text.
-      setReviews({ [lang]: primary });
+      // TEAM_005: One call regenerates all three languages. We hand the
+      // model the previous version *of the visible language* so it knows
+      // what to vary against.
+      const all = await generateAllReviews(results, prevReview || undefined);
+      setReviews(all);
       setRefreshCount((prev) => prev + 1);
       setStep("result");
     } catch (error) {
@@ -456,20 +458,10 @@ export default function App() {
     }
   };
 
-  const handleLanguageChange = async (newLang: Lang) => {
+  // TEAM_005: Language switching is now synchronous — every supported
+  // language is already cached in `reviews` after the initial generation.
+  const handleLanguageChange = (newLang: Lang) => {
     setLang(newLang);
-    if (step === "result" && (!reviews || !reviews[newLang])) {
-      setIsTranslating(true);
-      try {
-        const text = await generateReview(results, newLang);
-        setReviews((prev) => prev ? { ...prev, [newLang]: text } : { [newLang]: text });
-      } catch (error) {
-        if (import.meta.env.DEV) console.error(error);
-        setStep("error");
-      } finally {
-        setIsTranslating(false);
-      }
-    }
   };
 
   // TEAM_001: Await clipboard API with legacy fallback for HTTP origins or
@@ -554,7 +546,6 @@ export default function App() {
               muted
               loop
               playsInline
-              // @ts-expect-error — WeChat X5
               webkit-playsinline=""
               x5-video-player-type="h5-page"
               x5-playsinline=""
@@ -968,34 +959,17 @@ export default function App() {
               </div>
 
               <div className="relative group flex-1 flex flex-col">
-                {isTranslating ? (
-                  <div className="flex-1 bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E5E5] shadow-sm flex items-center justify-center min-h-[160px] sm:min-h-[200px] w-full">
-                    <div className="flex flex-col items-center space-y-3">
-                      <div className="relative w-8 h-8">
-                        <div className="absolute inset-0 border-[2px] border-[#DC2626]/20 rounded-full" />
-                        <m.div
-                          className="absolute inset-0 border-[2px] border-[#DC2626] rounded-full border-t-transparent"
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        />
-                      </div>
-                      <span className="text-[#555] font-medium animate-pulse">{t[lang].generatingTitle}</span>
-                    </div>
-                  </div>
-                ) : (
-                  <textarea
-                    value={(reviews && reviews[lang]) || ""}
-                    onChange={(e) => {
-                      if (reviews) {
-                        setReviews({ ...reviews, [lang]: e.target.value });
-                      }
-                    }}
-                    className="flex-1 bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E5E5] shadow-sm leading-relaxed text-[#111] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#111] transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
-                  />
-                )}
+                <textarea
+                  value={(reviews && reviews[lang]) || ""}
+                  onChange={(e) => {
+                    if (reviews) {
+                      setReviews({ ...reviews, [lang]: e.target.value });
+                    }
+                  }}
+                  className="flex-1 bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E5E5] shadow-sm leading-relaxed text-[#111] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#111] transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
+                />
                 <button
                   onClick={copyToClipboard}
-                  disabled={isTranslating}
                   className="absolute bottom-4 right-4 bg-white p-3 rounded-xl shadow-md border hover:border-[#111] hover:bg-[#111] hover:text-white transition-all active:scale-95 text-[#555] disabled:opacity-50 disabled:pointer-events-none"
                 >
                   {isCopying ? (
