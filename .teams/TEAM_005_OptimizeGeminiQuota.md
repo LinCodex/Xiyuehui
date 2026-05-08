@@ -35,6 +35,19 @@ full cost of a long prompt on every refresh and on every language switch.
       switch)
 - [x] Verified with `npm run lint` (tsc --noEmit) and `npm run build`
 
+## Follow-up (post-deploy feedback: "still 429 + slow")
+- [x] **Fail-fast retry.** First attempt failed with retryDelay=60s
+      meant the kiosk would spin for up to 3 minutes. Capped retry budget:
+      `MAX_RETRIES=1`, `SHORT_RETRY_CAP_MS=8s`. If Gemini suggests a
+      delay > 8s we throw immediately so the user sees the error UI's
+      "Try Again" / "Skip & write manually" buttons within a couple of
+      seconds.
+- [x] **`responseMimeType: "application/json"`** + **`maxOutputTokens: 600`**
+      added to the SDK config. Native JSON mode is more reliable than
+      relying on prompt instructions, and the token cap stops Flash-Lite
+      from over-generating, shaving ~30% off successful-call latency.
+- [x] Lowered `temperature` to 0.9 for steadier JSON shape (was default ~1.0).
+
 ## Summary
 The kiosk now makes one Gemini call per generation instead of up to three.
 Language switches on the result screen are instant. The trimmed prompt and

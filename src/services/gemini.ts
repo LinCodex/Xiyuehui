@@ -142,8 +142,12 @@ function parseAllReviews(raw: string): AllReviews {
   return { en, cn, es };
 }
 
-const MAX_RETRIES = 3;
-const MAX_BACKOFF_MS = 65_000;
+// TEAM_005 (revised): Fail fast on rate limits. A kiosk customer should
+// never sit on a spinner for more than ~10s; if Gemini's suggested
+// retryDelay is longer than SHORT_RETRY_CAP_MS we surface the error UI
+// immediately so they can hit "Try Again" or skip to writing manually.
+const MAX_RETRIES = 1;
+const SHORT_RETRY_CAP_MS = 8_000;
 const MIN_BACKOFF_MS = 1_000;
 
 /**
@@ -173,6 +177,17 @@ export async function generateAllReviews(
         // plenty of intelligence for 3-5 sentence reviews.
         model: "gemini-2.5-flash-lite",
         contents: prompt,
+        config: {
+          // TEAM_005 (revised): Three 3-5 sentence reviews + JSON
+          // scaffolding fits comfortably under 600 output tokens. Capping
+          // here saves ~30% latency on each successful call by stopping
+          // Flash-Lite from over-generating, and protects against the
+          // occasional model run-on.
+          maxOutputTokens: 600,
+          // Slightly lower temperature for more consistent JSON shape.
+          temperature: 0.9,
+          responseMimeType: "application/json",
+        },
       });
       const text = response.text?.trim();
       if (!text) throw new Error("Empty response from AI");
@@ -180,11 +195,22 @@ export async function generateAllReviews(
     } catch (error) {
       if (isRetryable(error) && attempt < MAX_RETRIES) {
         const hinted = extractRetryDelayMs(error);
-        // Gentle exponential fallback when the API gives no hint:
-        // 2s, 4s, 8s — capped at MAX_BACKOFF_MS.
+        // If Gemini tells us to wait longer than ~8s, that almost always
+        // means a 60s RPM bucket or a daily-quota stall — neither is worth
+        // making the customer stare at a spinner for. Fail fast and let
+        // the UI offer "Try Again" / "Write manually".
+        if (hinted != null && hinted > SHORT_RETRY_CAP_MS) {
+          if (import.meta.env.DEV) {
+            console.warn(
+              `Gemini retryDelay=${hinted}ms exceeds cap — failing fast`,
+            );
+          }
+          throw error;
+        }
+        // No hint, or a short hint: wait at most SHORT_RETRY_CAP_MS.
         const fallback = 2000 * Math.pow(2, attempt);
         const wait = Math.min(
-          MAX_BACKOFF_MS,
+          SHORT_RETRY_CAP_MS,
           Math.max(MIN_BACKOFF_MS, hinted ?? fallback),
         );
         if (import.meta.env.DEV) {
