@@ -328,6 +328,7 @@ export default function App() {
   const [refreshCount, setRefreshCount] = useState(0);
   const [isCopying, setIsCopying] = useState(false);
   const [showRedirectModal, setShowRedirectModal] = useState(false);
+  const [redirectTarget, setRedirectTarget] = useState<'google' | 'yelp'>('google');
   const [suggestionIdx, setSuggestionIdx] = useState(0);
   const [surveyIndex, setSurveyIndex] = useState(0);
   const [surveyDirection, setSurveyDirection] = useState<1 | -1>(1);
@@ -476,16 +477,25 @@ export default function App() {
     setTimeout(() => setIsCopying(false), 2000);
   };
 
-  const handleRedirect = () => {
+  const handleRedirect = (target: 'google' | 'yelp') => {
+    setRedirectTarget(target);
     copyToClipboard();
     setShowRedirectModal(true);
   };
 
-  const confirmRedirect = () => {
-    window.open(
-      "https://reviewthis.biz/chuanbistro",
-      "_blank",
-    );
+  const confirmRedirect = (target?: 'google' | 'yelp') => {
+    const finalTarget = target || redirectTarget;
+    if (finalTarget === 'yelp') {
+      window.open(
+        "https://www.yelp.com/writeareview/biz/ZFXQV1KOIBrKjJiLRWUBIw?return_url=%2Fbiz%2FZFXQV1KOIBrKjJiLRWUBIw&review_origin=biz-details-war-button",
+        "_blank",
+      );
+    } else {
+      window.open(
+        "https://reviewthis.biz/chuanbistro",
+        "_blank",
+      );
+    }
     setShowRedirectModal(false);
   };
 
@@ -873,12 +883,24 @@ export default function App() {
                   <RefreshCcw className="w-5 h-5" />
                   {t[lang].tryAgain}
                 </button>
-                <button
-                  onClick={confirmRedirect}
-                  className="w-full bg-white text-[#111] py-4 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-colors shadow-sm border border-gray-200"
-                >
-                  {t[lang].skipBtn}
-                </button>
+                
+                <div className="w-full space-y-2">
+                  <p className="text-sm font-medium text-[#777] uppercase tracking-wider">{t[lang].skipBtn}</p>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => confirmRedirect('google')}
+                      className="flex-1 bg-white text-[#111] py-4 rounded-2xl font-bold text-base hover:bg-gray-50 transition-colors shadow-sm border border-gray-200 flex justify-center items-center gap-2"
+                    >
+                      Google Maps <ExternalLink className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => confirmRedirect('yelp')}
+                      className="flex-1 bg-white text-[#111] py-4 rounded-2xl font-bold text-base hover:bg-gray-50 transition-colors shadow-sm border border-gray-200 flex justify-center items-center gap-2"
+                    >
+                      Yelp <ExternalLink className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
               </div>
             </m.div>
           )}
@@ -966,13 +988,20 @@ export default function App() {
                   {t[lang].regenerate}
                 </button>
 
-                <div className="w-full pt-2 mt-auto">
+                <div className="w-full pt-2 mt-auto flex gap-3">
                   <button
-                    onClick={handleRedirect}
-                    className="w-full bg-[#111] text-white py-4 rounded-[1.25rem] font-bold text-lg flex items-center justify-center gap-3 active:scale-95 transition-all shadow-lg"
+                    onClick={() => handleRedirect('google')}
+                    className="flex-1 bg-[#111] text-white py-4 rounded-[1.25rem] font-bold text-base sm:text-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg"
                   >
-                    {t[lang].postBtn}
-                    <ExternalLink className="w-5 h-5" />
+                    Google Maps
+                    <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+                  <button
+                    onClick={() => handleRedirect('yelp')}
+                    className="flex-1 bg-[#E00707] text-white py-4 rounded-[1.25rem] font-bold text-base sm:text-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg"
+                  >
+                    Yelp
+                    <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 </div>
               </div>
@@ -997,14 +1026,14 @@ export default function App() {
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">{t[lang].modalTitle}</h3>
                 <p className="text-[#78716C]">
-                  {t[lang].modalSub}
+                  {redirectTarget === 'google' ? (t[lang] as any).modalSubGoogle : (t[lang] as any).modalSubYelp}
                 </p>
               </div>
               <button
-                onClick={confirmRedirect}
-                className="w-full bg-[#1A1A1A] text-white py-4 rounded-full font-medium"
+                onClick={() => confirmRedirect()}
+                className={`w-full text-white py-4 rounded-full font-medium ${redirectTarget === 'yelp' ? 'bg-[#E00707]' : 'bg-[#1A1A1A]'}`}
               >
-                {t[lang].modalGo}
+                {redirectTarget === 'google' ? (t[lang] as any).modalGoGoogle : (t[lang] as any).modalGoYelp}
               </button>
             </m.div>
           </div>

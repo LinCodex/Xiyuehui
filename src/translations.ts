@@ -69,8 +69,10 @@ export const t = {
     regenerate: "Not quite right? Regenerate",
     postBtn: "Post to Google Maps",
     modalTitle: "Review Copied!",
-    modalSub: "We're opening Google Maps for you. Simply paste your review in the comment box.",
-    modalGo: "Go to Google Maps"
+    modalSubGoogle: "We're opening Google Maps for you. Simply paste your review in the comment box.",
+    modalSubYelp: "We're opening Yelp for you. Simply paste your review in the comment box.",
+    modalGoGoogle: "Go to Google Maps",
+    modalGoYelp: "Go to Yelp"
   },
   cn: {
     welcomeTitle1: "定制您的完美",
@@ -131,8 +133,10 @@ export const t = {
     regenerate: "不太满意？重新生成",
     postBtn: "发布到谷歌地图",
     modalTitle: "评价已复制！",
-    modalSub: "正在为您打开谷歌地图。只需将评价粘贴到评论框中即可。",
-    modalGo: "前往谷歌地图"
+    modalSubGoogle: "正在为您打开谷歌地图。只需将评价粘贴到评论框中即可。",
+    modalSubYelp: "正在为您打开 Yelp。只需将评价粘贴到评论框中即可。",
+    modalGoGoogle: "前往谷歌地图",
+    modalGoYelp: "前往 Yelp"
   },
   es: {
     welcomeTitle1: "Crea tu reseña",
@@ -193,7 +197,9 @@ export const t = {
     regenerate: "¿No es exactamente lo que buscas? Regenerar",
     postBtn: "Publicar en Google Maps",
     modalTitle: "¡Reseña copiada!",
-    modalSub: "Estamos abriendo Google Maps por ti. Simplemente pega tu reseña en la caja de comentarios.",
-    modalGo: "Ir a Google Maps"
+    modalSubGoogle: "Estamos abriendo Google Maps por ti. Simplemente pega tu reseña en la caja de comentarios.",
+    modalSubYelp: "Estamos abriendo Yelp por ti. Simplemente pega tu reseña en la caja de comentarios.",
+    modalGoGoogle: "Ir a Google Maps",
+    modalGoYelp: "Ir a Yelp"
   }
 };
