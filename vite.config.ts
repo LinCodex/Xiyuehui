@@ -10,12 +10,20 @@ export default defineConfig(({mode}) => {
   // literal `undefined`, which would crash the @google/genai constructor and
   // blank out the whole app.
   const geminiKey = env.VITE_GEMINI_API_KEY || env.GEMINI_API_KEY || '';
+  // TEAM_006: Up to two additional fallback keys from separate Google
+  // accounts. Each key has its own free-tier RPM/RPD bucket, so when the
+  // primary hits 429 the kiosk can rotate to a fresh key automatically.
+  // All three are optional — the app works fine with just the primary.
+  const geminiKey2 = env.VITE_GEMINI_API_KEY_2 || env.GEMINI_API_KEY_2 || '';
+  const geminiKey3 = env.VITE_GEMINI_API_KEY_3 || env.GEMINI_API_KEY_3 || '';
 
   return {
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(geminiKey),
       'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(geminiKey),
+      'import.meta.env.VITE_GEMINI_API_KEY_2': JSON.stringify(geminiKey2),
+      'import.meta.env.VITE_GEMINI_API_KEY_3': JSON.stringify(geminiKey3),
     },
     resolve: {
       alias: {

@@ -9,10 +9,43 @@ export interface SurveyResults {
 export type Lang = "en" | "cn" | "es";
 export type AllReviews = Record<Lang, string>;
 
-function getApiKey(): string {
-  return (
-    ((import.meta as ImportMeta).env?.VITE_GEMINI_API_KEY as string) || ""
+// TEAM_006: Up to three Gemini API keys (each from a separate Google
+// account so they have independent free-tier RPM/RPD buckets). The first
+// non-empty key is the primary; the others are rotated to ONLY when the
+// active key returns a rate-limit error. All three slots are optional —
+// the kiosk works with just `VITE_GEMINI_API_KEY` configured.
+function getApiKeys(): string[] {
+  const env = ((import.meta as ImportMeta).env ?? {}) as Record<
+    string,
+    string | undefined
+  >;
+  const candidates = [
+    env.VITE_GEMINI_API_KEY,
+    env.VITE_GEMINI_API_KEY_2,
+    env.VITE_GEMINI_API_KEY_3,
+  ];
+  return candidates.filter(
+    (k): k is string => typeof k === "string" && k.length > 0,
   );
+}
+
+// TEAM_006: In-memory cooldown tracker per API key. When a key returns
+// 429 we mark it unavailable until either Gemini's suggested retryDelay
+// elapses, or — if no hint is given — for a default 60s window (the RPM
+// bucket). Keeps wasted calls down on the next user action without
+// persisting anything across page reloads.
+const keyCooldowns = new Map<string, number>();
+const DEFAULT_COOLDOWN_MS = 60_000;
+const MAX_COOLDOWN_MS = 24 * 60 * 60 * 1000; // RPD reset is at most ~24h.
+
+function isKeyAvailable(key: string): boolean {
+  const until = keyCooldowns.get(key);
+  return !until || until <= Date.now();
+}
+
+function markKeyCoolingDown(key: string, durationMs: number): void {
+  const clamped = Math.min(MAX_COOLDOWN_MS, Math.max(1_000, durationMs));
+  keyCooldowns.set(key, Date.now() + clamped);
 }
 
 // TEAM_001: Defense-in-depth sanitization for user text interpolated into
@@ -68,14 +101,24 @@ function parseDurationSeconds(value: string): number | null {
   return m ? parseFloat(m[1]) : null;
 }
 
-function isRetryable(error: unknown): boolean {
+function isRateLimitError(error: unknown): boolean {
   const err = error as { status?: number; message?: string };
   const status = err?.status;
   const msg = err?.message ?? "";
   return (
     status === 429 ||
+    /\b429\b|RESOURCE_EXHAUSTED|quota/i.test(msg)
+  );
+}
+
+function isTransientError(error: unknown): boolean {
+  const err = error as { status?: number; message?: string };
+  const status = err?.status;
+  const msg = err?.message ?? "";
+  return (
     status === 503 ||
-    /\b429\b|\b503\b|RESOURCE_EXHAUSTED|UNAVAILABLE/i.test(msg)
+    status === 500 ||
+    /\b503\b|\b500\b|UNAVAILABLE|INTERNAL/i.test(msg)
   );
 }
 
@@ -142,100 +185,141 @@ function parseAllReviews(raw: string): AllReviews {
   return { en, cn, es };
 }
 
-// TEAM_005 (revised): Fail fast on rate limits. A kiosk customer should
-// never sit on a spinner for more than ~10s; if Gemini's suggested
-// retryDelay is longer than SHORT_RETRY_CAP_MS we surface the error UI
-// immediately so they can hit "Try Again" or skip to writing manually.
-const MAX_RETRIES = 1;
-const SHORT_RETRY_CAP_MS = 8_000;
-const MIN_BACKOFF_MS = 1_000;
+// TEAM_006: Single attempt against ONE specific API key. No internal
+// retry — when this throws, the rotator decides whether to try another
+// key or surface the error.
+async function callGeminiOnce(
+  apiKey: string,
+  prompt: string,
+): Promise<AllReviews> {
+  const { GoogleGenAI } = await import("@google/genai");
+  const ai = new GoogleGenAI({ apiKey });
+  const response = await ai.models.generateContent({
+    // TEAM_001: gemini-2.5-flash-lite — highest free-tier throughput,
+    // plenty of intelligence for 3-5 sentence reviews.
+    model: "gemini-2.5-flash-lite",
+    contents: prompt,
+    config: {
+      // TEAM_005: Three short reviews + JSON scaffolding fits comfortably
+      // under 600 output tokens. Capping here saves ~30% latency on each
+      // successful call by stopping the model from over-generating.
+      maxOutputTokens: 600,
+      temperature: 0.9,
+      responseMimeType: "application/json",
+    },
+  });
+  const text = response.text?.trim();
+  if (!text) throw new Error("Empty response from AI");
+  return parseAllReviews(text);
+}
 
 /**
- * TEAM_005: Generate the review in all three languages in a single API call.
- * Returns `{ en, cn, es }`. This is ~3x cheaper on the RPM/RPD buckets than
- * making one call per language, and lets the UI switch languages instantly.
+ * TEAM_006: Generate all three languages, with automatic key rotation on
+ * rate-limit errors.
+ *
+ * Flow:
+ *   1. Build the ordered list of configured keys (1, 2, then 3).
+ *   2. Skip any key currently in cooldown from a previous 429.
+ *   3. Try the first available key. On 429, mark it cooling-down for
+ *      Gemini's suggested retryDelay (or 60s default) and immediately try
+ *      the next key — no waiting.
+ *   4. On a transient 5xx, retry the SAME key once with a short backoff
+ *      before rotating.
+ *   5. If every key has been tried (or is in cooldown), throw — the UI
+ *      shows the error screen with "Try Again" / manual options.
  */
 export async function generateAllReviews(
   results: SurveyResults,
   previousReview?: string,
 ): Promise<AllReviews> {
-  const apiKey = getApiKey();
-  if (!apiKey) {
+  const allKeys = getApiKeys();
+  if (allKeys.length === 0) {
     throw new Error(
       "API key not configured. Add VITE_GEMINI_API_KEY to your .env file.",
     );
   }
 
-  const prompt = buildPrompt(results, previousReview);
-  const { GoogleGenAI } = await import("@google/genai");
-  const ai = new GoogleGenAI({ apiKey });
+  const candidates = allKeys.filter(isKeyAvailable);
+  if (candidates.length === 0) {
+    // Every configured key is in cooldown. Fail fast — the UI's error
+    // screen and the kiosk's manual-review buttons handle this gracefully.
+    throw new Error(
+      "All Gemini API keys are temporarily rate-limited. Please try again in a minute.",
+    );
+  }
 
-  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+  const prompt = buildPrompt(results, previousReview);
+  let lastError: unknown;
+
+  for (let i = 0; i < candidates.length; i++) {
+    const key = candidates[i];
+    const keyLabel = `key ${allKeys.indexOf(key) + 1}/${allKeys.length}`;
+
     try {
-      const response = await ai.models.generateContent({
-        // TEAM_001: gemini-2.5-flash-lite — highest free-tier throughput,
-        // plenty of intelligence for 3-5 sentence reviews.
-        model: "gemini-2.5-flash-lite",
-        contents: prompt,
-        config: {
-          // TEAM_005 (revised): Three 3-5 sentence reviews + JSON
-          // scaffolding fits comfortably under 600 output tokens. Capping
-          // here saves ~30% latency on each successful call by stopping
-          // Flash-Lite from over-generating, and protects against the
-          // occasional model run-on.
-          maxOutputTokens: 600,
-          // Slightly lower temperature for more consistent JSON shape.
-          temperature: 0.9,
-          responseMimeType: "application/json",
-        },
-      });
-      const text = response.text?.trim();
-      if (!text) throw new Error("Empty response from AI");
-      return parseAllReviews(text);
+      const result = await callGeminiOnce(key, prompt);
+      if (import.meta.env.DEV && i > 0) {
+        console.info(`Gemini: succeeded after rotating to ${keyLabel}`);
+      }
+      return result;
     } catch (error) {
-      if (isRetryable(error) && attempt < MAX_RETRIES) {
+      lastError = error;
+
+      if (isRateLimitError(error)) {
         const hinted = extractRetryDelayMs(error);
-        // If Gemini tells us to wait longer than ~8s, that almost always
-        // means a 60s RPM bucket or a daily-quota stall — neither is worth
-        // making the customer stare at a spinner for. Fail fast and let
-        // the UI offer "Try Again" / "Write manually".
-        if (hinted != null && hinted > SHORT_RETRY_CAP_MS) {
-          if (import.meta.env.DEV) {
-            console.warn(
-              `Gemini retryDelay=${hinted}ms exceeds cap — failing fast`,
-            );
-          }
-          throw error;
-        }
-        // No hint, or a short hint: wait at most SHORT_RETRY_CAP_MS.
-        const fallback = 2000 * Math.pow(2, attempt);
-        const wait = Math.min(
-          SHORT_RETRY_CAP_MS,
-          Math.max(MIN_BACKOFF_MS, hinted ?? fallback),
-        );
+        markKeyCoolingDown(key, hinted ?? DEFAULT_COOLDOWN_MS);
         if (import.meta.env.DEV) {
           console.warn(
-            `Gemini ${(error as { status?: number })?.status ?? "?"} ` +
-              `— retrying in ${wait}ms (attempt ${attempt + 1}/${MAX_RETRIES})`,
+            `Gemini ${keyLabel} rate-limited` +
+              (hinted ? ` (retry in ${Math.round(hinted / 1000)}s)` : "") +
+              ` — rotating to next key`,
           );
         }
-        await new Promise((r) => setTimeout(r, wait));
         continue;
       }
 
+      if (isTransientError(error) && i === candidates.length - 1) {
+        // Last key, transient 5xx. Give it ONE quick retry rather than
+        // failing — the kiosk shouldn't fail on a flaky upstream blip.
+        if (import.meta.env.DEV) {
+          console.warn(`Gemini ${keyLabel} 5xx — retrying once`);
+        }
+        await new Promise((r) => setTimeout(r, 1500));
+        try {
+          return await callGeminiOnce(key, prompt);
+        } catch (retryError) {
+          lastError = retryError;
+        }
+        continue;
+      }
+
+      if (isTransientError(error)) {
+        // Earlier key got a 5xx — try the next key instead of waiting.
+        if (import.meta.env.DEV) {
+          console.warn(`Gemini ${keyLabel} 5xx — rotating to next key`);
+        }
+        continue;
+      }
+
+      // Non-retryable error (bad prompt, auth, network down). Don't waste
+      // remaining keys on something that's not a quota problem.
       if (import.meta.env.DEV) console.error("Gemini Error:", error);
       throw error;
     }
   }
 
-  throw new Error("Max retries exceeded");
+  if (import.meta.env.DEV) {
+    console.error(
+      `Gemini: exhausted all ${candidates.length} available key(s)`,
+      lastError,
+    );
+  }
+  throw lastError ?? new Error("All API keys exhausted");
 }
 
 /**
  * TEAM_005: Backwards-compatible single-language helper. Internally calls
  * `generateAllReviews` and returns just the requested language. Kept so any
- * caller that still asks for one language at a time keeps working — but the
- * UI should prefer `generateAllReviews` to avoid wasting the JSON output.
+ * caller that still asks for one language at a time keeps working.
  */
 export async function generateReview(
   results: SurveyResults,
@@ -244,4 +328,10 @@ export async function generateReview(
 ): Promise<string> {
   const all = await generateAllReviews(results, previousReview);
   return all[language];
+}
+
+// TEAM_006: Test-only helper. Lets unit tests reset the cooldown map
+// between cases without exporting the map itself.
+export function _resetKeyCooldownsForTesting(): void {
+  keyCooldowns.clear();
 }
