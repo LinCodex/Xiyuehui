@@ -558,15 +558,15 @@ export default function App() {
               className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
               style={{ opacity: 0 }}
             />
-            {/* Gradual blur for top part to ensure Logo readability */}
+            {/* Gradual blur for top part to ensure Logo readability, starting exactly at screen top */}
             <div 
-              className="absolute bottom-0 inset-x-0 h-[55dvh] pointer-events-none backdrop-blur-md" 
+              className="absolute top-[50vh] inset-x-0 h-[25dvh] pointer-events-none backdrop-blur-md" 
               style={{ 
-                maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, transparent 100%)', 
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, transparent 100%)' 
+                maskImage: 'linear-gradient(to bottom, black 15%, transparent 100%)', 
+                WebkitMaskImage: 'linear-gradient(to bottom, black 15%, transparent 100%)' 
               }}
             />
-            <div className="absolute bottom-0 inset-x-0 h-[55dvh] bg-gradient-to-b from-black/70 via-black/30 to-transparent pointer-events-none" />
+            <div className="absolute top-[50vh] inset-x-0 h-[25dvh] bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
           </m.div>
         )}
       </AnimatePresence>
@@ -590,12 +590,12 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        <div className="relative pointer-events-auto ml-auto shrink-0">
+        <div className="relative pointer-events-auto ml-auto shrink-0" style={{ WebkitTapHighlightColor: "transparent" }}>
           <select
             value={lang}
             onChange={(e) => handleLanguageChange(e.target.value as Lang)}
             style={{ WebkitTapHighlightColor: "transparent" }}
-            className="appearance-none flex items-center gap-1.5 pl-7 pr-5 py-1 bg-white/80 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-bold text-[#111] hover:bg-white transition-colors shadow-md border border-white/40 outline-none cursor-pointer"
+            className="appearance-none flex items-center gap-1.5 pl-7 pr-5 py-1 bg-white/80 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-bold text-[#111] shadow-md border border-white/40 outline-none cursor-pointer focus:outline-none focus:ring-0"
           >
             <option value="en">English</option>
             <option value="cn">中文</option>
