@@ -519,15 +519,17 @@ export default function App() {
   return (
     <div className="relative min-h-[100dvh] text-[#111] font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-[#FAF5ED]">
       
-      {/* Background Video Layer - Overextended upwards to hide overscroll sharp lines */}
+      {/* Background Video Layer - Small overextension to hide overscroll edge */}
       <AnimatePresence>
         {step === "welcome" && (
           <m.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute top-[-50vh] inset-x-0 w-full h-[105dvh] z-0 pointer-events-none"
+            className="absolute inset-x-0 w-full z-0 pointer-events-none"
             style={{ 
+              top: "-100px",
+              height: "calc(55dvh + 100px)",
               maskImage: 'linear-gradient(to bottom, black calc(100% - 10dvh), transparent 100%)',
               WebkitMaskImage: 'linear-gradient(to bottom, black calc(100% - 10dvh), transparent 100%)'
             }}
@@ -560,15 +562,6 @@ export default function App() {
               className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
               style={{ opacity: 0 }}
             />
-            {/* Gradual blur for top part to ensure Logo readability, starting exactly at screen top */}
-            <div 
-              className="absolute top-[50vh] inset-x-0 h-[25dvh] pointer-events-none backdrop-blur-md" 
-              style={{ 
-                maskImage: 'linear-gradient(to bottom, black 15%, transparent 100%)', 
-                WebkitMaskImage: 'linear-gradient(to bottom, black 15%, transparent 100%)' 
-              }}
-            />
-            <div className="absolute top-[50vh] inset-x-0 h-[25dvh] bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
           </m.div>
         )}
       </AnimatePresence>
