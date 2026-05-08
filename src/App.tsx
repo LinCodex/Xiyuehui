@@ -516,6 +516,61 @@ export default function App() {
 
   return (
     <div className="relative min-h-[100dvh] text-[#111] font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-[#FAF5ED]">
+      
+      {/* Background Video Layer - Overextended upwards to hide overscroll sharp lines */}
+      <AnimatePresence>
+        {step === "welcome" && (
+          <m.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute top-[-50vh] inset-x-0 w-full h-[105dvh] z-0 pointer-events-none"
+            style={{ 
+              maskImage: 'linear-gradient(to bottom, black calc(100% - 20dvh), transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black calc(100% - 20dvh), transparent 100%)'
+            }}
+          >
+            <m.img
+              src="/hero-bg.png"
+              alt="Chuan Bistro"
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ scale: 1.05, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+            />
+            <video
+              ref={(el: HTMLVideoElement | null) => {
+                if (el) el.play().catch(() => {});
+              }}
+              onPlaying={(e) => {
+                (e.target as HTMLVideoElement).style.opacity = "1";
+              }}
+              src="https://chuanbistro.com/wp-content/themes/chuan-bistro/assets/Hero%20Video-C9Qrq4r7.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              // @ts-expect-error — WeChat X5
+              webkit-playsinline=""
+              x5-video-player-type="h5-page"
+              x5-playsinline=""
+              x5-video-player-fullscreen="false"
+              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+              style={{ opacity: 0 }}
+            />
+            {/* Gradual blur for top part to ensure Logo readability */}
+            <div 
+              className="absolute bottom-0 inset-x-0 h-[55dvh] pointer-events-none backdrop-blur-md" 
+              style={{ 
+                maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, transparent 100%)', 
+                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, transparent 100%)' 
+              }}
+            />
+            <div className="absolute bottom-0 inset-x-0 h-[55dvh] bg-gradient-to-b from-black/70 via-black/30 to-transparent pointer-events-none" />
+          </m.div>
+        )}
+      </AnimatePresence>
+
       {/* Global Header */}
       <div 
         className="absolute top-0 inset-x-0 z-50 flex justify-between items-center px-6 sm:px-8 pointer-events-none"
@@ -569,64 +624,6 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col h-full relative"
             >
-              {/* Full-bleed Video Background for top half (no curved edges) */}
-              <div 
-                className="absolute left-1/2 -translate-x-1/2 w-screen z-0"
-                style={{ 
-                  top: 0,
-                  marginTop: "calc(-50px - max(1.5rem, env(safe-area-inset-top)))",
-                  height: "calc(55dvh + 50px)",
-                  maskImage: 'linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)',
-                  WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)'
-                }}
-              >
-                {/* TEAM_001: WeChat in-app browser blocks cross-origin video
-                    entirely. Solution: always show a static image, layer the
-                    video on top, and only reveal it once it actually starts
-                    playing. The hero is never blank regardless of browser. */}
-                <m.img
-                  src="/hero-bg.png"
-                  alt="Chuan Bistro"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  initial={{ scale: 1.05, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
-                />
-                <video
-                  ref={(el: HTMLVideoElement | null) => {
-                    if (el) {
-                      el.play().catch(() => {});
-                    }
-                  }}
-                  onPlaying={(e) => {
-                    // Video confirmed playing — fade it in over the static image.
-                    (e.target as HTMLVideoElement).style.opacity = "1";
-                  }}
-                  src="https://chuanbistro.com/wp-content/themes/chuan-bistro/assets/Hero%20Video-C9Qrq4r7.mp4"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  // @ts-expect-error — WeChat X5 WebView proprietary attributes
-                  webkit-playsinline=""
-                  x5-video-player-type="h5-page"
-                  x5-playsinline=""
-                  x5-video-player-fullscreen="false"
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-                  style={{ opacity: 0 }}
-                />
-                {/* Gradual blur for top 1/4 (Logo readability) */}
-                <div 
-                  className="absolute top-0 inset-x-0 h-[40%] pointer-events-none backdrop-blur-md" 
-                  style={{ 
-                    maskImage: 'linear-gradient(to bottom, black 10%, transparent 100%)', 
-                    WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 100%)' 
-                  }}
-                />
-                <div className="absolute top-0 inset-x-0 h-[40%] bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
-              </div>
-              
-              {/* Spacer matching original image container layout to push text down exactly where it was */}
               <div className="relative h-[45dvh] sm:h-[55dvh] w-full pt-20 px-6 pb-2 mt-4 shrink-0 z-10 pointer-events-none" />
 
               <div className="px-6 sm:px-8 py-4 sm:py-8 flex-1 flex flex-col justify-end pb-6 sm:pb-12 z-10 relative">
