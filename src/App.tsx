@@ -539,6 +539,7 @@ export default function App() {
           <select
             value={lang}
             onChange={(e) => handleLanguageChange(e.target.value as Lang)}
+            style={{ WebkitTapHighlightColor: "transparent" }}
             className="appearance-none flex items-center gap-1.5 pl-7 pr-5 py-1 bg-white/80 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-bold text-[#111] hover:bg-white transition-colors shadow-md border border-white/40 outline-none cursor-pointer"
           >
             <option value="en">English</option>
@@ -575,8 +576,8 @@ export default function App() {
                   top: 0,
                   marginTop: "calc(-50px - max(1.5rem, env(safe-area-inset-top)))",
                   height: "calc(55dvh + 50px)",
-                  maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
-                  WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)'
+                  maskImage: 'linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)'
                 }}
               >
                 {/* TEAM_001: WeChat in-app browser blocks cross-origin video
