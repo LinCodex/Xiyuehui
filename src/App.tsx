@@ -320,10 +320,11 @@ export default function App() {
     comments: "",
   });
 
-  const [reviews, setReviews] = useState<{ en: string; cn: string } | null>(
+  const [reviews, setReviews] = useState<Partial<Record<Lang, string>> | null>(
     null,
   );
   const [lang, setLang] = useState<Lang>(getInitialLang());
+  const [isTranslating, setIsTranslating] = useState(false);
   const [refreshCount, setRefreshCount] = useState(0);
   const [isCopying, setIsCopying] = useState(false);
   const [showRedirectModal, setShowRedirectModal] = useState(false);
@@ -404,18 +405,10 @@ export default function App() {
     isGenerating.current = true;
     setStep("generating");
     try {
-      // Generate active language first, show result immediately.
-      // Then fetch the other language in the background to halve burst rate.
+      // TEAM_003: Generate active language only.
       const primary = await generateReview(results, lang);
-      const otherLang = lang === "en" ? "cn" : "en";
-      setReviews({ en: lang === "en" ? primary : "", cn: lang === "cn" ? primary : "" });
+      setReviews({ [lang]: primary });
       setStep("result");
-      // Background: generate the other language silently.
-      generateReview(results, otherLang)
-        .then((secondary) => {
-          setReviews((prev) => prev ? { ...prev, [otherLang]: secondary } : prev);
-        })
-        .catch(() => {}); // Non-critical — user can toggle and it will re-try.
     } catch (error) {
       if (import.meta.env.DEV) console.error(error);
       setStep("error");
@@ -433,17 +426,10 @@ export default function App() {
     try {
       const prevReview = reviews ? reviews[lang] : undefined;
       const primary = await generateReview(results, lang, prevReview || undefined);
-      const otherLang = lang === "en" ? "cn" : "en";
-      setReviews({ en: lang === "en" ? primary : "", cn: lang === "cn" ? primary : "" });
+      // Reset translations when refreshing so they match the newly generated text.
+      setReviews({ [lang]: primary });
       setRefreshCount((prev) => prev + 1);
       setStep("result");
-      // Background: generate the other language silently.
-      const prevOther = reviews ? reviews[otherLang] : undefined;
-      generateReview(results, otherLang, prevOther || undefined)
-        .then((secondary) => {
-          setReviews((prev) => prev ? { ...prev, [otherLang]: secondary } : prev);
-        })
-        .catch(() => {});
     } catch (error) {
       if (import.meta.env.DEV) console.error(error);
       setStep("error");
@@ -452,10 +438,26 @@ export default function App() {
     }
   };
 
+  const handleLanguageChange = async (newLang: Lang) => {
+    setLang(newLang);
+    if (step === "result" && (!reviews || !reviews[newLang])) {
+      setIsTranslating(true);
+      try {
+        const text = await generateReview(results, newLang);
+        setReviews((prev) => prev ? { ...prev, [newLang]: text } : { [newLang]: text });
+      } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+        setStep("error");
+      } finally {
+        setIsTranslating(false);
+      }
+    }
+  };
+
   // TEAM_001: Await clipboard API with legacy fallback for HTTP origins or
   // browsers that deny clipboard permission.
   const copyToClipboard = async () => {
-    const text = reviews ? (lang === "en" ? reviews.en : reviews.cn) : "";
+    const text = (reviews && reviews[lang]) ? reviews[lang] : "";
     try {
       await navigator.clipboard.writeText(text);
       setIsCopying(true);
@@ -491,13 +493,23 @@ export default function App() {
     <div className="relative min-h-[100dvh] text-[#111] font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-[#FAF5ED]">
       {/* Global Language Toggle */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
-        <button
-          onClick={() => setLang(lang === "en" ? "cn" : "en")}
-          className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md rounded-full text-sm font-bold text-[#111] hover:bg-white transition-colors shadow-md border border-white/40"
-        >
-          <Languages className="w-4 h-4 sm:w-5" />
-          {lang === "en" ? "中文" : "English"}
-        </button>
+        <div className="relative">
+          <select
+            value={lang}
+            onChange={(e) => handleLanguageChange(e.target.value as Lang)}
+            className="appearance-none flex items-center gap-2 pl-10 pr-8 py-2 bg-white/80 backdrop-blur-md rounded-full text-sm font-bold text-[#111] hover:bg-white transition-colors shadow-md border border-white/40 outline-none cursor-pointer"
+          >
+            <option value="en">English</option>
+            <option value="cn">中文</option>
+            <option value="es">Español</option>
+          </select>
+          <Languages className="w-4 h-4 sm:w-5 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#111]" />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#111]">
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
       </div>
 
       <main
@@ -886,18 +898,35 @@ export default function App() {
               </div>
 
               <div className="relative group flex-1 flex flex-col">
-                <textarea
-                  value={lang === "en" ? reviews.en : reviews.cn}
-                  onChange={(e) => {
-                    if (reviews) {
-                      setReviews({ ...reviews, [lang]: e.target.value });
-                    }
-                  }}
-                  className="flex-1 bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E5E5] shadow-sm leading-relaxed text-[#111] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#111] transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
-                />
+                {isTranslating ? (
+                  <div className="flex-1 bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E5E5] shadow-sm flex items-center justify-center min-h-[160px] sm:min-h-[200px] w-full">
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className="relative w-8 h-8">
+                        <div className="absolute inset-0 border-[2px] border-[#DC2626]/20 rounded-full" />
+                        <m.div
+                          className="absolute inset-0 border-[2px] border-[#DC2626] rounded-full border-t-transparent"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        />
+                      </div>
+                      <span className="text-[#555] font-medium animate-pulse">{t[lang].generatingTitle}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <textarea
+                    value={(reviews && reviews[lang]) || ""}
+                    onChange={(e) => {
+                      if (reviews) {
+                        setReviews({ ...reviews, [lang]: e.target.value });
+                      }
+                    }}
+                    className="flex-1 bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E5E5] shadow-sm leading-relaxed text-[#111] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#111] transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
+                  />
+                )}
                 <button
                   onClick={copyToClipboard}
-                  className="absolute bottom-4 right-4 bg-white p-3 rounded-xl shadow-md border hover:border-[#111] hover:bg-[#111] hover:text-white transition-all active:scale-95 text-[#555]"
+                  disabled={isTranslating}
+                  className="absolute bottom-4 right-4 bg-white p-3 rounded-xl shadow-md border hover:border-[#111] hover:bg-[#111] hover:text-white transition-all active:scale-95 text-[#555] disabled:opacity-50 disabled:pointer-events-none"
                 >
                   {isCopying ? (
                     <Check className="w-5 h-5 text-green-500 hover:text-white" />

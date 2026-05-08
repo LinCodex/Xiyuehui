@@ -1,8 +1,10 @@
-export type Lang = "en" | "cn";
+export type Lang = "en" | "cn" | "es";
 
 export const getInitialLang = (): Lang => {
-  if (typeof navigator !== "undefined" && navigator.language.toLowerCase().startsWith("zh")) {
-    return "cn";
+  if (typeof navigator !== "undefined") {
+    const lang = navigator.language.toLowerCase();
+    if (lang.startsWith("zh")) return "cn";
+    if (lang.startsWith("es")) return "es";
   }
   return "en";
 };
@@ -131,5 +133,67 @@ export const t = {
     modalTitle: "评价已复制！",
     modalSub: "正在为您打开谷歌地图。只需将评价粘贴到评论框中即可。",
     modalGo: "前往谷歌地图"
+  },
+  es: {
+    welcomeTitle1: "Crea tu reseña",
+    welcomeTitle2: "perfecta.",
+    startBtn: "Empezar",
+    surveyFoodTitle: "¿Qué tal la comida?",
+    surveyFoodSub: "Desde el primer bocado hasta el último — ¿qué te parecieron los sabores?",
+    surveyServiceTitle: "¿Qué tal el servicio?",
+    surveyServiceSub: "Cuéntanos sobre el equipo que atendió tu mesa.",
+    surveyAtmoTitle: "¿Qué tal el ambiente?",
+    surveyAtmoSub: "La energía del lugar puede mejorar aún más una gran comida.",
+    foodOptions: [
+      { label: "Excepcional", description: "Realmente memorable, cada bocado fue increíble." },
+      { label: "Delicioso", description: "Me encantaron los platos, volvería a pedir." },
+      { label: "Sabroso", description: "Bueno, satisfactorio, dio en el clavo." }
+    ],
+    serviceOptions: [
+      { label: "Excelente", description: "Impecable, atento y siempre un paso adelante." },
+      { label: "Atento", description: "Siempre ahí cuando necesitábamos algo." },
+      { label: "Amable", description: "Cálido, acogedor, fácil de conversar." }
+    ],
+    atmoOptions: [
+      { label: "Vibrante", description: "Animado, enérgico, lleno de vida." },
+      { label: "Acogedor", description: "Cálido, íntimo, acogedor." },
+      { label: "Relajante", description: "Tranquilo, sin prisas, relajado." }
+    ],
+    overallRating: "Calificación general",
+    overallSub: "¿Qué tal fue tu visita en general?",
+    ratingLabels: ["Necesita mejorar", "Excelente"],
+    qualityLabels: ["Necesita mejorar", "Bueno", "Muy bueno", "Excelente", "Excepcional"],
+    next: "Siguiente",
+    commentsTitle: "¿Algo más?",
+    commentsSub: "Cuéntanos sobre un plato específico que te encantó, o un mesero que hizo de tu noche algo especial.",
+    placeholder: "ej., No te pierdas el...",
+    createBtn: "Crear reseña",
+    suggestions: [
+      "ej., El Mapo Tofu tenía la cantidad perfecta de picante...",
+      "ej., El servicio fue increíblemente rápido a pesar de ser un viernes ocupado...",
+      "ej., Los fideos Dan Dan eran ricos, sabrosos y con la textura perfecta...",
+      "ej., Recomiendo mucho el Pollo Picante de Chongqing...",
+      "ej., El ambiente era enérgico pero no demasiado ruidoso...",
+      "ej., Nos sentaron de inmediato y el mesero nos dio excelentes recomendaciones...",
+      "ej., La panceta de cerdo al ajo estaba cortada finamente y muy bien equilibrada...",
+      "ej., No te pierdas el pastel de arroz glutinoso con azúcar morena de postre...",
+      "ej., Los wontons en aceite de chile eran suaves, delicados y tenían un gran sabor...",
+    ],
+    generatingTitle: "Creando tu reseña...",
+    generatingSub: "Personalizando según tus comentarios",
+    errorTitle: "Ups, algo salió mal.",
+    errorSub: "Hubo un problema al generar tu reseña. Esto podría ser un error temporal de la red. Por favor, pide ayuda a nuestro personal si esto persiste.",
+    tryAgain: "Intentar de nuevo",
+    skipBtn: "Omitir y escribir reseña manualmente",
+    resultTitle: "Tu Reseña",
+    copyBtn: "Copiar al portapapeles",
+    copiedBtn: "¡Copiado!",
+    refreshes: "Intentos",
+    limitReached: "Límite alcanzado",
+    regenerate: "¿No es exactamente lo que buscas? Regenerar",
+    postBtn: "Publicar en Google Maps",
+    modalTitle: "¡Reseña copiada!",
+    modalSub: "Estamos abriendo Google Maps por ti. Simplemente pega tu reseña en la caja de comentarios.",
+    modalGo: "Ir a Google Maps"
   }
 };

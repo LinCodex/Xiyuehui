@@ -28,7 +28,7 @@ function sanitizeForPrompt(text: string, maxLength: number): string {
 
 export async function generateReview(
   results: SurveyResults,
-  language: "en" | "cn" = "en",
+  language: "en" | "cn" | "es" = "en",
   previousReview?: string
 ): Promise<string> {
   const apiKey = getApiKey();
@@ -46,7 +46,7 @@ Here is what the customer told us about their visit:
 - Their overall rating: ${results.rating} out of 5
 - Their own additional details: ${results.comments ? sanitizeForPrompt(results.comments, MAX_COMMENT_LENGTH) : "nothing specific mentioned"}
 
-Write a review in ${language === "en" ? "English" : "Simplified Chinese"} that sounds like a normal, everyday person posting on Google Maps. NOT a food blogger, NOT an influencer, NOT a marketing person. Just a regular customer sharing their honest experience.
+Write a review in ${language === "en" ? "English" : language === "cn" ? "Simplified Chinese" : "Spanish"} that sounds like a normal, everyday person posting on Google Maps. NOT a food blogger, NOT an influencer, NOT a marketing person. Just a regular customer sharing their honest experience.
 
 Critical rules you MUST follow:
 1. NEVER use hyphens (-) or dashes anywhere in the review.
