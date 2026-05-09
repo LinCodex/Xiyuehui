@@ -1067,6 +1067,10 @@ export default function App() {
             </m.div>
           )}
         </AnimatePresence>
+
+        <p className="mt-auto pt-4 pb-0 text-center text-[10px] sm:text-[11px] font-medium tracking-wide text-[#111]/35 select-none">
+          Powered by Ezrefill
+        </p>
       </main>
 
       {/* Redirect Confirmation Modal */}
