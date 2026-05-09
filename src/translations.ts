@@ -71,8 +71,10 @@ export const t = {
     modalTitle: "Review Copied!",
     modalSubGoogle: "We're opening Google Maps for you. Simply paste your review in the comment box.",
     modalSubYelp: "We're opening Yelp for you. Simply paste your review in the comment box.",
+    modalSubInstagram: "We're opening Instagram for you. Simply paste your review into a new post or story.",
     modalGoGoogle: "Go to Google Maps",
-    modalGoYelp: "Go to Yelp"
+    modalGoYelp: "Go to Yelp",
+    modalGoInstagram: "Go to Instagram"
   },
   cn: {
     welcomeTitle1: "定制您的完美",
@@ -135,8 +137,10 @@ export const t = {
     modalTitle: "评价已复制！",
     modalSubGoogle: "正在为您打开谷歌地图。只需将评价粘贴到评论框中即可。",
     modalSubYelp: "正在为您打开 Yelp。只需将评价粘贴到评论框中即可。",
+    modalSubInstagram: "正在为您打开 Instagram。只需将评价粘贴到新帖子或故事中即可。",
     modalGoGoogle: "前往谷歌地图",
-    modalGoYelp: "前往 Yelp"
+    modalGoYelp: "前往 Yelp",
+    modalGoInstagram: "前往 Instagram"
   },
   es: {
     welcomeTitle1: "Crea tu reseña",
@@ -199,7 +203,9 @@ export const t = {
     modalTitle: "¡Reseña copiada!",
     modalSubGoogle: "Estamos abriendo Google Maps por ti. Simplemente pega tu reseña en la caja de comentarios.",
     modalSubYelp: "Estamos abriendo Yelp por ti. Simplemente pega tu reseña en la caja de comentarios.",
+    modalSubInstagram: "Estamos abriendo Instagram por ti. Simplemente pega tu reseña en una nueva publicación o historia.",
     modalGoGoogle: "Ir a Google Maps",
-    modalGoYelp: "Ir a Yelp"
+    modalGoYelp: "Ir a Yelp",
+    modalGoInstagram: "Ir a Instagram"
   }
 };

@@ -42,6 +42,14 @@ const YelpIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const InstagramIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 32 32" fill="currentColor" className={className}>
+    <path d="M21.3,9.7c-0.6,0-1.2,0.5-1.2,1.2c0,0.7,0.5,1.2,1.2,1.2c0.7,0,1.2-0.5,1.2-1.2C22.4,10.2,21.9,9.7,21.3,9.7z"/>
+    <path d="M16,11.2c-2.7,0-4.9,2.2-4.9,4.9c0,2.7,2.2,4.9,4.9,4.9s4.9-2.2,4.9-4.9C21,13.4,18.8,11.2,16,11.2z M16,19.3c-1.7,0-3.2-1.4-3.2-3.2c0-1.7,1.4-3.2,3.2-3.2c1.7,0,3.2,1.4,3.2,3.2C19.2,17.9,17.8,19.3,16,19.3z"/>
+    <path d="M20,6h-8c-3.3,0-6,2.7-6,6v8c0,3.3,2.7,6,6,6h8c3.3,0,6-2.7,6-6v-8C26,8.7,23.3,6,20,6z M24.1,20c0,2.3-1.9,4.1-4.1,4.1h-8c-2.3,0-4.1-1.9-4.1-4.1v-8c0-2.3,1.9-4.1,4.1-4.1h8c2.3,0,4.1,1.9,4.1,4.1V20z"/>
+  </svg>
+);
+
 // Stable inline style for <main> so React doesn't allocate a fresh object on
 // every render. The `max(...)` keeps a 1.5rem default on devices without
 // safe-area insets (desktop, older phones).
@@ -50,6 +58,13 @@ const MAIN_PADDING: CSSProperties = {
   paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))",
   paddingLeft: "max(1.5rem, env(safe-area-inset-left))",
   paddingRight: "max(1.5rem, env(safe-area-inset-right))",
+};
+
+// Instagram brand gradient — applied inline to avoid arbitrary-class detection
+// quirks and keep the CSS bundle lean.
+const INSTAGRAM_GRADIENT: CSSProperties = {
+  background:
+    "conic-gradient(from 220deg at 50% 50%, #FEDA77 0deg, #F58529 60deg, #DD2A7B 180deg, #8134AF 270deg, #515BD4 360deg)",
 };
 
 // --- Types ---
@@ -344,7 +359,7 @@ export default function App() {
   const [showRedirectModal, setShowRedirectModal] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
-  const [redirectTarget, setRedirectTarget] = useState<'google' | 'yelp'>('google');
+  const [redirectTarget, setRedirectTarget] = useState<'google' | 'yelp' | 'instagram'>('google');
   const [suggestionIdx, setSuggestionIdx] = useState(0);
   const [surveyIndex, setSurveyIndex] = useState(0);
   const [surveyDirection, setSurveyDirection] = useState<1 | -1>(1);
@@ -486,17 +501,22 @@ export default function App() {
     setTimeout(() => setIsCopying(false), 2000);
   };
 
-  const handleRedirect = (target: 'google' | 'yelp') => {
+  const handleRedirect = (target: 'google' | 'yelp' | 'instagram') => {
     setRedirectTarget(target);
     copyToClipboard();
     setShowRedirectModal(true);
   };
 
-  const confirmRedirect = (target?: 'google' | 'yelp') => {
+  const confirmRedirect = (target?: 'google' | 'yelp' | 'instagram') => {
     const finalTarget = target || redirectTarget;
     if (finalTarget === 'yelp') {
       window.open(
         "https://www.yelp.com/writeareview/biz/ZFXQV1KOIBrKjJiLRWUBIw?return_url=%2Fbiz%2FZFXQV1KOIBrKjJiLRWUBIw&review_origin=biz-details-war-button",
+        "_blank",
+      );
+    } else if (finalTarget === 'instagram') {
+      window.open(
+        "https://www.instagram.com/chuanbistro/",
         "_blank",
       );
     } else {
@@ -925,18 +945,28 @@ export default function App() {
                 
                 <div className="w-full space-y-2">
                   <p className="text-sm font-medium text-[#777] uppercase tracking-wider mt-4">{t[lang].skipBtn}</p>
-                  <div className="flex gap-3">
+                  <div className="flex items-center justify-center gap-5 sm:gap-6">
                     <button
                       onClick={() => confirmRedirect('google')}
-                      className="flex-1 bg-white border border-[#E5E5E5] py-4 rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
+                      aria-label="Google"
+                      className="w-16 h-16 sm:w-[72px] sm:h-[72px] bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
                     >
                       <GoogleIcon className="w-8 h-8" />
                     </button>
                     <button
                       onClick={() => confirmRedirect('yelp')}
-                      className="flex-1 bg-[#E00707] py-4 rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
+                      aria-label="Yelp"
+                      className="w-16 h-16 sm:w-[72px] sm:h-[72px] bg-[#E00707] rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
                     >
                       <YelpIcon className="w-8 h-8 text-white" />
+                    </button>
+                    <button
+                      onClick={() => confirmRedirect('instagram')}
+                      aria-label="Instagram"
+                      style={INSTAGRAM_GRADIENT}
+                      className="w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
+                    >
+                      <InstagramIcon className="w-8 h-8 text-white" />
                     </button>
                   </div>
                 </div>
@@ -1010,18 +1040,28 @@ export default function App() {
                   {t[lang].regenerate}
                 </button>
 
-                <div className="w-full pt-2 mt-auto flex gap-3">
+                <div className="w-full pt-2 mt-auto flex items-center justify-center gap-5 sm:gap-6">
                   <button
                     onClick={() => handleRedirect('google')}
-                    className="flex-1 bg-white border border-[#E5E5E5] py-4 rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
+                    aria-label="Google"
+                    className="w-16 h-16 sm:w-[72px] sm:h-[72px] bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
                   >
                     <GoogleIcon className="w-8 h-8" />
                   </button>
                   <button
                     onClick={() => handleRedirect('yelp')}
-                    className="flex-1 bg-[#E00707] py-4 rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
+                    aria-label="Yelp"
+                    className="w-16 h-16 sm:w-[72px] sm:h-[72px] bg-[#E00707] rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
                   >
                     <YelpIcon className="w-8 h-8 text-white" />
+                  </button>
+                  <button
+                    onClick={() => handleRedirect('instagram')}
+                    aria-label="Instagram"
+                    style={INSTAGRAM_GRADIENT}
+                    className="w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
+                  >
+                    <InstagramIcon className="w-8 h-8 text-white" />
                   </button>
                 </div>
               </div>
@@ -1046,14 +1086,29 @@ export default function App() {
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">{t[lang].modalTitle}</h3>
                 <p className="text-[#78716C]">
-                  {redirectTarget === 'google' ? (t[lang] as any).modalSubGoogle : (t[lang] as any).modalSubYelp}
+                  {redirectTarget === 'google'
+                    ? (t[lang] as any).modalSubGoogle
+                    : redirectTarget === 'yelp'
+                      ? (t[lang] as any).modalSubYelp
+                      : (t[lang] as any).modalSubInstagram}
                 </p>
               </div>
               <button
                 onClick={() => confirmRedirect()}
-                className={`w-full text-white py-4 rounded-full font-medium ${redirectTarget === 'yelp' ? 'bg-[#E00707]' : 'bg-[#1A1A1A]'}`}
+                style={redirectTarget === 'instagram' ? INSTAGRAM_GRADIENT : undefined}
+                className={`w-full text-white py-4 rounded-full font-medium ${
+                  redirectTarget === 'yelp'
+                    ? 'bg-[#E00707]'
+                    : redirectTarget === 'instagram'
+                      ? ''
+                      : 'bg-[#1A1A1A]'
+                }`}
               >
-                {redirectTarget === 'google' ? (t[lang] as any).modalGoGoogle : (t[lang] as any).modalGoYelp}
+                {redirectTarget === 'google'
+                  ? (t[lang] as any).modalGoGoogle
+                  : redirectTarget === 'yelp'
+                    ? (t[lang] as any).modalGoYelp
+                    : (t[lang] as any).modalGoInstagram}
               </button>
             </m.div>
           </div>
