@@ -60,11 +60,10 @@ const MAIN_PADDING: CSSProperties = {
   paddingRight: "max(1.5rem, env(safe-area-inset-right))",
 };
 
-// Instagram brand gradient — applied inline to avoid arbitrary-class detection
-// quirks and keep the CSS bundle lean.
+// Instagram-style gradient — linear reads cleaner on circles than conic (no seams).
 const INSTAGRAM_GRADIENT: CSSProperties = {
   background:
-    "conic-gradient(from 220deg at 50% 50%, #FEDA77 0deg, #F58529 60deg, #DD2A7B 180deg, #8134AF 270deg, #515BD4 360deg)",
+    "linear-gradient(220deg, #FFDC80 0%, #FCAF45 12%, #F77737 28%, #E1306C 52%, #C13584 72%, #833AB4 100%)",
 };
 
 // --- Types ---
@@ -966,7 +965,7 @@ export default function App() {
                       style={INSTAGRAM_GRADIENT}
                       className="w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
                     >
-                      <InstagramIcon className="w-8 h-8 text-white" />
+                      <InstagramIcon className="w-10 h-10 sm:w-11 sm:h-11 text-white shrink-0" />
                     </button>
                   </div>
                 </div>
@@ -1061,7 +1060,7 @@ export default function App() {
                     style={INSTAGRAM_GRADIENT}
                     className="w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full flex items-center justify-center active:scale-95 transition-all shadow-md hover:shadow-lg"
                   >
-                    <InstagramIcon className="w-8 h-8 text-white" />
+                    <InstagramIcon className="w-10 h-10 sm:w-11 sm:h-11 text-white shrink-0" />
                   </button>
                 </div>
               </div>
