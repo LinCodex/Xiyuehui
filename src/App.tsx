@@ -199,6 +199,7 @@ const RatingStep = memo(function RatingStep({
       exit={{ opacity: 0, x: -20 }}
       className="flex-1 flex flex-col py-2 max-w-xl mx-auto w-full"
     >
+      <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 sm:p-10 flex-1 flex flex-col my-4 transform hover:scale-[1.01] transition-transform duration-500">
       <div className="text-center pt-8 pb-2">
         <m.h2
           initial={{ opacity: 0, y: 12 }}
@@ -293,7 +294,7 @@ const RatingStep = memo(function RatingStep({
           <div className="relative h-7 flex items-center">
             <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#E5E5E5] rounded-full" />
             <div
-              className="absolute left-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#111111] rounded-full"
+              className="absolute left-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#E62E2D] rounded-full"
               style={{ width: `${fillPct}%` }}
             />
             <input
@@ -314,6 +315,7 @@ const RatingStep = memo(function RatingStep({
             <span>{t[lang].ratingLabels[1]}</span>
           </div>
         </m.div>
+      </div>
       </div>
 
       <m.div
@@ -542,53 +544,40 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] text-[#4A2311] font-sans selection:bg-[#E62E2D] selection:text-white overflow-x-hidden w-full bg-[#FDF3EC]">
+    <div className="relative min-h-[100dvh] text-[#4A2311] font-sans selection:bg-[#E62E2D] selection:text-white overflow-x-hidden w-full bg-transparent">
       
       {/* Background Video Layer */}
-      <AnimatePresence>
-        {step === "welcome" && (
-          <m.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-x-0 w-full z-0 pointer-events-none"
-            style={{ 
-              top: 0,
-              height: "45dvh",
-              maskImage: 'linear-gradient(to bottom, black calc(100% - 10dvh), transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black calc(100% - 10dvh), transparent 100%)'
-            }}
-          >
-            <m.img
-              src="/hero-bg.png"
-              alt="Chuan Bistro"
-              className="absolute inset-0 w-full h-full object-cover"
-              initial={{ scale: 1.05, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
-            />
-            <video
-              ref={(el: HTMLVideoElement | null) => {
-                if (el) el.play().catch(() => {});
-              }}
-              onPlaying={(e) => {
-                (e.target as HTMLVideoElement).style.opacity = "1";
-              }}
-              src="/background.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              webkit-playsinline=""
-              x5-video-player-type="h5-page"
-              x5-playsinline=""
-              x5-video-player-fullscreen="false"
-              className="absolute inset-0 w-full h-full object-contain sm:object-cover transition-opacity duration-1000 bg-black/5"
-              style={{ opacity: 0 }}
-            />
-          </m.div>
-        )}
-      </AnimatePresence>
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
+        <m.img
+          src="/hero-bg.png"
+          alt="Xi Yue Hui"
+          className="absolute inset-0 w-full h-full object-cover"
+          initial={{ scale: 1.05, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+        />
+        <video
+          ref={(el: HTMLVideoElement | null) => {
+            if (el) el.play().catch(() => {});
+          }}
+          onPlaying={(e) => {
+            (e.target as HTMLVideoElement).style.opacity = "1";
+          }}
+          src="/background.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          webkit-playsinline=""
+          x5-video-player-type="h5-page"
+          x5-playsinline=""
+          x5-video-player-fullscreen="false"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+          style={{ opacity: 0 }}
+        />
+        {/* Soft overlay to ensure readability */}
+        <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px]" />
+      </div>
 
       {/* Global Header */}
       <div 
@@ -604,7 +593,7 @@ export default function App() {
               className="flex items-center gap-2 pointer-events-auto shrink-0"
             >
               <img 
-                src="/xiyuehui.svg" 
+                src="/xiyuehuilogo.png" 
                 alt="Xi Yue Hui" 
                 className="h-16 sm:h-20 object-contain drop-shadow-sm" 
               />
@@ -674,9 +663,10 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col h-full relative"
             >
-              <div className="relative h-[45dvh] sm:h-[55dvh] w-full pt-20 px-6 pb-2 mt-4 shrink-0 z-10 pointer-events-none" />
+              <div className="relative h-[20dvh] sm:h-[30dvh] w-full pt-20 px-6 pb-2 mt-4 shrink-0 z-10 pointer-events-none" />
 
-              <div className="px-6 sm:px-8 py-4 sm:py-8 flex-1 flex flex-col justify-end pb-6 sm:pb-12 z-10 relative">
+              <div className="px-6 sm:px-8 py-6 sm:py-10 flex-1 flex flex-col justify-end pb-8 sm:pb-12 z-10 relative">
+                <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-8 sm:p-10 mb-4 transform hover:scale-[1.02] transition-transform duration-500">
                 <m.h1 
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}
                   className="text-[clamp(2rem,8vw,3rem)] min-[400px]:text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-[#4A2311]"
@@ -703,6 +693,7 @@ export default function App() {
                     </button>
                   </div>
                 </m.div>
+                </div>
               </div>
             </m.div>
           )}
@@ -743,8 +734,9 @@ export default function App() {
                   animate="animate"
                   exit="exit"
                   transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                  className="flex-1 flex flex-col px-6"
+                  className="flex-1 flex flex-col px-6 mt-4"
                 >
+                  <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 sm:p-8 flex-1 flex flex-col my-4">
                   {(() => {
                     const question = surveyQuestions[surveyIndex];
                     const selectedValue = results[question.key];
@@ -752,7 +744,7 @@ export default function App() {
                     return (
                       <>
                         {/* Question heading */}
-                        <div className="pt-6 pb-2 text-left">
+                        <div className="pb-6 text-center">
                           <m.h2
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -765,7 +757,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.13 }}
-                            className="text-sm sm:text-base text-[#6D4C41] mt-3 max-w-[85%] leading-relaxed"
+                            className="text-sm sm:text-base text-[#6D4C41] mt-3 mx-auto max-w-[90%] leading-relaxed"
                           >
                             {question.subtitle}
                           </m.p>
@@ -786,14 +778,14 @@ export default function App() {
                                 style={{
                                   animationDelay: `${0.25 + idx * 0.08}s`,
                                 }}
-                                className={`card-enter relative overflow-hidden flex items-center gap-4 p-6 sm:p-8 rounded-[1.25rem] border transition-all duration-300 active:scale-[0.97] ${
+                                className={`card-enter relative overflow-hidden flex items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 transition-all duration-500 active:scale-[0.96] transform hover:-translate-y-0.5 ${
                                   isSelected
-                                    ? "bg-white border-[#111] shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-                                    : "bg-white/60 border-transparent hover:bg-white text-[#4A2311] shadow-sm"
+                                    ? "bg-white/90 border-[#E62E2D] shadow-[0_8px_30px_rgba(230,46,45,0.15)]"
+                                    : "bg-white/40 border-white/40 hover:bg-white/70 hover:border-white/80 text-[#4A2311] shadow-sm hover:shadow-lg"
                                 }`}
                               >
                                 <div className="relative z-10 flex-1 min-w-0">
-                                  <p className="text-lg sm:text-xl font-bold leading-tight text-[#4A2311]">
+                                  <p className="text-base sm:text-lg font-bold leading-tight text-[#4A2311]">
                                     {opt.label}
                                   </p>
                                   <p
@@ -845,6 +837,7 @@ export default function App() {
                       </>
                     );
                   })()}
+                  </div>
                 </m.div>
               </AnimatePresence>
             </m.div>
@@ -871,35 +864,37 @@ export default function App() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="flex-1 flex flex-col py-4 justify-between max-w-xl mx-auto w-full space-y-4"
+              className="flex-1 flex flex-col py-4 justify-between max-w-xl mx-auto w-full"
             >
-              <div className="pt-8 pb-4 px-6 text-left">
-                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4A2311] leading-[1.1]">
-                  {t[lang].commentsTitle}
-                </h2>
-                <p className="text-sm sm:text-base text-[#6D4C41] mt-3 max-w-[85%] leading-relaxed">
-                  {t[lang].commentsSub}
-                </p>
-              </div>
+              <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 sm:p-10 flex-1 flex flex-col my-4">
+                <div className="pb-4 text-center">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4A2311] leading-[1.1]">
+                    {t[lang].commentsTitle}
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#6D4C41] mt-3 mx-auto max-w-[90%] leading-relaxed">
+                    {t[lang].commentsSub}
+                  </p>
+                </div>
 
-                  <div className="flex-1 flex flex-col min-h-[200px] my-2 relative px-6">
-                    <textarea
-                      value={results.comments}
-                      onChange={(e) =>
-                        handleOptionSelect("comments", e.target.value)
-                      }
-                      placeholder={t[lang].suggestions[suggestionIdx]}
-                      className="flex-1 w-full p-6 sm:p-8 bg-white border border-[#E5E5E5] rounded-2xl outline-none focus:border-[#111] transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-md text-[#4A2311] placeholder-[#A8A29E]"
-                    />
-                  </div>
+                <div className="flex-1 flex flex-col min-h-[200px] my-2 relative">
+                  <textarea
+                    value={results.comments}
+                    onChange={(e) =>
+                      handleOptionSelect("comments", e.target.value)
+                    }
+                    placeholder={t[lang].suggestions[suggestionIdx]}
+                    className="flex-1 w-full p-6 sm:p-8 bg-white/60 border border-white/40 rounded-2xl outline-none focus:border-[#E62E2D]/40 transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-md text-[#4A2311] placeholder-[#A8A29E]"
+                  />
+                </div>
 
-              <div className="pt-6 pb-8 px-6 mt-auto">
-                <button
-                  onClick={handleGenerate}
-                  className="w-full bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white py-4 sm:py-5 rounded-[1.25rem] font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition-all duration-300 shadow-lg"
-                >
-                  {t[lang].createBtn}
-                </button>
+                <div className="pt-4 mt-auto">
+                  <button
+                    onClick={handleGenerate}
+                    className="w-full bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white py-4 sm:py-5 rounded-[1.25rem] font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition-all duration-300 shadow-lg"
+                  >
+                    {t[lang].createBtn}
+                  </button>
+                </div>
               </div>
             </m.div>
           )}
@@ -911,25 +906,27 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex-1 flex flex-col justify-center items-center space-y-8"
+              className="flex-1 flex flex-col justify-center items-center"
             >
-              <div className="relative w-16 h-16 flex items-center justify-center">
-                <div className="absolute inset-0 border-[3px] border-[#DC2626]/20 rounded-full" />
-                <m.div
-                  className="absolute inset-0 border-[3px] border-[#DC2626] rounded-full border-t-transparent"
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                />
-              </div>
-              <div className="text-center space-y-2">
-                <p className="text-xl font-bold text-[#4A2311]">{t[lang].generatingTitle}</p>
-                <p className="text-sm text-[#6D4C41]">
-                  {t[lang].generatingSub}
-                </p>
+              <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-12 sm:p-16 text-center space-y-8">
+                <div className="relative w-16 h-16 flex items-center justify-center mx-auto">
+                  <div className="absolute inset-0 border-[3px] border-[#DC2626]/20 rounded-full" />
+                  <m.div
+                    className="absolute inset-0 border-[3px] border-[#DC2626] rounded-full border-t-transparent"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xl font-bold text-[#4A2311]">{t[lang].generatingTitle}</p>
+                  <p className="text-sm text-[#6D4C41]">
+                    {t[lang].generatingSub}
+                  </p>
+                </div>
               </div>
             </m.div>
           )}
@@ -943,6 +940,7 @@ export default function App() {
               exit={{ opacity: 0, scale: 0.95 }}
               className="flex-1 flex flex-col justify-center items-center text-center px-6 py-8 overflow-y-auto"
             >
+              <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-8 sm:p-12 w-full max-w-md">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-red-100 rounded-[2rem] flex items-center justify-center mb-6 sm:mb-8 shadow-inner shrink-0">
                 <span className="text-red-500 text-3xl sm:text-4xl">⚠️</span>
               </div>
@@ -986,6 +984,7 @@ export default function App() {
                   </button>
                 </div>
               </div>
+              </div>
             </m.div>
           )}
 
@@ -997,7 +996,8 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               className="flex-1 flex flex-col py-4 justify-between space-y-4 max-w-2xl mx-auto w-full"
             >
-              <div className="flex justify-between items-center px-6 mt-4">
+              <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 sm:p-8 flex-1 flex flex-col my-4">
+              <div className="flex justify-between items-center mt-2 mb-4">
                 <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4A2311]">
                   {t[lang].resultTitle}
                 </h2>
@@ -1011,7 +1011,7 @@ export default function App() {
                       setReviews({ ...reviews, [lang]: e.target.value });
                     }
                   }}
-                  className="flex-1 bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E5E5] shadow-sm leading-relaxed text-[#4A2311] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#111] transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
+                  className="flex-1 bg-white/60 p-6 sm:p-8 rounded-2xl border border-white/40 shadow-sm leading-relaxed text-[#4A2311] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#E62E2D]/40 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
                 />
                 <button
                   onClick={copyToClipboard}
@@ -1079,6 +1079,7 @@ export default function App() {
                     {(t[lang] as any).shareBtn}
                   </button>
                 </div>
+              </div>
               </div>
             </m.div>
           )}

@@ -13,7 +13,7 @@ html {
 body {
   margin: 0;
   overscroll-behavior-y: none;
-  background-color: #FDF3EC; /* Soft peach */
+  background-color: transparent;
   color: #4A2311; /* Dark Brown */
 }
 
@@ -61,8 +61,8 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 10px; /* Squircle */
-  background: #111111;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background: #E62E2D;
+  box-shadow: 0 4px 14px rgba(230,46,45,0.39);
   cursor: pointer;
   margin-top: -12px;
   transition: transform 0.2s ease, background 0.2s ease;
@@ -88,8 +88,8 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 10px;
-  background: #111111;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background: #E62E2D;
+  box-shadow: 0 4px 14px rgba(230,46,45,0.39);
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
 }
