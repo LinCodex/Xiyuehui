@@ -551,10 +551,24 @@ export default function App() {
         <video
           ref={(el: HTMLVideoElement | null) => {
             if (!el) return;
-            // Attempt autoplay immediately
+            const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+
+            // Standard autoplay attempt
             el.play().catch(() => {});
-            // WeChat mini-browser blocks autoplay until user gesture —
-            // listen for the first touch anywhere and retry.
+
+            if (isWeChat) {
+              // WeChat X5 kernel exposes WeixinJSBridge which allows
+              // autoplay without user gesture. This code only runs
+              // inside WeChat's in-app browser.
+              const bridgePlay = () => el.play().catch(() => {});
+              if ((window as any).WeixinJSBridge) {
+                bridgePlay();
+              } else {
+                document.addEventListener("WeixinJSBridgeReady", bridgePlay, { once: true });
+              }
+            }
+
+            // Fallback: retry on first user gesture (works everywhere)
             const tryPlay = () => {
               el.play().catch(() => {});
               document.removeEventListener("touchstart", tryPlay);
