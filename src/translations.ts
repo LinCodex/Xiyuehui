@@ -14,34 +14,34 @@ export const t = {
     welcomeTitle1: "Share the",
     welcomeTitle2: "hotpot love.",
     startBtn: "Start",
-    surveyFoodTitle: "How was the hotpot?",
-    surveyFoodSub: "From the fresh ingredients to the broth — how did the flavors land?",
+    surveyFoodTitle: "How was the food?",
+    surveyFoodSub: "Rate the broth, ingredients & seafood selection.",
     surveyServiceTitle: "How was the service?",
-    surveyServiceSub: "Tell us about the team that took care of your table.",
+    surveyServiceSub: "From refills to clearing — how was the team?",
     surveyAtmoTitle: "How was the vibe?",
-    surveyAtmoSub: "The energy of the room can make a great meal even better.",
+    surveyAtmoSub: "The atmosphere that made the meal memorable.",
     foodOptions: [
-      { label: "Outstanding", description: "Incredible broths and super fresh ingredients." },
-      { label: "Delicious", description: "Loved the variety, would come back again." },
-      { label: "Tasty", description: "Solid hotpot experience, hit the spot." }
+      { label: "Incredible", description: "Best AYCE hotpot — broth, seafood, everything." },
+      { label: "Really Good", description: "Great selection and freshness, would return." },
+      { label: "Solid", description: "Good hotpot, a reliable AYCE choice." }
     ],
     serviceOptions: [
-      { label: "Excellent", description: "Polished, attentive, and a step ahead." },
-      { label: "Attentive", description: "Always there when we needed something." },
-      { label: "Friendly", description: "Warm, welcoming, easy to chat with." }
+      { label: "Top-Notch", description: "Fast, attentive, kept our table perfect." },
+      { label: "Great", description: "Friendly and responsive to every need." },
+      { label: "Good", description: "Helpful team, warm and welcoming." }
     ],
     atmoOptions: [
-      { label: "Vibrant", description: "Lively, energetic, full of buzz." },
-      { label: "Cozy", description: "Warm, intimate, inviting." },
-      { label: "Relaxing", description: "Calm, easy-going, unhurried." }
+      { label: "Electric", description: "Buzzing energy, perfect for groups." },
+      { label: "Cozy", description: "Warm and inviting, great for dates." },
+      { label: "Chill", description: "Relaxed pace, no rush at all." }
     ],
     overallRating: "Overall Rating",
-    overallSub: "How was your visit overall?",
+    overallSub: "How would you rate your visit?",
     ratingLabels: ["Needs Work", "Excellent"],
     qualityLabels: ["Needs Work", "Good", "Great", "Excellent", "Outstanding"],
     next: "Next",
     commentsTitle: "Anything else?",
-    commentsSub: "Tell us about a specific dish you loved, or a server who made your night.",
+    commentsSub: "A favorite dish, a standout moment, or a server who shined.",
     placeholder: "e.g., Don't miss out on the...",
     createBtn: "Create Review",
     suggestions: [
@@ -83,34 +83,34 @@ export const t = {
     welcomeTitle1: "分享火锅",
     welcomeTitle2: "好滋味。",
     startBtn: "开始",
-    surveyFoodTitle: "火锅体验如何？",
-    surveyFoodSub: "从新鲜食材到特色锅底，味道符合您的期待吗？",
-    surveyServiceTitle: "服务体验如何？",
-    surveyServiceSub: "跟我们说说照顾您这桌的团队表现吧。",
-    surveyAtmoTitle: "用餐环境如何？",
-    surveyAtmoSub: "好的氛围能让美味加分。",
+    surveyFoodTitle: "食物如何？",
+    surveyFoodSub: "锅底、食材和海鲜选择怎么样？",
+    surveyServiceTitle: "服务如何？",
+    surveyServiceSub: "从加汤到收盘，团队表现怎么样？",
+    surveyAtmoTitle: "氛围如何？",
+    surveyAtmoSub: "让美食更加难忘的用餐环境。",
     foodOptions: [
-      { label: "惊艳绝伦", description: "锅底浓郁，食材极其新鲜，强烈推荐。" },
-      { label: "非常美味", description: "菜品丰富，吃得很满足，下次还会来。" },
-      { label: "好吃", description: "味道扎实，是不错的自助火锅选择。" }
+      { label: "太棒了", description: "最好的自助火锅，锅底海鲜都一流。" },
+      { label: "非常好", description: "食材新鲜种类丰富，下次还来。" },
+      { label: "不错", description: "好吃的火锅，値得一试。" }
     ],
     serviceOptions: [
-      { label: "卓越", description: "专业、贴心，服务超前。" },
-      { label: "周到", description: "有求必应，随叫随到。" },
-      { label: "友好", description: "热情好客，沟通轻松。" }
+      { label: "卓越", description: "迅速、贴心，服务周到。" },
+      { label: "很好", description: "友善热情，有求必应。" },
+      { label: "不错", description: "团队贴心，氛围轻松。" }
     ],
     atmoOptions: [
-      { label: "充满活力", description: "生机勃勃，热闹非凡。" },
-      { label: "温馨", description: "温暖、私密，让人想亲近。" },
-      { label: "令人放松", description: "宁静、从容，不急不躁。" }
+      { label: "超棒", description: "热闹有活力，适合聚餐。" },
+      { label: "温馨", description: "温暖舒适，适合约会。" },
+      { label: "放松", description: "节奏慢，悬然自得。" }
     ],
     overallRating: "总体评价",
     overallSub: "您这次的整体体验如何？",
     ratingLabels: ["有待提高", "极佳"],
     qualityLabels: ["有待提高", "不错", "很好", "优秀", "极佳"],
     next: "下一步",
-    commentsTitle: "还有其他想补充的吗？",
-    commentsSub: "跟我们分享您特别喜欢的某道菜，或者让您开心的某位服务员。",
+    commentsTitle: "还有想说的吗？",
+    commentsSub: "分享您特别喜欢的菜品或难忘的经历。",
     placeholder: "例如：千万别错过这里的...",
     createBtn: "生成评价",
     suggestions: [
@@ -152,34 +152,34 @@ export const t = {
     welcomeTitle1: "Comparte el",
     welcomeTitle2: "sabor hotpot.",
     startBtn: "Empezar",
-    surveyFoodTitle: "¿Qué tal el hotpot?",
-    surveyFoodSub: "Desde los ingredientes frescos hasta el caldo — ¿qué te parecieron los sabores?",
+    surveyFoodTitle: "¿Qué tal la comida?",
+    surveyFoodSub: "Califica el caldo, ingredientes y selección de mariscos.",
     surveyServiceTitle: "¿Qué tal el servicio?",
-    surveyServiceSub: "Cuéntanos sobre el equipo que atendió tu mesa.",
+    surveyServiceSub: "Desde rellenar hasta limpiar — ¿cómo fue el equipo?",
     surveyAtmoTitle: "¿Qué tal el ambiente?",
-    surveyAtmoSub: "La energía del lugar puede mejorar aún más una gran comida.",
+    surveyAtmoSub: "La atmósfera que hizo la comida memorable.",
     foodOptions: [
-      { label: "Excepcional", description: "Caldos increíbles e ingredientes súper frescos." },
-      { label: "Delicioso", description: "Me encantó la variedad, volvería otra vez." },
-      { label: "Sabroso", description: "Una buena experiencia de hotpot, satisfactorio." }
+      { label: "Increíble", description: "El mejor AYCE hotpot — caldo, mariscos, todo." },
+      { label: "Muy Bueno", description: "Gran selección y frescura, volvería." },
+      { label: "Sólido", description: "Buen hotpot, una opción AYCE confiable." }
     ],
     serviceOptions: [
-      { label: "Excelente", description: "Impecable, atento y siempre un paso adelante." },
-      { label: "Atento", description: "Siempre ahí cuando necesitábamos algo." },
-      { label: "Amable", description: "Cálido, acogedor, fácil de conversar." }
+      { label: "De Primera", description: "Rápido, atento, mesa siempre perfecta." },
+      { label: "Genial", description: "Amable y atento a cada necesidad." },
+      { label: "Bueno", description: "Equipo servicial, cálido y acogedor." }
     ],
     atmoOptions: [
-      { label: "Vibrante", description: "Animado, enérgico, lleno de vida." },
-      { label: "Acogedor", description: "Cálido, íntimo, acogedor." },
-      { label: "Relajante", description: "Tranquilo, sin prisas, relajado." }
+      { label: "Eléctrico", description: "Energía vibrante, perfecto para grupos." },
+      { label: "Acogedor", description: "Cálido e íntimo, ideal para citas." },
+      { label: "Tranquilo", description: "Ritmo relajado, sin prisa alguna." }
     ],
     overallRating: "Calificación general",
-    overallSub: "¿Qué tal fue tu visita en general?",
+    overallSub: "¿Cómo calificarías tu visita?",
     ratingLabels: ["Necesita mejorar", "Excelente"],
     qualityLabels: ["Necesita mejorar", "Bueno", "Muy bueno", "Excelente", "Excepcional"],
     next: "Siguiente",
     commentsTitle: "¿Algo más?",
-    commentsSub: "Cuéntanos sobre un plato específico que te encantó, o un mesero que hizo de tu noche algo especial.",
+    commentsSub: "Un plato favorito, un momento especial o un mesero destacado.",
     placeholder: "ej., No te pierdas el...",
     createBtn: "Crear reseña",
     suggestions: [

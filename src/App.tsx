@@ -589,7 +589,7 @@ export default function App() {
                 alt="Xi Yue Hui" 
                 className="h-24 sm:h-[7.5rem] object-contain drop-shadow-lg" 
               />
-              <span className="font-serif font-bold text-[#E62E2D] text-lg sm:text-2xl tracking-wide ml-3 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">禧悦會海鲜自助火锅</span>
+              <span className="font-serif font-bold text-[#E62E2D] text-sm sm:text-lg tracking-wide ml-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] truncate max-w-[140px] sm:max-w-none">禧悦會海鲜自助火锅</span>
             </m.div>
           )}
         </AnimatePresence>
@@ -739,12 +739,12 @@ export default function App() {
                     return (
                       <>
                         {/* Question heading */}
-                        <div className="pb-6 text-center">
+                        <div className="pb-3 text-center">
                           <m.h2
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.05 }}
-                            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md"
+                            className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md"
                           >
                             {question.title}
                           </m.h2>
@@ -752,7 +752,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.13 }}
-                            className="text-sm sm:text-base text-white/60 mt-3 mx-auto max-w-[90%] leading-relaxed"
+                            className="text-xs sm:text-sm text-white/60 mt-2 mx-auto max-w-[90%] leading-relaxed"
                           >
                             {question.subtitle}
                           </m.p>
@@ -761,7 +761,7 @@ export default function App() {
                         {/* Option cards ??? plain buttons + CSS for entrance,
                             tap, and selection states. No motion components
                             here so taps stay on the compositor thread. */}
-                        <div className="flex-1 flex flex-col justify-center gap-4 my-2">
+                        <div className="flex-1 flex flex-col justify-center gap-2.5 my-1">
                           {question.options.map((opt, idx) => {
                             const isSelected = selectedValue === opt.value;
                             return (
@@ -773,18 +773,18 @@ export default function App() {
                                 style={{
                                   animationDelay: `${0.25 + idx * 0.08}s`,
                                 }}
-                                className={`card-enter relative overflow-hidden flex items-center gap-4 p-5 sm:p-6 rounded-2xl border transition-all duration-500 active:scale-[0.96] transform hover:-translate-y-0.5 ${
+                                className={`card-enter relative overflow-hidden flex items-center gap-3 p-4 sm:p-5 rounded-xl border transition-all duration-500 active:scale-[0.96] ${
                                   isSelected
                                     ? "bg-white/95 border-[#E62E2D] shadow-[0_8px_30px_rgba(230,46,45,0.25)]"
-                                    : "bg-white/10 border-white/15 hover:bg-white/20 hover:border-white/30 shadow-sm hover:shadow-lg backdrop-blur-sm"
+                                    : "bg-white/10 border-white/15 hover:bg-white/20 hover:border-white/30 shadow-sm backdrop-blur-sm"
                                 }`}
                               >
                                 <div className="relative z-10 flex-1 min-w-0">
-                                  <p className={`text-base sm:text-lg font-bold leading-tight ${isSelected ? "text-[#4A2311]" : "text-white"}`}>
+                                  <p className={`text-sm sm:text-base font-bold leading-tight ${isSelected ? "text-[#4A2311]" : "text-white"}`}>
                                     {opt.label}
                                   </p>
                                   <p
-                                    className={`text-sm sm:text-base mt-1.5 leading-snug ${
+                                    className={`text-xs sm:text-sm mt-1 leading-snug ${
                                       isSelected
                                         ? "text-[#6D4C41]"
                                         : "text-white/50"
@@ -795,8 +795,8 @@ export default function App() {
                                 </div>
 
                                 {isSelected && (
-                                  <div className="check-badge relative z-10 shrink-0 w-8 h-8 rounded-full bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white flex items-center justify-center shadow-md">
-                                    <Check className="w-5 h-5" strokeWidth={3} />
+                                  <div className="check-badge relative z-10 shrink-0 w-7 h-7 rounded-full bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white flex items-center justify-center">
+                                    <Check className="w-4 h-4" strokeWidth={3} />
                                   </div>
                                 )}
                               </button>
@@ -809,7 +809,7 @@ export default function App() {
                           initial={{ opacity: 0, y: 16 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.55 }}
-                          className="flex items-center justify-between pt-4 pb-8"
+                          className="flex items-center justify-between pt-2 pb-4"
                         >
                           <button
                             onClick={handleSurveyBack}
@@ -1022,7 +1022,7 @@ export default function App() {
 
               <div className="space-y-4 mt-4">
                 <div className="flex justify-between items-center">
-                  <p className="text-sm font-medium text-white/50">
+                  <p className="text-sm font-medium text-white/50 pl-4">
                     {t[lang].refreshes}:{" "}
                     <span
                       className={
@@ -1057,7 +1057,7 @@ export default function App() {
                         initial={{ opacity: 0, scale: 0.9, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                        className="absolute bottom-full mb-3 left-0 w-full bg-black/60 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/15 p-3 flex justify-center gap-4 z-[110]"
+                        className="absolute bottom-full mb-3 left-0 w-full bg-black/80 backdrop-blur-2xl rounded-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.6)] border border-white/15 p-3 flex justify-center gap-4 z-[110]"
                       >
                         <button onClick={() => handleRedirect('google')} className="w-14 h-14 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
                         <button onClick={() => handleRedirect('yelp')} className="w-14 h-14 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><YelpIcon className="w-7 h-7 text-white" /></button>
