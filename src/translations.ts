@@ -31,7 +31,7 @@ export const t = {
       { label: "Good", description: "Helpful team, warm and welcoming." }
     ],
     atmoOptions: [
-      { label: "Electric", description: "Buzzing energy, perfect for groups." },
+      { label: "Lively", description: "Buzzing energy, perfect for groups." },
       { label: "Cozy", description: "Warm and inviting, great for dates." },
       { label: "Chill", description: "Relaxed pace, no rush at all." }
     ],
@@ -169,7 +169,7 @@ export const t = {
       { label: "Bueno", description: "Equipo servicial, cálido y acogedor." }
     ],
     atmoOptions: [
-      { label: "Eléctrico", description: "Energía vibrante, perfecto para grupos." },
+      { label: "Animado", description: "Energía vibrante, perfecto para grupos." },
       { label: "Acogedor", description: "Cálido e íntimo, ideal para citas." },
       { label: "Tranquilo", description: "Ritmo relajado, sin prisa alguna." }
     ],
