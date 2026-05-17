@@ -199,13 +199,13 @@ const RatingStep = memo(function RatingStep({
       exit={{ opacity: 0, x: -20 }}
       className="flex-1 flex flex-col py-2 max-w-xl mx-auto w-full"
     >
-      <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 sm:p-10 flex-1 flex flex-col my-4 transform hover:scale-[1.01] transition-transform duration-500">
+      <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-6 sm:p-10 flex-1 flex flex-col my-4">
       <div className="text-center pt-8 pb-2">
         <m.h2
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#4A2311] leading-[1.1]"
+          className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md"
         >
           {t[lang].overallRating}
         </m.h2>
@@ -213,7 +213,7 @@ const RatingStep = memo(function RatingStep({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.13 }}
-          className="text-sm sm:text-base text-[#6D4C41] mt-4 max-w-sm mx-auto leading-relaxed"
+          className="text-sm sm:text-base text-white/60 mt-4 max-w-sm mx-auto leading-relaxed"
         >
           {t[lang].overallSub}
         </m.p>
@@ -240,7 +240,7 @@ const RatingStep = memo(function RatingStep({
                 aria-label={`Rate ${star} out of 5`}
               >
                 <Star
-                  className="w-11 h-11 sm:w-14 sm:h-14 text-[#E7E5E4]"
+                  className="w-11 h-11 sm:w-14 sm:h-14 text-white/20"
                   strokeWidth={1.5}
                 />
                 <div
@@ -265,7 +265,7 @@ const RatingStep = memo(function RatingStep({
           transition={{ delay: 0.3, duration: 0.4 }}
           className="bg-transparent px-10 py-6 flex flex-col items-center min-w-[220px]"
         >
-          <span className="text-[5rem] sm:text-[6rem] font-black text-[#4A2311] tabular-nums leading-none tracking-tighter">
+          <span className="text-[5rem] sm:text-[6rem] font-black text-white tabular-nums leading-none tracking-tighter drop-shadow-lg">
             {rating.toFixed(1)}
           </span>
           <AnimatePresence mode="wait">
@@ -292,7 +292,7 @@ const RatingStep = memo(function RatingStep({
           className="w-full max-w-md mx-auto px-2"
         >
           <div className="relative h-7 flex items-center">
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#E5E5E5] rounded-full" />
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-white/15 rounded-full" />
             <div
               className="absolute left-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#E62E2D] rounded-full"
               style={{ width: `${fillPct}%` }}
@@ -310,7 +310,7 @@ const RatingStep = memo(function RatingStep({
               className="rating-slider absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer"
             />
           </div>
-          <div className="flex justify-between text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#5D4037] mt-4">
+          <div className="flex justify-between text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-white/40 mt-4">
             <span>{t[lang].ratingLabels[0]}</span>
             <span>{t[lang].ratingLabels[1]}</span>
           </div>
@@ -326,13 +326,13 @@ const RatingStep = memo(function RatingStep({
       >
         <button
           onClick={onBack}
-          className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-[#4A2311] active:scale-95 transition-all"
+          className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 active:scale-95 transition-all"
           aria-label="Back"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <div className="flex items-center gap-4">
-          <span className="font-bold text-sm text-[#4A2311]">{t[lang].next}</span>
+          <span className="font-bold text-sm text-white/80">{t[lang].next}</span>
           <button
             onClick={handleContinue}
             className="w-16 h-16 bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
@@ -567,8 +567,8 @@ export default function App() {
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
           style={{ opacity: 0 }}
         />
-        {/* Soft overlay to ensure readability */}
-        <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px]" />
+        {/* Cinematic dark overlay for premium contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
       </div>
 
       {/* Global Header */}
@@ -587,9 +587,9 @@ export default function App() {
               <img 
                 src="/xiyuehuilogo.png" 
                 alt="Xi Yue Hui" 
-                className="h-16 sm:h-20 object-contain drop-shadow-sm" 
+                className="h-24 sm:h-[7.5rem] object-contain drop-shadow-lg" 
               />
-              <span className="font-serif font-bold text-[#4A2311] text-base sm:text-xl tracking-wide ml-2">禧悦會海鲜自助火锅</span>
+              <span className="font-serif font-bold text-[#E62E2D] text-lg sm:text-2xl tracking-wide ml-3 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">禧悦會海鲜自助火锅</span>
             </m.div>
           )}
         </AnimatePresence>
@@ -598,10 +598,10 @@ export default function App() {
           <button
             type="button"
             onClick={() => setLangOpen((v) => !v)}
-            className="flex items-center gap-1.5 pl-7 pr-5 py-1 bg-white/60 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-bold text-[#4A2311] shadow-md border border-white/40 outline-none cursor-pointer select-none"
+            className="flex items-center gap-1.5 pl-7 pr-5 py-1.5 bg-black/30 backdrop-blur-xl rounded-full text-[10px] sm:text-xs font-bold text-white shadow-lg border border-white/20 outline-none cursor-pointer select-none"
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
-            <Languages className="w-3 h-3 sm:w-3.5 sm:h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#4A2311]" />
+            <Languages className="w-3 h-3 sm:w-3.5 sm:h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-white" />
             {{en: "English", cn: "中文", es: "Español"}[lang]}
             <svg className={`ml-0.5 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} width="6" height="4" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -619,15 +619,15 @@ export default function App() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9, y: -4 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-1.5 z-50 bg-white/90 backdrop-blur-xl rounded-xl shadow-xl border border-white/50 overflow-hidden min-w-[100px]"
+                  className="absolute right-0 top-full mt-1.5 z-50 bg-black/70 backdrop-blur-xl rounded-xl shadow-xl border border-white/20 overflow-hidden min-w-[100px]"
                 >
                   {(["en", "cn", "es"] as Lang[]).map((l) => (
                     <button
                       key={l}
                       type="button"
                       onClick={() => { handleLanguageChange(l); setLangOpen(false); }}
-                      className={`w-full text-left px-4 py-2 text-xs sm:text-sm font-semibold transition-colors ${
-                        lang === l ? "bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white" : "text-[#4A2311] hover:bg-black/5 active:bg-black/10"
+                      className={`w-full text-left px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors ${
+                        lang === l ? "bg-[#E62E2D] text-white" : "text-white/80 hover:bg-white/10 active:bg-white/20"
                       }`}
                       style={{ WebkitTapHighlightColor: "transparent" }}
                     >
@@ -658,10 +658,10 @@ export default function App() {
               <div className="relative h-[20dvh] sm:h-[30dvh] w-full pt-20 px-6 pb-2 mt-4 shrink-0 z-10 pointer-events-none" />
 
               <div className="px-6 sm:px-8 py-6 sm:py-10 flex-1 flex flex-col justify-end pb-8 sm:pb-12 z-10 relative">
-                <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-8 sm:p-10 mb-4 transform hover:scale-[1.02] transition-transform duration-500">
+                <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-8 sm:p-10 mb-4">
                 <m.h1 
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}
-                  className="text-[clamp(2rem,8vw,3rem)] min-[400px]:text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-[#4A2311]"
+                  className="text-[clamp(2rem,8vw,3rem)] min-[400px]:text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-white drop-shadow-lg"
                 >
                   {t[lang].welcomeTitle1}<br/>{t[lang].welcomeTitle2}
                 </m.h1>
@@ -671,12 +671,12 @@ export default function App() {
                   className="mt-10 flex justify-between items-end"
                 >
                   <div className="flex gap-2 pb-4">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)]"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#ccc]"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#ccc]"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#E62E2D] shadow-[0_0_8px_rgba(230,46,45,0.6)]"></div>
+                    <div className="w-2 h-2 rounded-full bg-white/30"></div>
+                    <div className="w-2 h-2 rounded-full bg-white/30"></div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="font-bold text-sm text-[#4A2311]">{t[lang].startBtn}</span>
+                    <span className="font-bold text-sm text-white/80">{t[lang].startBtn}</span>
                     <button 
                       onClick={goToSurvey} 
                       className="w-16 h-16 bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
@@ -699,19 +699,22 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col py-2 max-w-xl mx-auto w-full"
             >
-              {/* Progress segments */}
-              <div className="flex items-center justify-center gap-2 pt-6">
+              {/* Progress step indicators */}
+              <div className="flex items-center justify-center gap-3 pt-6">
                 {surveyQuestions.map((q, idx) => {
                   const isActive = idx === surveyIndex;
-                  const isFilled = isActive || (!!results[q.key] && idx < surveyIndex);
+                  const isDone = !!results[q.key] && idx < surveyIndex;
                   return (
                     <div
                       key={q.key}
-                      className={`h-1.5 rounded-full transition-all duration-400 ease-out ${
-                        isFilled ? "bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)]" : "bg-[#E5E5E5]"
+                      className={`flex items-center justify-center rounded-full transition-all duration-500 ease-out font-bold text-xs ${
+                        isActive ? "w-9 h-9 bg-[#E62E2D] text-white shadow-[0_0_20px_rgba(230,46,45,0.4)] scale-110" 
+                        : isDone ? "w-8 h-8 bg-[#E62E2D]/80 text-white" 
+                        : "w-8 h-8 bg-white/20 text-white/50 backdrop-blur-sm border border-white/10"
                       }`}
-                      style={{ width: isActive ? 36 : 10 }}
-                    />
+                    >
+                      {isDone ? "✓" : idx + 1}
+                    </div>
                   );
                 })}
               </div>
@@ -728,7 +731,7 @@ export default function App() {
                   transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                   className="flex-1 flex flex-col px-6 mt-4"
                 >
-                  <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 sm:p-8 flex-1 flex flex-col my-4">
+                  <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-6 sm:p-8 flex-1 flex flex-col my-4">
                   {(() => {
                     const question = surveyQuestions[surveyIndex];
                     const selectedValue = results[question.key];
@@ -741,7 +744,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.05 }}
-                            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4A2311] leading-[1.1]"
+                            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md"
                           >
                             {question.title}
                           </m.h2>
@@ -749,7 +752,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.13 }}
-                            className="text-sm sm:text-base text-[#6D4C41] mt-3 mx-auto max-w-[90%] leading-relaxed"
+                            className="text-sm sm:text-base text-white/60 mt-3 mx-auto max-w-[90%] leading-relaxed"
                           >
                             {question.subtitle}
                           </m.p>
@@ -770,21 +773,21 @@ export default function App() {
                                 style={{
                                   animationDelay: `${0.25 + idx * 0.08}s`,
                                 }}
-                                className={`card-enter relative overflow-hidden flex items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 transition-all duration-500 active:scale-[0.96] transform hover:-translate-y-0.5 ${
+                                className={`card-enter relative overflow-hidden flex items-center gap-4 p-5 sm:p-6 rounded-2xl border transition-all duration-500 active:scale-[0.96] transform hover:-translate-y-0.5 ${
                                   isSelected
-                                    ? "bg-white/90 border-[#E62E2D] shadow-[0_8px_30px_rgba(230,46,45,0.15)]"
-                                    : "bg-white/40 border-white/40 hover:bg-white/70 hover:border-white/80 text-[#4A2311] shadow-sm hover:shadow-lg"
+                                    ? "bg-white/95 border-[#E62E2D] shadow-[0_8px_30px_rgba(230,46,45,0.25)]"
+                                    : "bg-white/10 border-white/15 hover:bg-white/20 hover:border-white/30 shadow-sm hover:shadow-lg backdrop-blur-sm"
                                 }`}
                               >
                                 <div className="relative z-10 flex-1 min-w-0">
-                                  <p className="text-base sm:text-lg font-bold leading-tight text-[#4A2311]">
+                                  <p className={`text-base sm:text-lg font-bold leading-tight ${isSelected ? "text-[#4A2311]" : "text-white"}`}>
                                     {opt.label}
                                   </p>
                                   <p
                                     className={`text-sm sm:text-base mt-1.5 leading-snug ${
                                       isSelected
                                         ? "text-[#6D4C41]"
-                                        : "text-[#8D6E63]"
+                                        : "text-white/50"
                                     }`}
                                   >
                                     {opt.description}
@@ -810,13 +813,13 @@ export default function App() {
                         >
                           <button
                             onClick={handleSurveyBack}
-                            className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-[#4A2311] active:scale-95 transition-all"
+                            className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 active:scale-95 transition-all"
                             aria-label="Back"
                           >
                             <ChevronLeft className="w-6 h-6" />
                           </button>
                           <div className={`flex items-center gap-4 transition-opacity duration-300 ${!selectedValue ? "opacity-30 pointer-events-none" : "opacity-100"}`}>
-                            <span className="font-bold text-sm text-[#4A2311]">{t[lang].next}</span>
+                            <span className="font-bold text-sm text-white/80">{t[lang].next}</span>
                             <button
                               disabled={!selectedValue}
                               onClick={handleSurveyNext}
@@ -858,12 +861,12 @@ export default function App() {
               exit={{ opacity: 0, x: -20 }}
               className="flex-1 flex flex-col py-4 justify-between max-w-xl mx-auto w-full"
             >
-              <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 sm:p-10 flex-1 flex flex-col my-4">
+              <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-6 sm:p-10 flex-1 flex flex-col my-4">
                 <div className="pb-4 text-center">
-                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4A2311] leading-[1.1]">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md">
                     {t[lang].commentsTitle}
                   </h2>
-                  <p className="text-sm sm:text-base text-[#6D4C41] mt-3 mx-auto max-w-[90%] leading-relaxed">
+                  <p className="text-sm sm:text-base text-white/60 mt-3 mx-auto max-w-[90%] leading-relaxed">
                     {t[lang].commentsSub}
                   </p>
                 </div>
@@ -875,7 +878,7 @@ export default function App() {
                       handleOptionSelect("comments", e.target.value)
                     }
                     placeholder={t[lang].suggestions[suggestionIdx]}
-                    className="flex-1 w-full p-6 sm:p-8 bg-white/60 border border-white/40 rounded-2xl outline-none focus:border-[#E62E2D]/40 transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-md text-[#4A2311] placeholder-[#A8A29E]"
+                    className="flex-1 w-full p-6 sm:p-8 bg-white/10 border border-white/15 rounded-2xl outline-none focus:border-[#E62E2D]/60 transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-[0_0_20px_rgba(230,46,45,0.15)] text-white placeholder-white/30 backdrop-blur-sm"
                   />
                 </div>
 
@@ -900,11 +903,11 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col justify-center items-center"
             >
-              <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-12 sm:p-16 text-center space-y-8">
+              <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-12 sm:p-16 text-center space-y-8">
                 <div className="relative w-16 h-16 flex items-center justify-center mx-auto">
                   <div className="absolute inset-0 border-[3px] border-[#DC2626]/20 rounded-full" />
                   <m.div
-                    className="absolute inset-0 border-[3px] border-[#DC2626] rounded-full border-t-transparent"
+                    className="absolute inset-0 border-[3px] border-[#E62E2D] rounded-full border-t-transparent"
                     animate={{ rotate: 360 }}
                     transition={{
                       duration: 1,
@@ -914,8 +917,8 @@ export default function App() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <p className="text-xl font-bold text-[#4A2311]">{t[lang].generatingTitle}</p>
-                  <p className="text-sm text-[#6D4C41]">
+                  <p className="text-xl font-bold text-white">{t[lang].generatingTitle}</p>
+                  <p className="text-sm text-white/50">
                     {t[lang].generatingSub}
                   </p>
                 </div>
@@ -988,9 +991,9 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               className="flex-1 flex flex-col py-4 justify-between space-y-4 max-w-2xl mx-auto w-full"
             >
-              <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 sm:p-8 flex-1 flex flex-col my-4">
+              <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-6 sm:p-8 flex-1 flex flex-col my-4">
               <div className="flex justify-between items-center mt-2 mb-4">
-                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4A2311]">
+                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white drop-shadow-md">
                   {t[lang].resultTitle}
                 </h2>
               </div>
@@ -1003,11 +1006,11 @@ export default function App() {
                       setReviews({ ...reviews, [lang]: e.target.value });
                     }
                   }}
-                  className="flex-1 bg-white/60 p-6 sm:p-8 rounded-2xl border border-white/40 shadow-sm leading-relaxed text-[#4A2311] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#E62E2D]/40 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
+                  className="flex-1 bg-white/10 p-6 sm:p-8 rounded-2xl border border-white/15 shadow-sm leading-relaxed text-white text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#E62E2D]/50 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-[0_0_20px_rgba(230,46,45,0.15)] placeholder-white/30 backdrop-blur-sm"
                 />
                 <button
                   onClick={copyToClipboard}
-                  className="absolute bottom-4 right-4 bg-white p-3 rounded-xl shadow-md border hover:border-[#111] hover:bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] hover:text-white transition-all active:scale-95 text-[#6D4C41] disabled:opacity-50 disabled:pointer-events-none"
+                  className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-sm p-3 rounded-xl shadow-md border border-white/20 hover:bg-[#E62E2D] hover:border-[#E62E2D] hover:text-white transition-all active:scale-95 text-white/60 disabled:opacity-50 disabled:pointer-events-none"
                 >
                   {isCopying ? (
                     <Check className="w-5 h-5 text-green-500 hover:text-white" />
@@ -1017,20 +1020,20 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="space-y-4 px-6 pb-6 mt-4">
+              <div className="space-y-4 mt-4">
                 <div className="flex justify-between items-center">
-                  <p className="text-sm font-medium text-[#8D6E63]">
+                  <p className="text-sm font-medium text-white/50">
                     {t[lang].refreshes}:{" "}
                     <span
                       className={
-                        refreshCount >= MAX_REFRESH ? "text-[#DC2626]" : ""
+                        refreshCount >= MAX_REFRESH ? "text-[#E62E2D]" : "text-white/70"
                       }
                     >
                       {refreshCount}/{MAX_REFRESH}
                     </span>
                   </p>
                   {refreshCount >= MAX_REFRESH && (
-                    <p className="text-[10px] uppercase tracking-tighter text-[#DC2626] font-bold bg-red-50 px-2 py-1 rounded-full">
+                    <p className="text-[10px] uppercase tracking-tighter text-[#E62E2D] font-bold bg-[#E62E2D]/10 px-2 py-1 rounded-full border border-[#E62E2D]/20">
                       {t[lang].limitReached}
                     </p>
                   )}
@@ -1039,7 +1042,7 @@ export default function App() {
                 <button
                   onClick={handleRefresh}
                   disabled={refreshCount >= MAX_REFRESH}
-                  className="w-full flex items-center justify-center gap-2 font-bold text-base sm:text-lg text-[#6D4C41] hover:text-[#4A2311] disabled:opacity-30 p-2 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 font-bold text-base sm:text-lg text-white/50 hover:text-white disabled:opacity-30 p-2 transition-colors"
                 >
                   <RefreshCcw
                     className={`w-4 h-4 sm:w-5 ${refreshCount < MAX_REFRESH ? "hover:rotate-180 transition-transform duration-500" : ""}`}
@@ -1054,7 +1057,7 @@ export default function App() {
                         initial={{ opacity: 0, scale: 0.9, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                        className="absolute bottom-full mb-3 left-0 w-full bg-white rounded-2xl shadow-2xl border border-[#E5E5E5] p-3 flex justify-center gap-4 z-[110]"
+                        className="absolute bottom-full mb-3 left-0 w-full bg-black/60 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/15 p-3 flex justify-center gap-4 z-[110]"
                       >
                         <button onClick={() => handleRedirect('google')} className="w-14 h-14 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
                         <button onClick={() => handleRedirect('yelp')} className="w-14 h-14 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><YelpIcon className="w-7 h-7 text-white" /></button>
@@ -1065,7 +1068,7 @@ export default function App() {
                   </AnimatePresence>
                   <button
                     onClick={() => setShareOpen(!shareOpen)}
-                    className="w-full bg-white border border-[#E5E5E5] text-[#4A2311] py-4 rounded-[1.25rem] font-bold text-lg active:scale-95 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                    className="w-full bg-[#E62E2D] text-white py-4 rounded-[1.25rem] font-bold text-lg active:scale-95 transition-all shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] hover:shadow-[0_8px_30px_rgba(230,46,45,0.5)] flex items-center justify-center gap-2"
                   >
                     <ExternalLink className="w-5 h-5" />
                     {(t[lang] as any).shareBtn}
@@ -1077,7 +1080,7 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        <p className="mt-auto pt-4 pb-0 text-center text-[10px] sm:text-[11px] font-medium tracking-wide text-[#4A2311]/35 select-none">
+        <p className="mt-auto pt-4 pb-0 text-center text-[10px] sm:text-[11px] font-medium tracking-wide text-white/20 select-none">
           Powered by Ezrefill
         </p>
       </main>
