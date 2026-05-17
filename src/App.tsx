@@ -604,7 +604,7 @@ export default function App() {
               className="flex items-center gap-2 pointer-events-auto shrink-0"
             >
               <img 
-                src="/329634140_674854171086091_8709234013583780065_n-removebg-preview.png" 
+                src="/xiyuehui.svg" 
                 alt="Xi Yue Hui" 
                 className="h-10 sm:h-12 object-contain drop-shadow-md" 
               />
