@@ -13,8 +13,8 @@ html {
 body {
   margin: 0;
   overscroll-behavior-y: none;
-  background-color: #000000;
-  color: #FFFFFF;
+  background-color: #FDF3EC; /* Soft peach */
+  color: #4A2311; /* Dark Brown */
 }
 
 /* Base custom scrollbar */
