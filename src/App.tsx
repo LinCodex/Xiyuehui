@@ -1055,14 +1055,14 @@ export default function App() {
                   {t[lang].regenerate}
                 </button>
 
-                <div className="w-full pt-2 mt-auto relative z-20">
+                <div className="w-full pt-2 mt-auto relative z-[100]">
                   <AnimatePresence>
                     {shareOpen && (
                       <m.div
                         initial={{ opacity: 0, scale: 0.9, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                        className="absolute bottom-full mb-3 left-0 w-full bg-white rounded-2xl shadow-xl border border-[#E5E5E5] p-3 flex justify-center gap-4"
+                        className="absolute bottom-full mb-3 left-0 w-full bg-white rounded-2xl shadow-2xl border border-[#E5E5E5] p-3 flex justify-center gap-4 z-[110]"
                       >
                         <button onClick={() => handleRedirect('google')} className="w-14 h-14 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
                         <button onClick={() => handleRedirect('yelp')} className="w-14 h-14 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><YelpIcon className="w-7 h-7 text-white" /></button>
