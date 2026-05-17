@@ -51,8 +51,8 @@ const InstagramIcon = ({ className }: { className?: string }) => (
 );
 
 const XiaohongshuIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 256 256" className={className}>
-    <path fill="currentColor" d="M 29,0.33332825 C 13.959937,3.4666748 1.5356731,15.204498 0,31 -1.586103,47.314209 0,64.597672 0,81 v 102 c 0,18.76035 -4.7369685,44.19888 7.3333335,60 C 20.372129,260.06897 44.156731,256 63,256 h 111 35 c 5.78276,0 12.33244,0.84741 18,-0.33333 15.0401,-3.13336 27.46432,-14.87115 29,-30.66667 1.58612,-16.31419 0,-33.59769 0,-50 V 73 C 256,54.239685 260.73697,28.801102 248.66667,13 235.62787,-4.0689697 211.84329,0 193,0 H 82 47 C 41.217228,0 34.667561,-0.84741211 29,0.33332825 M 120,91 l -7,19 h 12 l -10,24 9,1 c -0.98794,2.68155 -2.31718,7.73317 -4.33334,9.83334 C 118.18945,146.3721 115.92654,146 114,146 c -4.35942,0 -13.16798,1.80539 -15.5,-3 -1.069664,-2.20416 0.465553,-4.98451 1.333336,-7 1.813624,-4.21228 4.222554,-8.51549 5.166664,-13 -2.17548,0 -4.92464,0.42967 -7,-0.33333 -7.778526,-2.85974 0.874031,-15.36435 2.66666,-19.66667 1.25875,-3.020981 2.75652,-9.584732 5.5,-11.5 C 110.01874,88.810822 115.88325,90.674988 120,91 m -79,63 c 2.750713,0 6.837379,0.81721 8.5,-2 1.769028,-2.99753 0.5,-9.58963 0.5,-13 V 106 C 50,102.90659 48.438198,93.464493 51.166668,91.5 53.41069,89.884308 62.832935,90.226166 63.833332,93 65.47065,97.539825 64,105.16241 64,110 v 32 c 0,5.48389 0.949112,11.8645 -1.333332,17 -2.177158,4.89861 -12.303417,9.27243 -17.333336,5.5 C 43.120155,162.84012 41.545292,156.59013 41,154 M 193,91 v 5 c 3.72887,0 8.4108,-0.763367 12,0.333328 11.97635,3.659424 11,15.422502 11,25.666672 1.99706,0 4.04419,-0.15562 6,0.33333 11.49335,2.87334 10,14.36401 10,23.66667 0,4.95615 0.93086,10.82184 -2.33333,15 -3.59567,4.60246 -9.48195,4 -14.66667,4 -1.6116,0 -4.26318,0.51051 -5.66667,-0.5 -2.62326,-1.88875 -3.78159,-7.50485 -4.33333,-10.5 3.28711,0 9.2179,1.12517 11.83333,-1.33334 C 219.9164,149.76859 218.65411,138.43454 215,136.5 c -1.93661,-1.02527 -4.88672,-0.5 -7,-0.5 h -15 v 29 h -14 v -29 h -14 v -14 h 14 v -12 h -9 V 96 h 9 v -5 h 14 m -32,5 v 14 h -8 v 42 h 13 v 13 H 120 L 125.33334,152.5 138,152 v -42 h -8 V 96 h 31 m 57,14 c 0,-2.84204 -0.51608,-6.25871 0.33333,-9 3.34434,-10.793121 19.61577,-2.093994 11.5,6.83333 -0.92279,1.01507 -2.54419,1.51106 -3.83333,1.83334 C 223.43948,110.30679 220.61993,110 218,110 M 41,110 36.833332,147 30,159 24,143 27,110 h 14 m 46,0 3,33 -6,15 h -2 c -5.366936,-8.49765 -6.053299,-17.26251 -7,-27 -0.672195,-6.91406 -2,-14.04004 -2,-21 h 14 m 106,0 v 12 h 9 v -12 h -9 m -75,42 -5,13 H 91 L 96.333336,151.5 104,151.66666 Z" />
+  <svg viewBox="0 0 256 256" fill="currentColor" className={className}>
+    <path d="M 29,0.33332825 C 13.959937,3.4666748 1.5356731,15.204498 0,31 -1.586103,47.314209 0,64.597672 0,81 v 102 c 0,18.76035 -4.7369685,44.19888 7.3333335,60 C 20.372129,260.06897 44.156731,256 63,256 h 111 35 c 5.78276,0 12.33244,0.84741 18,-0.33333 15.0401,-3.13336 27.46432,-14.87115 29,-30.66667 1.58612,-16.31419 0,-33.59769 0,-50 V 73 C 256,54.239685 260.73697,28.801102 248.66667,13 235.62787,-4.0689697 211.84329,0 193,0 H 82 47 C 41.217228,0 34.667561,-0.84741211 29,0.33332825 M 120,91 l -7,19 h 12 l -10,24 9,1 c -0.98794,2.68155 -2.31718,7.73317 -4.33334,9.83334 C 118.18945,146.3721 115.92654,146 114,146 c -4.35942,0 -13.16798,1.80539 -15.5,-3 -1.069664,-2.20416 0.465553,-4.98451 1.333336,-7 1.813624,-4.21228 4.222554,-8.51549 5.166664,-13 -2.17548,0 -4.92464,0.42967 -7,-0.33333 -7.778526,-2.85974 0.874031,-15.36435 2.66666,-19.66667 1.25875,-3.020981 2.75652,-9.584732 5.5,-11.5 C 110.01874,88.810822 115.88325,90.674988 120,91 m -79,63 c 2.750713,0 6.837379,0.81721 8.5,-2 1.769028,-2.99753 0.5,-9.58963 0.5,-13 V 106 C 50,102.90659 48.438198,93.464493 51.166668,91.5 53.41069,89.884308 62.832935,90.226166 63.833332,93 65.47065,97.539825 64,105.16241 64,110 v 32 c 0,5.48389 0.949112,11.8645 -1.333332,17 -2.177158,4.89861 -12.303417,9.27243 -17.333336,5.5 C 43.120155,162.84012 41.545292,156.59013 41,154 M 193,91 v 5 c 3.72887,0 8.4108,-0.763367 12,0.333328 11.97635,3.659424 11,15.422502 11,25.666672 1.99706,0 4.04419,-0.15562 6,0.33333 11.49335,2.87334 10,14.36401 10,23.66667 0,4.95615 0.93086,10.82184 -2.33333,15 -3.59567,4.60246 -9.48195,4 -14.66667,4 -1.6116,0 -4.26318,0.51051 -5.66667,-0.5 -2.62326,-1.88875 -3.78159,-7.50485 -4.33333,-10.5 3.28711,0 9.2179,1.12517 11.83333,-1.33334 C 219.9164,149.76859 218.65411,138.43454 215,136.5 c -1.93661,-1.02527 -4.88672,-0.5 -7,-0.5 h -15 v 29 h -14 v -29 h -14 v -14 h 14 v -12 h -9 V 96 h 9 v -5 h 14 m -32,5 v 14 h -8 v 42 h 13 v 13 H 120 L 125.33334,152.5 138,152 v -42 h -8 V 96 h 31 m 57,14 c 0,-2.84204 -0.51608,-6.25871 0.33333,-9 3.34434,-10.793121 19.61577,-2.093994 11.5,6.83333 -0.92279,1.01507 -2.54419,1.51106 -3.83333,1.83334 C 223.43948,110.30679 220.61993,110 218,110 M 41,110 36.833332,147 30,159 24,143 27,110 h 14 m 46,0 3,33 -6,15 h -2 c -5.366936,-8.49765 -6.053299,-17.26251 -7,-27 -0.672195,-6.91406 -2,-14.04004 -2,-21 h 14 m 106,0 v 12 h 9 v -12 h -9 m -75,42 -5,13 H 91 L 96.333336,151.5 104,151.66666 Z"/>
   </svg>
 );
 
@@ -365,10 +365,10 @@ export default function App() {
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const [redirectTarget, setRedirectTarget] = useState<'google' | 'yelp' | 'instagram' | 'xiaohongshu'>('google');
-  const [shareOpen, setShareOpen] = useState(false);
   const [suggestionIdx, setSuggestionIdx] = useState(0);
   const [surveyIndex, setSurveyIndex] = useState(0);
   const [surveyDirection, setSurveyDirection] = useState<1 | -1>(1);
+  const [shareOpen, setShareOpen] = useState(false);
 
   // TEAM_001: Guard against duplicate API calls from double-taps.
   const isGenerating = useRef(false);
@@ -509,21 +509,21 @@ export default function App() {
 
   const handleRedirect = (target: 'google' | 'yelp' | 'instagram' | 'xiaohongshu') => {
     setRedirectTarget(target);
+    setShareOpen(false);
     copyToClipboard();
     setShowRedirectModal(true);
-    setShareOpen(false);
   };
 
   const confirmRedirect = (target?: 'google' | 'yelp' | 'instagram' | 'xiaohongshu') => {
     const finalTarget = target || redirectTarget;
     if (finalTarget === 'yelp') {
       window.open(
-        "https://www.yelp.com/writeareview/biz/ZFXQV1KOIBrKjJiLRWUBIw?return_url=%2Fbiz%2FZFXQV1KOIBrKjJiLRWUBIw&review_origin=biz-details-war-button",
+        "https://www.yelp.com/",
         "_blank",
       );
     } else if (finalTarget === 'instagram') {
       window.open(
-        "https://www.instagram.com/chuanbistro/",
+        "https://www.instagram.com/",
         "_blank",
       );
     } else if (finalTarget === 'xiaohongshu') {
@@ -533,11 +533,12 @@ export default function App() {
       );
     } else {
       window.open(
-        "https://reviewthis.biz/chuanbistro",
+        "https://reviewthis.biz/xiyuehui",
         "_blank",
       );
     }
     setShowRedirectModal(false);
+    setShareOpen(false);
   };
 
   return (
@@ -955,65 +956,30 @@ export default function App() {
                   {t[lang].tryAgain}
                 </button>
                 
-                <div className="w-full space-y-2">
+                <div className="w-full space-y-2 relative">
                   <p className="text-sm font-medium text-[#777] uppercase tracking-wider mt-4">{t[lang].skipBtn}</p>
-                  <div className="relative">
-                    <button
-                      onClick={() => setShareOpen(!shareOpen)}
-                      className="w-full bg-white text-[#111] border-2 border-[#111] py-4 rounded-[1.25rem] font-bold text-lg hover:bg-gray-50 transition-colors shadow-lg flex items-center justify-center gap-2"
-                    >
-                      <ExternalLink className="w-5 h-5" />
-                      Share Review
-                    </button>
-                    
-                    <AnimatePresence>
-                      {shareOpen && (
-                        <>
-                          <div className="fixed inset-0 z-40" onClick={() => setShareOpen(false)} />
-                          <m.div
-                            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                            transition={{ duration: 0.15 }}
-                            className="absolute bottom-full mb-3 w-full z-50 bg-white/90 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 overflow-hidden flex justify-around p-4"
-                          >
-                            <button
-                              onClick={() => handleRedirect('google')}
-                              className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                            >
-                              <div className="w-12 h-12 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm">
-                                <GoogleIcon className="w-6 h-6" />
-                              </div>
-                            </button>
-                            <button
-                              onClick={() => handleRedirect('yelp')}
-                              className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                            >
-                              <div className="w-12 h-12 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm">
-                                <YelpIcon className="w-6 h-6 text-white" />
-                              </div>
-                            </button>
-                            <button
-                              onClick={() => handleRedirect('xiaohongshu')}
-                              className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                            >
-                              <div className="w-12 h-12 bg-[#ff2842] rounded-full flex items-center justify-center shadow-sm">
-                                <XiaohongshuIcon className="w-6 h-6 text-white" />
-                              </div>
-                            </button>
-                            <button
-                              onClick={() => handleRedirect('instagram')}
-                              className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                            >
-                              <div style={INSTAGRAM_GRADIENT} className="w-12 h-12 rounded-full flex items-center justify-center shadow-sm">
-                                <InstagramIcon className="w-7 h-7 text-white" />
-                              </div>
-                            </button>
-                          </m.div>
-                        </>
-                      )}
-                    </AnimatePresence>
-                  </div>
+                  <AnimatePresence>
+                    {shareOpen && (
+                      <m.div
+                        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                        className="absolute bottom-full mb-3 left-0 w-full bg-white rounded-2xl shadow-xl border border-[#E5E5E5] p-3 flex justify-center gap-4 z-50"
+                      >
+                        <button onClick={() => confirmRedirect('google')} className="w-14 h-14 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
+                        <button onClick={() => confirmRedirect('yelp')} className="w-14 h-14 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><YelpIcon className="w-7 h-7 text-white" /></button>
+                        <button onClick={() => confirmRedirect('xiaohongshu')} className="w-14 h-14 bg-[#FF2842] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><XiaohongshuIcon className="w-7 h-7 text-white" /></button>
+                        <button onClick={() => confirmRedirect('instagram')} style={INSTAGRAM_GRADIENT} className="w-14 h-14 rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><InstagramIcon className="w-8 h-8 text-white" /></button>
+                      </m.div>
+                    )}
+                  </AnimatePresence>
+                  <button
+                    onClick={() => setShareOpen(!shareOpen)}
+                    className="w-full bg-white border border-[#E5E5E5] text-[#111] py-4 rounded-[1.25rem] font-bold text-lg active:scale-95 transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+                  >
+                    <ExternalLink className="w-5 h-5" />
+                    {(t[lang] as any).shareBtn}
+                  </button>
                 </div>
               </div>
             </m.div>
@@ -1085,62 +1051,29 @@ export default function App() {
                   {t[lang].regenerate}
                 </button>
 
-                <div className="w-full pt-2 mt-auto relative">
-                  <button
-                    onClick={() => setShareOpen(!shareOpen)}
-                    className="w-full bg-[#111] text-white py-4 rounded-[1.25rem] font-bold text-lg hover:bg-[#333] transition-colors shadow-lg flex items-center justify-center gap-2"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                    Share Review
-                  </button>
-
+                <div className="w-full pt-2 mt-auto relative z-20">
                   <AnimatePresence>
                     {shareOpen && (
-                      <>
-                        <div className="fixed inset-0 z-40" onClick={() => setShareOpen(false)} />
-                        <m.div
-                          initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute bottom-full mb-3 w-full z-50 bg-white/90 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 overflow-hidden flex justify-around p-4"
-                        >
-                          <button
-                            onClick={() => handleRedirect('google')}
-                            className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                          >
-                            <div className="w-12 h-12 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm">
-                              <GoogleIcon className="w-6 h-6" />
-                            </div>
-                          </button>
-                          <button
-                            onClick={() => handleRedirect('yelp')}
-                            className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                          >
-                            <div className="w-12 h-12 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm">
-                              <YelpIcon className="w-6 h-6 text-white" />
-                            </div>
-                          </button>
-                          <button
-                            onClick={() => handleRedirect('xiaohongshu')}
-                            className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                          >
-                            <div className="w-12 h-12 bg-[#ff2842] rounded-full flex items-center justify-center shadow-sm">
-                              <XiaohongshuIcon className="w-6 h-6 text-white" />
-                            </div>
-                          </button>
-                          <button
-                            onClick={() => handleRedirect('instagram')}
-                            className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
-                          >
-                            <div style={INSTAGRAM_GRADIENT} className="w-12 h-12 rounded-full flex items-center justify-center shadow-sm">
-                              <InstagramIcon className="w-7 h-7 text-white" />
-                            </div>
-                          </button>
-                        </m.div>
-                      </>
+                      <m.div
+                        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                        className="absolute bottom-full mb-3 left-0 w-full bg-white rounded-2xl shadow-xl border border-[#E5E5E5] p-3 flex justify-center gap-4"
+                      >
+                        <button onClick={() => handleRedirect('google')} className="w-14 h-14 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
+                        <button onClick={() => handleRedirect('yelp')} className="w-14 h-14 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><YelpIcon className="w-7 h-7 text-white" /></button>
+                        <button onClick={() => handleRedirect('xiaohongshu')} className="w-14 h-14 bg-[#FF2842] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><XiaohongshuIcon className="w-7 h-7 text-white" /></button>
+                        <button onClick={() => handleRedirect('instagram')} style={INSTAGRAM_GRADIENT} className="w-14 h-14 rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><InstagramIcon className="w-8 h-8 text-white" /></button>
+                      </m.div>
                     )}
                   </AnimatePresence>
+                  <button
+                    onClick={() => setShareOpen(!shareOpen)}
+                    className="w-full bg-white border border-[#E5E5E5] text-[#111] py-4 rounded-[1.25rem] font-bold text-lg active:scale-95 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <ExternalLink className="w-5 h-5" />
+                    {(t[lang] as any).shareBtn}
+                  </button>
                 </div>
               </div>
             </m.div>
@@ -1172,9 +1105,7 @@ export default function App() {
                     ? (t[lang] as any).modalSubGoogle
                     : redirectTarget === 'yelp'
                       ? (t[lang] as any).modalSubYelp
-                      : redirectTarget === 'xiaohongshu'
-                        ? "We're opening Xiaohongshu for you. Simply paste your review."
-                        : (t[lang] as any).modalSubInstagram}
+                      : (t[lang] as any).modalSubInstagram}
                 </p>
               </div>
               <button
@@ -1183,10 +1114,10 @@ export default function App() {
                 className={`w-full text-white py-4 rounded-full font-medium ${
                   redirectTarget === 'yelp'
                     ? 'bg-[#E00707]'
-                    : redirectTarget === 'xiaohongshu'
-                      ? 'bg-[#ff2842]'
-                      : redirectTarget === 'instagram'
-                        ? ''
+                    : redirectTarget === 'instagram'
+                      ? ''
+                      : redirectTarget === 'xiaohongshu'
+                        ? 'bg-[#FF2842]'
                         : 'bg-[#1A1A1A]'
                 }`}
               >
@@ -1195,7 +1126,7 @@ export default function App() {
                   : redirectTarget === 'yelp'
                     ? (t[lang] as any).modalGoYelp
                     : redirectTarget === 'xiaohongshu'
-                      ? 'Go to Xiaohongshu'
+                      ? (t[lang] as any).modalGoXiaohongshu
                       : (t[lang] as any).modalGoInstagram}
               </button>
             </m.div>
