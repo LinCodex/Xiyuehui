@@ -547,10 +547,21 @@ export default function App() {
     <div className="relative min-h-[100dvh] text-[#4A2311] font-sans selection:bg-[#E62E2D] selection:text-white overflow-x-hidden w-full bg-transparent">
       
       {/* Background Video Layer */}
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black">
         <video
           ref={(el: HTMLVideoElement | null) => {
-            if (el) el.play().catch(() => {});
+            if (!el) return;
+            // Attempt autoplay immediately
+            el.play().catch(() => {});
+            // WeChat mini-browser blocks autoplay until user gesture —
+            // listen for the first touch anywhere and retry.
+            const tryPlay = () => {
+              el.play().catch(() => {});
+              document.removeEventListener("touchstart", tryPlay);
+              document.removeEventListener("click", tryPlay);
+            };
+            document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+            document.addEventListener("click", tryPlay, { once: true });
           }}
           onPlaying={(e) => {
             (e.target as HTMLVideoElement).style.opacity = "1";
@@ -564,6 +575,7 @@ export default function App() {
           x5-video-player-type="h5-page"
           x5-playsinline=""
           x5-video-player-fullscreen="false"
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
           style={{ opacity: 0 }}
         />
@@ -773,13 +785,14 @@ export default function App() {
                                 style={{
                                   animationDelay: `${0.25 + idx * 0.08}s`,
                                 }}
-                                className={`card-enter relative overflow-hidden flex items-center gap-3 p-4 sm:p-5 rounded-xl border transition-all duration-500 active:scale-[0.96] ${
+                                className={`card-enter relative overflow-hidden flex items-center p-4 sm:p-5 rounded-xl border transition-all duration-500 active:scale-[0.96] ${
                                   isSelected
                                     ? "bg-white/95 border-[#E62E2D] shadow-[0_8px_30px_rgba(230,46,45,0.25)]"
                                     : "bg-white/10 border-white/15 hover:bg-white/20 hover:border-white/30 shadow-sm backdrop-blur-sm"
                                 }`}
                               >
-                                <div className="relative z-10 flex-1 min-w-0">
+                                {/* Text content — always centered, never shifts */}
+                                <div className="relative z-[1] w-full text-center">
                                   <p className={`text-sm sm:text-base font-bold leading-tight ${isSelected ? "text-[#4A2311]" : "text-white"}`}>
                                     {opt.label}
                                   </p>
@@ -794,9 +807,13 @@ export default function App() {
                                   </p>
                                 </div>
 
+                                {/* Checkmark overlay — centered over card with blur */}
                                 {isSelected && (
-                                  <div className="check-badge relative z-10 shrink-0 w-7 h-7 rounded-full bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white flex items-center justify-center">
-                                    <Check className="w-4 h-4" strokeWidth={3} />
+                                  <div className="absolute inset-0 z-[2] flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-white/60 backdrop-blur-[3px] rounded-xl" />
+                                    <div className="relative z-[3] w-10 h-10 rounded-full bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.5)] text-white flex items-center justify-center">
+                                      <Check className="w-5 h-5" strokeWidth={3} />
+                                    </div>
                                   </div>
                                 )}
                               </button>
