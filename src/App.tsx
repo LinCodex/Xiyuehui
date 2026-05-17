@@ -542,9 +542,9 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] text-[#111] font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-[#FAF5ED]">
+    <div className="relative min-h-[100dvh] text-[#111] font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-[#FEF2F2]">
       
-      {/* Background Video Layer - Small overextension to hide overscroll edge */}
+      {/* Background Video Layer */}
       <AnimatePresence>
         {step === "welcome" && (
           <m.div 
@@ -553,8 +553,8 @@ export default function App() {
             exit={{ opacity: 0 }}
             className="absolute inset-x-0 w-full z-0 pointer-events-none"
             style={{ 
-              top: "-100px",
-              height: "calc(55dvh + 100px)",
+              top: 0,
+              height: "45dvh",
               maskImage: 'linear-gradient(to bottom, black calc(100% - 10dvh), transparent 100%)',
               WebkitMaskImage: 'linear-gradient(to bottom, black calc(100% - 10dvh), transparent 100%)'
             }}
@@ -583,7 +583,7 @@ export default function App() {
               x5-video-player-type="h5-page"
               x5-playsinline=""
               x5-video-player-fullscreen="false"
-              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+              className="absolute inset-0 w-full h-full object-contain sm:object-cover transition-opacity duration-1000 bg-black/5"
               style={{ opacity: 0 }}
             />
           </m.div>
@@ -601,10 +601,13 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex items-baseline gap-1.5 sm:gap-2 pointer-events-auto shrink-0"
+              className="flex items-center gap-2 pointer-events-auto shrink-0"
             >
-              <span className="font-serif font-extrabold text-white tracking-widest text-lg sm:text-2xl uppercase drop-shadow-md">Xi Yue Hui</span>
-              <span className="font-serif font-bold text-[#C5A254] text-base sm:text-xl tracking-wide drop-shadow-md">禧悦會海鲜自助火锅</span>
+              <img 
+                src="/329634140_674854171086091_8709234013583780065_n-removebg-preview.png" 
+                alt="Xi Yue Hui" 
+                className="h-10 sm:h-12 object-contain drop-shadow-md" 
+              />
             </m.div>
           )}
         </AnimatePresence>
@@ -675,7 +678,7 @@ export default function App() {
               <div className="px-6 sm:px-8 py-4 sm:py-8 flex-1 flex flex-col justify-end pb-6 sm:pb-12 z-10 relative">
                 <m.h1 
                   initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}
-                  className="text-[clamp(2rem,8vw,3rem)] min-[400px]:text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-[#111]"
+                  className="text-[clamp(2rem,8vw,3rem)] min-[400px]:text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] text-[#DC2626]"
                 >
                   {t[lang].welcomeTitle1}<br/>{t[lang].welcomeTitle2}
                 </m.h1>
