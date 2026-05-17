@@ -548,14 +548,6 @@ export default function App() {
       
       {/* Background Video Layer */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-        <m.img
-          src="/hero-bg.png"
-          alt="Xi Yue Hui"
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ scale: 1.05, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
-        />
         <video
           ref={(el: HTMLVideoElement | null) => {
             if (el) el.play().catch(() => {});
