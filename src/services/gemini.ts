@@ -15,14 +15,10 @@ export type AllReviews = Record<Lang, string>;
 // active key returns a rate-limit error. All three slots are optional —
 // the kiosk works with just `VITE_GEMINI_API_KEY` configured.
 function getApiKeys(): string[] {
-  const env = ((import.meta as ImportMeta).env ?? {}) as Record<
-    string,
-    string | undefined
-  >;
   const candidates = [
-    env.VITE_GEMINI_API_KEY,
-    env.VITE_GEMINI_API_KEY_2,
-    env.VITE_GEMINI_API_KEY_3,
+    import.meta.env.VITE_GEMINI_API_KEY,
+    import.meta.env.VITE_GEMINI_API_KEY_2,
+    import.meta.env.VITE_GEMINI_API_KEY_3,
   ];
   return candidates.filter(
     (k): k is string => typeof k === "string" && k.length > 0,

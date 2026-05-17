@@ -13,8 +13,8 @@ html {
 body {
   margin: 0;
   overscroll-behavior-y: none;
-  background-color: #FEF2F2; /* Subtle red tint */
-  color: #111111; /* Charcoal */
+  background-color: #000000;
+  color: #FFFFFF;
 }
 
 /* Base custom scrollbar */

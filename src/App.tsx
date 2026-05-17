@@ -204,7 +204,7 @@ const RatingStep = memo(function RatingStep({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#111] leading-[1.1]"
+          className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.1]"
         >
           {t[lang].overallRating}
         </m.h2>
@@ -212,7 +212,7 @@ const RatingStep = memo(function RatingStep({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.13 }}
-          className="text-sm sm:text-base text-[#555] mt-4 max-w-sm mx-auto leading-relaxed"
+          className="text-sm sm:text-base text-gray-300 mt-4 max-w-sm mx-auto leading-relaxed"
         >
           {t[lang].overallSub}
         </m.p>
@@ -264,7 +264,7 @@ const RatingStep = memo(function RatingStep({
           transition={{ delay: 0.3, duration: 0.4 }}
           className="bg-transparent px-10 py-6 flex flex-col items-center min-w-[220px]"
         >
-          <span className="text-[5rem] sm:text-[6rem] font-black text-[#111] tabular-nums leading-none tracking-tighter">
+          <span className="text-[5rem] sm:text-[6rem] font-black text-white tabular-nums leading-none tracking-tighter">
             {rating.toFixed(1)}
           </span>
           <AnimatePresence mode="wait">
@@ -291,7 +291,7 @@ const RatingStep = memo(function RatingStep({
           className="w-full max-w-md mx-auto px-2"
         >
           <div className="relative h-7 flex items-center">
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#E5E5E5] rounded-full" />
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-white/10 rounded-full" />
             <div
               className="absolute left-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#111111] rounded-full"
               style={{ width: `${fillPct}%` }}
@@ -309,7 +309,7 @@ const RatingStep = memo(function RatingStep({
               className="rating-slider absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer"
             />
           </div>
-          <div className="flex justify-between text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] mt-4">
+          <div className="flex justify-between text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mt-4">
             <span>{t[lang].ratingLabels[0]}</span>
             <span>{t[lang].ratingLabels[1]}</span>
           </div>
@@ -324,16 +324,16 @@ const RatingStep = memo(function RatingStep({
       >
         <button
           onClick={onBack}
-          className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-[#111] active:scale-95 transition-all"
+          className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-white active:scale-95 transition-all"
           aria-label="Back"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <div className="flex items-center gap-4">
-          <span className="font-bold text-sm text-[#111]">{t[lang].next}</span>
+          <span className="font-bold text-sm text-white">{t[lang].next}</span>
           <button
             onClick={handleContinue}
-            className="w-16 h-16 bg-[#111] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
+            className="w-16 h-16 bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
@@ -542,31 +542,24 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] text-[#111] font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-[#FEF2F2]">
+    <div className="relative min-h-[100dvh] text-white font-sans selection:bg-[#DC2626] selection:text-white overflow-x-hidden w-full bg-transparent">
       
       {/* Background Video Layer */}
-      <AnimatePresence>
-        {step === "welcome" && (
-          <m.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-x-0 w-full z-0 pointer-events-none"
-            style={{ 
-              top: 0,
-              height: "45dvh",
-              maskImage: 'linear-gradient(to bottom, black calc(100% - 10dvh), transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black calc(100% - 10dvh), transparent 100%)'
-            }}
-          >
-            <m.img
-              src="/hero-bg.png"
-              alt="Chuan Bistro"
-              className="absolute inset-0 w-full h-full object-cover"
-              initial={{ scale: 1.05, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
-            />
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black">
+        <m.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute inset-0 w-full h-full"
+        >
+          <m.img
+            src="/hero-bg.png"
+            alt="Xi Yue Hui"
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ scale: 1.05, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.4 }}
+            transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+          />
             <video
               ref={(el: HTMLVideoElement | null) => {
                 if (el) el.play().catch(() => {});
@@ -583,12 +576,13 @@ export default function App() {
               x5-video-player-type="h5-page"
               x5-playsinline=""
               x5-video-player-fullscreen="false"
-              className="absolute inset-0 w-full h-full object-contain sm:object-cover transition-opacity duration-1000 bg-black/5"
+              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
               style={{ opacity: 0 }}
             />
+            {/* Dark Overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
           </m.div>
-        )}
-      </AnimatePresence>
+      </div>
 
       {/* Global Header */}
       <div 
@@ -596,30 +590,27 @@ export default function App() {
         style={{ paddingTop: "max(1.5rem, env(safe-area-inset-top))" }}
       >
         <AnimatePresence>
-          {step === "welcome" && (
-            <m.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex items-center gap-2 pointer-events-auto shrink-0"
-            >
+          <m.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center gap-2 pointer-events-auto shrink-0"
+          >
               <img 
                 src="/xiyuehui.svg" 
                 alt="Xi Yue Hui" 
                 className="h-10 sm:h-12 object-contain drop-shadow-md" 
               />
             </m.div>
-          )}
         </AnimatePresence>
 
         <div ref={langRef} className="relative pointer-events-auto ml-auto shrink-0" style={{ WebkitTapHighlightColor: "transparent" }}>
           <button
             type="button"
             onClick={() => setLangOpen((v) => !v)}
-            className="flex items-center gap-1.5 pl-7 pr-5 py-1 bg-white/80 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-bold text-[#111] shadow-md border border-white/40 outline-none cursor-pointer select-none"
+            className="flex items-center gap-1.5 pl-7 pr-5 py-1 bg-black/60 backdrop-blur-md backdrop-blur-md rounded-full text-[10px] sm:text-xs font-bold text-white shadow-md border border-white/40 outline-none cursor-pointer select-none"
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
-            <Languages className="w-3 h-3 sm:w-3.5 sm:h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#111]" />
+            <Languages className="w-3 h-3 sm:w-3.5 sm:h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-white" />
             {{en: "English", cn: "中文", es: "Español"}[lang]}
             <svg className={`ml-0.5 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} width="6" height="4" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -637,7 +628,7 @@ export default function App() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9, y: -4 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-1.5 z-50 bg-white/90 backdrop-blur-xl rounded-xl shadow-xl border border-white/50 overflow-hidden min-w-[100px]"
+                  className="absolute right-0 top-full mt-1.5 z-50 bg-black/80 backdrop-blur-xl border border-white/10 backdrop-blur-xl rounded-xl shadow-xl border border-white/50 overflow-hidden min-w-[100px]"
                 >
                   {(["en", "cn", "es"] as Lang[]).map((l) => (
                     <button
@@ -645,7 +636,7 @@ export default function App() {
                       type="button"
                       onClick={() => { handleLanguageChange(l); setLangOpen(false); }}
                       className={`w-full text-left px-4 py-2 text-xs sm:text-sm font-semibold transition-colors ${
-                        lang === l ? "bg-[#111] text-white" : "text-[#111] hover:bg-black/5 active:bg-black/10"
+                        lang === l ? "bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)] text-white" : "text-white hover:bg-black/5 active:bg-black/10"
                       }`}
                       style={{ WebkitTapHighlightColor: "transparent" }}
                     >
@@ -688,15 +679,15 @@ export default function App() {
                   className="mt-10 flex justify-between items-end"
                 >
                   <div className="flex gap-2 pb-4">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#111]"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)]"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-[#ccc]"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-[#ccc]"></div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="font-bold text-sm text-[#111]">{t[lang].startBtn}</span>
+                    <span className="font-bold text-sm text-white">{t[lang].startBtn}</span>
                     <button 
                       onClick={goToSurvey} 
-                      className="w-16 h-16 bg-[#111] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
+                      className="w-16 h-16 bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
                     >
                       <ChevronRight className="w-6 h-6" />
                     </button>
@@ -724,7 +715,7 @@ export default function App() {
                     <div
                       key={q.key}
                       className={`h-1.5 rounded-full transition-all duration-400 ease-out ${
-                        isFilled ? "bg-[#111]" : "bg-[#E5E5E5]"
+                        isFilled ? "bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)]" : "bg-white/10"
                       }`}
                       style={{ width: isActive ? 36 : 10 }}
                     />
@@ -756,7 +747,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.05 }}
-                            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#111] leading-[1.1]"
+                            className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.1]"
                           >
                             {question.title}
                           </m.h2>
@@ -764,7 +755,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.13 }}
-                            className="text-sm sm:text-base text-[#555] mt-3 max-w-[85%] leading-relaxed"
+                            className="text-sm sm:text-base text-gray-300 mt-3 max-w-[85%] leading-relaxed"
                           >
                             {question.subtitle}
                           </m.p>
@@ -787,19 +778,19 @@ export default function App() {
                                 }}
                                 className={`card-enter relative overflow-hidden flex items-center gap-4 p-6 sm:p-8 rounded-[1.25rem] border transition-all duration-300 active:scale-[0.97] ${
                                   isSelected
-                                    ? "bg-white border-[#111] shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-                                    : "bg-white/60 border-transparent hover:bg-white text-[#111] shadow-sm"
+                                    ? "bg-black/50 backdrop-blur-xl border border-white/10 border-[#111] shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+                                    : "bg-black/40 backdrop-blur-md border-transparent hover:bg-black/50 backdrop-blur-xl border border-white/10 text-white shadow-sm"
                                 }`}
                               >
                                 <div className="relative z-10 flex-1 min-w-0">
-                                  <p className="text-lg sm:text-xl font-bold leading-tight text-[#111]">
+                                  <p className="text-lg sm:text-xl font-bold leading-tight text-white">
                                     {opt.label}
                                   </p>
                                   <p
                                     className={`text-sm sm:text-base mt-1.5 leading-snug ${
                                       isSelected
-                                        ? "text-[#555]"
-                                        : "text-[#777]"
+                                        ? "text-gray-300"
+                                        : "text-gray-400"
                                     }`}
                                   >
                                     {opt.description}
@@ -807,7 +798,7 @@ export default function App() {
                                 </div>
 
                                 {isSelected && (
-                                  <div className="check-badge relative z-10 shrink-0 w-8 h-8 rounded-full bg-[#111] text-white flex items-center justify-center shadow-md">
+                                  <div className="check-badge relative z-10 shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)] text-white flex items-center justify-center shadow-md">
                                     <Check className="w-5 h-5" strokeWidth={3} />
                                   </div>
                                 )}
@@ -825,17 +816,17 @@ export default function App() {
                         >
                           <button
                             onClick={handleSurveyBack}
-                            className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-[#111] active:scale-95 transition-all"
+                            className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-white active:scale-95 transition-all"
                             aria-label="Back"
                           >
                             <ChevronLeft className="w-6 h-6" />
                           </button>
                           <div className={`flex items-center gap-4 transition-opacity duration-300 ${!selectedValue ? "opacity-30 pointer-events-none" : "opacity-100"}`}>
-                            <span className="font-bold text-sm text-[#111]">{t[lang].next}</span>
+                            <span className="font-bold text-sm text-white">{t[lang].next}</span>
                             <button
                               disabled={!selectedValue}
                               onClick={handleSurveyNext}
-                              className="w-16 h-16 bg-[#111] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
+                              className="w-16 h-16 bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
                             >
                               <ChevronRight className={`w-6 h-6 ${selectedValue ? "arrow-nudge" : ""}`} />
                             </button>
@@ -873,10 +864,10 @@ export default function App() {
               className="flex-1 flex flex-col py-4 justify-between max-w-xl mx-auto w-full space-y-4"
             >
               <div className="pt-8 pb-4 px-6 text-left">
-                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#111] leading-[1.1]">
+                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.1]">
                   {t[lang].commentsTitle}
                 </h2>
-                <p className="text-sm sm:text-base text-[#555] mt-3 max-w-[85%] leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-300 mt-3 max-w-[85%] leading-relaxed">
                   {t[lang].commentsSub}
                 </p>
               </div>
@@ -888,14 +879,14 @@ export default function App() {
                         handleOptionSelect("comments", e.target.value)
                       }
                       placeholder={t[lang].suggestions[suggestionIdx]}
-                      className="flex-1 w-full p-6 sm:p-8 bg-white border border-[#E5E5E5] rounded-2xl outline-none focus:border-[#111] transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-md text-[#111] placeholder-[#A8A29E]"
+                      className="flex-1 w-full p-6 sm:p-8 bg-black/50 backdrop-blur-xl border border-white/10 border border-white/10 rounded-2xl outline-none focus:border-[#111] transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-md text-white placeholder-[#A8A29E]"
                     />
                   </div>
 
               <div className="pt-6 pb-8 px-6 mt-auto">
                 <button
                   onClick={handleGenerate}
-                  className="w-full bg-[#111] text-white py-4 sm:py-5 rounded-[1.25rem] font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition-all duration-300 shadow-lg"
+                  className="w-full bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)] text-white py-4 sm:py-5 rounded-[1.25rem] font-bold text-base flex items-center justify-center gap-2 active:scale-95 transition-all duration-300 shadow-lg"
                 >
                   {t[lang].createBtn}
                 </button>
@@ -925,8 +916,8 @@ export default function App() {
                 />
               </div>
               <div className="text-center space-y-2">
-                <p className="text-xl font-bold text-[#111]">{t[lang].generatingTitle}</p>
-                <p className="text-sm text-[#555]">
+                <p className="text-xl font-bold text-white">{t[lang].generatingTitle}</p>
+                <p className="text-sm text-gray-300">
                   {t[lang].generatingSub}
                 </p>
               </div>
@@ -953,23 +944,23 @@ export default function App() {
               <div className="w-full space-y-4 max-w-md mx-auto">
                 <button
                   onClick={handleGenerate}
-                  className="w-full bg-[#111] text-white py-4 rounded-[1.25rem] font-bold text-lg hover:bg-[#333] transition-colors shadow-lg flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)] text-white py-4 rounded-[1.25rem] font-bold text-lg hover:bg-[#333] transition-colors shadow-lg flex items-center justify-center gap-2"
                 >
                   <RefreshCcw className="w-5 h-5" />
                   {t[lang].tryAgain}
                 </button>
                 
                 <div className="w-full space-y-2 relative">
-                  <p className="text-sm font-medium text-[#777] uppercase tracking-wider mt-4">{t[lang].skipBtn}</p>
+                  <p className="text-sm font-medium text-gray-400 uppercase tracking-wider mt-4">{t[lang].skipBtn}</p>
                   <AnimatePresence>
                     {shareOpen && (
                       <m.div
                         initial={{ opacity: 0, scale: 0.9, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                        className="absolute bottom-full mb-3 left-0 w-full bg-white rounded-2xl shadow-xl border border-[#E5E5E5] p-3 flex justify-center gap-4 z-50"
+                        className="absolute bottom-full mb-3 left-0 w-full bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl border border-white/10 p-3 flex justify-center gap-4 z-50"
                       >
-                        <button onClick={() => confirmRedirect('google')} className="w-14 h-14 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
+                        <button onClick={() => confirmRedirect('google')} className="w-14 h-14 bg-black/50 backdrop-blur-xl border border-white/10 border border-white/10 rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
                         <button onClick={() => confirmRedirect('yelp')} className="w-14 h-14 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><YelpIcon className="w-7 h-7 text-white" /></button>
                         <button onClick={() => confirmRedirect('xiaohongshu')} className="w-14 h-14 bg-[#FF2842] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><XiaohongshuIcon className="w-7 h-7 text-white" /></button>
                         <button onClick={() => confirmRedirect('instagram')} style={INSTAGRAM_GRADIENT} className="w-14 h-14 rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><InstagramIcon className="w-8 h-8 text-white" /></button>
@@ -978,7 +969,7 @@ export default function App() {
                   </AnimatePresence>
                   <button
                     onClick={() => setShareOpen(!shareOpen)}
-                    className="w-full bg-white border border-[#E5E5E5] text-[#111] py-4 rounded-[1.25rem] font-bold text-lg active:scale-95 transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+                    className="w-full bg-black/50 backdrop-blur-xl border border-white/10 border border-white/10 text-white py-4 rounded-[1.25rem] font-bold text-lg active:scale-95 transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2"
                   >
                     <ExternalLink className="w-5 h-5" />
                     {(t[lang] as any).shareBtn}
@@ -997,7 +988,7 @@ export default function App() {
               className="flex-1 flex flex-col py-4 justify-between space-y-4 max-w-2xl mx-auto w-full"
             >
               <div className="flex justify-between items-center px-6 mt-4">
-                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#111]">
+                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
                   {t[lang].resultTitle}
                 </h2>
               </div>
@@ -1010,11 +1001,11 @@ export default function App() {
                       setReviews({ ...reviews, [lang]: e.target.value });
                     }
                   }}
-                  className="flex-1 bg-white p-6 sm:p-8 rounded-3xl border border-[#E5E5E5] shadow-sm leading-relaxed text-[#111] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#111] transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
+                  className="flex-1 bg-black/50 backdrop-blur-xl border border-white/10 p-6 sm:p-8 rounded-3xl border border-white/10 shadow-sm leading-relaxed text-white text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#111] transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-md"
                 />
                 <button
                   onClick={copyToClipboard}
-                  className="absolute bottom-4 right-4 bg-white p-3 rounded-xl shadow-md border hover:border-[#111] hover:bg-[#111] hover:text-white transition-all active:scale-95 text-[#555] disabled:opacity-50 disabled:pointer-events-none"
+                  className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-xl border border-white/10 p-3 rounded-xl shadow-md border hover:border-[#111] hover:bg-gradient-to-r from-red-600 to-red-800 border border-red-500/50 shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:text-white transition-all active:scale-95 text-gray-300 disabled:opacity-50 disabled:pointer-events-none"
                 >
                   {isCopying ? (
                     <Check className="w-5 h-5 text-green-500 hover:text-white" />
@@ -1026,7 +1017,7 @@ export default function App() {
 
               <div className="space-y-4 px-6 pb-6 mt-4">
                 <div className="flex justify-between items-center">
-                  <p className="text-sm font-medium text-[#777]">
+                  <p className="text-sm font-medium text-gray-400">
                     {t[lang].refreshes}:{" "}
                     <span
                       className={
@@ -1046,7 +1037,7 @@ export default function App() {
                 <button
                   onClick={handleRefresh}
                   disabled={refreshCount >= MAX_REFRESH}
-                  className="w-full flex items-center justify-center gap-2 font-bold text-base sm:text-lg text-[#555] hover:text-[#111] disabled:opacity-30 p-2 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 font-bold text-base sm:text-lg text-gray-300 hover:text-white disabled:opacity-30 p-2 transition-colors"
                 >
                   <RefreshCcw
                     className={`w-4 h-4 sm:w-5 ${refreshCount < MAX_REFRESH ? "hover:rotate-180 transition-transform duration-500" : ""}`}
@@ -1061,9 +1052,9 @@ export default function App() {
                         initial={{ opacity: 0, scale: 0.9, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                        className="absolute bottom-full mb-3 left-0 w-full bg-white rounded-2xl shadow-xl border border-[#E5E5E5] p-3 flex justify-center gap-4"
+                        className="absolute bottom-full mb-3 left-0 w-full bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl border border-white/10 p-3 flex justify-center gap-4"
                       >
-                        <button onClick={() => handleRedirect('google')} className="w-14 h-14 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
+                        <button onClick={() => handleRedirect('google')} className="w-14 h-14 bg-black/50 backdrop-blur-xl border border-white/10 border border-white/10 rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
                         <button onClick={() => handleRedirect('yelp')} className="w-14 h-14 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><YelpIcon className="w-7 h-7 text-white" /></button>
                         <button onClick={() => handleRedirect('xiaohongshu')} className="w-14 h-14 bg-[#FF2842] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><XiaohongshuIcon className="w-7 h-7 text-white" /></button>
                         <button onClick={() => handleRedirect('instagram')} style={INSTAGRAM_GRADIENT} className="w-14 h-14 rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><InstagramIcon className="w-8 h-8 text-white" /></button>
@@ -1072,7 +1063,7 @@ export default function App() {
                   </AnimatePresence>
                   <button
                     onClick={() => setShareOpen(!shareOpen)}
-                    className="w-full bg-white border border-[#E5E5E5] text-[#111] py-4 rounded-[1.25rem] font-bold text-lg active:scale-95 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                    className="w-full bg-black/50 backdrop-blur-xl border border-white/10 border border-white/10 text-white py-4 rounded-[1.25rem] font-bold text-lg active:scale-95 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                   >
                     <ExternalLink className="w-5 h-5" />
                     {(t[lang] as any).shareBtn}
@@ -1083,7 +1074,7 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        <p className="mt-auto pt-4 pb-0 text-center text-[10px] sm:text-[11px] font-medium tracking-wide text-[#111]/35 select-none">
+        <p className="mt-auto pt-4 pb-0 text-center text-[10px] sm:text-[11px] font-medium tracking-wide text-white/35 select-none">
           Powered by Ezrefill
         </p>
       </main>
@@ -1096,7 +1087,7 @@ export default function App() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white w-full max-w-sm rounded-[2.5rem] p-8 text-center space-y-6 shadow-2xl"
+              className="bg-black/50 backdrop-blur-xl border border-white/10 w-full max-w-sm rounded-[2.5rem] p-8 text-center space-y-6 shadow-2xl"
             >
               <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto">
                 <Check className="w-8 h-8 text-green-600" />
