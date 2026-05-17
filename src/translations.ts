@@ -11,8 +11,8 @@ export const getInitialLang = (): Lang => {
 
 export const t = {
   en: {
-    welcomeTitle1: "Craft your perfect",
-    welcomeTitle2: "review.",
+    welcomeTitle1: "Share the",
+    welcomeTitle2: "hotpot love.",
     startBtn: "Start",
     surveyFoodTitle: "How was the hotpot?",
     surveyFoodSub: "From the fresh ingredients to the broth — how did the flavors land?",
@@ -80,8 +80,8 @@ export const t = {
     shareBtn: "Share Review"
   },
   cn: {
-    welcomeTitle1: "定制您的完美",
-    welcomeTitle2: "评价。",
+    welcomeTitle1: "分享火锅",
+    welcomeTitle2: "好滋味。",
     startBtn: "开始",
     surveyFoodTitle: "火锅体验如何？",
     surveyFoodSub: "从新鲜食材到特色锅底，味道符合您的期待吗？",
@@ -149,8 +149,8 @@ export const t = {
     shareBtn: "分享评价"
   },
   es: {
-    welcomeTitle1: "Crea tu reseña",
-    welcomeTitle2: "perfecta.",
+    welcomeTitle1: "Comparte el",
+    welcomeTitle2: "sabor hotpot.",
     startBtn: "Empezar",
     surveyFoodTitle: "¿Qué tal el hotpot?",
     surveyFoodSub: "Desde los ingredientes frescos hasta el caldo — ¿qué te parecieron los sabores?",

@@ -1,22 +1,21 @@
 <!doctype html>
-<html lang="en" style="background-color: #1a0a00;">
+<html lang="en" style="background-color: #000000;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <!-- Tints the iOS Safari status bar / URL bar / toolbar so the safe-area
-         zones around the iPhone notch and home indicator paint the SAME
-         off-white as the main app background instead of an intrusive dark
-         frame. -->
-    <meta name="theme-color" content="#0a0a0a" />
+    <!-- Tints the iOS Safari status bar / URL bar / toolbar to match
+         the dark cinematic video background. -->
+    <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <!-- `default` (light bar, dark text) matches the new light theme; the
-         old `black-translucent` would have forced white status-bar text
-         which is unreadable on the light background. -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <!-- black-translucent lets the app content extend behind the status bar
+         so the video background bleeds seamlessly into the notch area. -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="icon" type="image/png" href="/xiyuehuilogo.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/xiyuehuilogo.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/xiyuehuilogo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/xiyuehuilogo.png" />
     <title>Xi Yue Hui 禧悦會海鲜自助火锅</title>
     <script>
       if (window.navigator.standalone) {
@@ -24,9 +23,8 @@
       }
     </script>
   </head>
-  <body style="background-color: #1a0a00;">
+  <body style="background-color: #000000;">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
