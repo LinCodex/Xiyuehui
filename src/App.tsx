@@ -191,6 +191,7 @@ const RatingStep = memo(function RatingStep({
     onContinue();
   };
 
+  // TEAM_008: Revert container and use solid light background for slider rating step
   return (
     <m.div
       key="rating"
@@ -199,13 +200,13 @@ const RatingStep = memo(function RatingStep({
       exit={{ opacity: 0, x: -20 }}
       className="flex-1 flex flex-col py-2 max-w-xl mx-auto w-full"
     >
-      <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-6 sm:p-10 flex-1 flex flex-col my-4">
+      <div className="flex-1 flex flex-col my-4 justify-between">
       <div className="text-center pt-8 pb-2">
         <m.h2
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md"
+          className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#4A2311] leading-[1.1]"
         >
           {t[lang].overallRating}
         </m.h2>
@@ -213,7 +214,7 @@ const RatingStep = memo(function RatingStep({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.13 }}
-          className="text-sm sm:text-base text-white/60 mt-4 max-w-sm mx-auto leading-relaxed"
+          className="text-sm sm:text-base text-[#6D4C41] mt-4 max-w-sm mx-auto leading-relaxed"
         >
           {t[lang].overallSub}
         </m.p>
@@ -239,8 +240,9 @@ const RatingStep = memo(function RatingStep({
                 className="p-1 relative active:scale-125 transition-transform duration-150"
                 aria-label={`Rate ${star} out of 5`}
               >
+                {/* TEAM_008: empty star using subtle dark color */}
                 <Star
-                  className="w-11 h-11 sm:w-14 sm:h-14 text-white/20"
+                  className="w-11 h-11 sm:w-14 sm:h-14 text-[#4A2311]/15"
                   strokeWidth={1.5}
                 />
                 <div
@@ -248,7 +250,7 @@ const RatingStep = memo(function RatingStep({
                   style={{ clipPath: `inset(0 ${100 - fillPercent}% 0 0)` }}
                 >
                   <Star
-                    className="w-11 h-11 sm:w-14 sm:h-14 text-[#DC2626] fill-[#DC2626]"
+                    className="w-11 h-11 sm:w-14 sm:h-14 text-[#E62E2D] fill-[#E62E2D]"
                     strokeWidth={1.5}
                   />
                 </div>
@@ -257,7 +259,7 @@ const RatingStep = memo(function RatingStep({
           })}
         </m.div>
 
-        {/* Glassy value card. Big number is direct, label re-keys only when
+        {/* Value card. Big number is direct, label re-keys only when
             the bucket changes so it doesn't strobe during slider drag. */}
         <m.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -265,7 +267,8 @@ const RatingStep = memo(function RatingStep({
           transition={{ delay: 0.3, duration: 0.4 }}
           className="bg-transparent px-10 py-6 flex flex-col items-center min-w-[220px]"
         >
-          <span className="text-[5rem] sm:text-[6rem] font-black text-white tabular-nums leading-none tracking-tighter drop-shadow-lg">
+          {/* TEAM_008: styled big rating number in dark theme */}
+          <span className="text-[5rem] sm:text-[6rem] font-black text-[#4A2311] tabular-nums leading-none tracking-tighter">
             {rating.toFixed(1)}
           </span>
           <AnimatePresence mode="wait">
@@ -275,7 +278,7 @@ const RatingStep = memo(function RatingStep({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.25 }}
-              className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-[#DC2626] mt-3"
+              className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-[#E62E2D] mt-3"
             >
               {qualityLabel}
             </m.p>
@@ -292,7 +295,8 @@ const RatingStep = memo(function RatingStep({
           className="w-full max-w-md mx-auto px-2"
         >
           <div className="relative h-7 flex items-center">
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-white/15 rounded-full" />
+            {/* TEAM_008: slider track and filled track using light/dark theme colors */}
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#4A2311]/10 rounded-full" />
             <div
               className="absolute left-0 top-1/2 -translate-y-1/2 h-1.5 bg-[#E62E2D] rounded-full"
               style={{ width: `${fillPct}%` }}
@@ -310,7 +314,8 @@ const RatingStep = memo(function RatingStep({
               className="rating-slider absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer"
             />
           </div>
-          <div className="flex justify-between text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-white/40 mt-4">
+          {/* TEAM_008: rating track labels styled in dark color */}
+          <div className="flex justify-between text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#4A2311]/40 mt-4">
             <span>{t[lang].ratingLabels[0]}</span>
             <span>{t[lang].ratingLabels[1]}</span>
           </div>
@@ -318,6 +323,7 @@ const RatingStep = memo(function RatingStep({
       </div>
       </div>
 
+      {/* TEAM_008: rating step back and next buttons adapted for light theme */}
       <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -326,13 +332,13 @@ const RatingStep = memo(function RatingStep({
       >
         <button
           onClick={onBack}
-          className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 active:scale-95 transition-all"
+          className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-[#4A2311]/60 hover:text-[#4A2311] hover:bg-[#4A2311]/5 active:scale-95 transition-all"
           aria-label="Back"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <div className="flex items-center gap-4">
-          <span className="font-bold text-sm text-white/80">{t[lang].next}</span>
+          <span className="font-bold text-sm text-[#4A2311]/80">{t[lang].next}</span>
           <button
             onClick={handleContinue}
             className="w-16 h-16 bg-[#E62E2D] shadow-[0_4px_14px_0_rgba(230,46,45,0.39)] text-white rounded-[1.25rem] flex items-center justify-center active:scale-95 transition-transform shadow-lg"
@@ -349,6 +355,8 @@ const RatingStep = memo(function RatingStep({
 // --- Main App ---
 export default function App() {
   const [step, setStep] = useState<Step>("welcome");
+  // TEAM_008: Solid background active state
+  const isSolidBg = step !== "welcome";
   const [results, setResults] = useState<SurveyResults>({
     food: "",
     service: "",
@@ -544,58 +552,62 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] text-[#4A2311] font-sans selection:bg-[#E62E2D] selection:text-white overflow-x-hidden w-full bg-transparent">
+    // TEAM_008: Dynamic background transition to solid peach
+    <div className={`relative min-h-[100dvh] text-[#4A2311] font-sans selection:bg-[#E62E2D] selection:text-white overflow-x-hidden w-full transition-colors duration-500 ${isSolidBg ? "bg-[#FDF3EC]" : "bg-transparent"}`}>
       
       {/* Background Video Layer */}
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black">
-        <video
-          ref={(el: HTMLVideoElement | null) => {
-            if (!el) return;
-            const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+      {/* TEAM_008: Render background video only on the welcome page */}
+      {!isSolidBg && (
+        <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black">
+          <video
+            ref={(el: HTMLVideoElement | null) => {
+              if (!el) return;
+              const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
 
-            // Standard autoplay attempt
-            el.play().catch(() => {});
-
-            if (isWeChat) {
-              // WeChat X5 kernel exposes WeixinJSBridge which allows
-              // autoplay without user gesture. This code only runs
-              // inside WeChat's in-app browser.
-              const bridgePlay = () => el.play().catch(() => {});
-              if ((window as any).WeixinJSBridge) {
-                bridgePlay();
-              } else {
-                document.addEventListener("WeixinJSBridgeReady", bridgePlay, { once: true });
-              }
-            }
-
-            // Fallback: retry on first user gesture (works everywhere)
-            const tryPlay = () => {
+              // Standard autoplay attempt
               el.play().catch(() => {});
-              document.removeEventListener("touchstart", tryPlay);
-              document.removeEventListener("click", tryPlay);
-            };
-            document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
-            document.addEventListener("click", tryPlay, { once: true });
-          }}
-          onPlaying={(e) => {
-            (e.target as HTMLVideoElement).style.opacity = "1";
-          }}
-          src="/background.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          webkit-playsinline=""
-          x5-video-player-type="h5-page"
-          x5-playsinline=""
-          x5-video-player-fullscreen="false"
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-          style={{ opacity: 0 }}
-        />
-        {/* Cinematic dark overlay for premium contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
-      </div>
+
+              if (isWeChat) {
+                // WeChat X5 kernel exposes WeixinJSBridge which allows
+                // autoplay without user gesture. This code only runs
+                // inside WeChat's in-app browser.
+                const bridgePlay = () => el.play().catch(() => {});
+                if ((window as any).WeixinJSBridge) {
+                  bridgePlay();
+                } else {
+                  document.addEventListener("WeixinJSBridgeReady", bridgePlay, { once: true });
+                }
+              }
+
+              // Fallback: retry on first user gesture (works everywhere)
+              const tryPlay = () => {
+                el.play().catch(() => {});
+                document.removeEventListener("touchstart", tryPlay);
+                document.removeEventListener("click", tryPlay);
+              };
+              document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+              document.addEventListener("click", tryPlay, { once: true });
+            }}
+            onPlaying={(e) => {
+              (e.target as HTMLVideoElement).style.opacity = "1";
+            }}
+            src="/background.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            webkit-playsinline=""
+            x5-video-player-type="h5-page"
+            x5-playsinline=""
+            x5-video-player-fullscreen="false"
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+            style={{ opacity: 0 }}
+          />
+          {/* Cinematic dark overlay for premium contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
+        </div>
+      )}
 
       {/* Global Header */}
       <div 
@@ -621,13 +633,16 @@ export default function App() {
         </AnimatePresence>
 
         <div ref={langRef} className="relative pointer-events-auto ml-auto shrink-0" style={{ WebkitTapHighlightColor: "transparent" }}>
+          {/* TEAM_008: Adapt language selection button dynamically to light/dark themes */}
           <button
             type="button"
             onClick={() => setLangOpen((v) => !v)}
-            className="flex items-center gap-1.5 pl-7 pr-5 py-1.5 bg-black/30 backdrop-blur-xl rounded-full text-[10px] sm:text-xs font-bold text-white shadow-lg border border-white/20 outline-none cursor-pointer select-none"
+            className={`flex items-center gap-1.5 pl-7 pr-5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold transition-all duration-300 shadow-md border outline-none cursor-pointer select-none ${
+              isSolidBg ? "bg-white/80 border-[#E5E5E5] text-[#4A2311]" : "bg-black/30 border-white/20 text-white"
+            }`}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
-            <Languages className="w-3 h-3 sm:w-3.5 sm:h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-white" />
+            <Languages className={`w-3 h-3 sm:w-3.5 sm:h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none ${isSolidBg ? "text-[#4A2311]" : "text-white"}`} />
             {{en: "English", cn: "中文", es: "Español"}[lang]}
             <svg className={`ml-0.5 transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`} width="6" height="4" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -640,12 +655,15 @@ export default function App() {
               <>
                 {/* Invisible backdrop to close menu on outside tap */}
                 <div className="fixed inset-0 z-40" onClick={() => setLangOpen(false)} />
+                {/* TEAM_008: Adapt dropdown list styles dynamically to light/dark themes */}
                 <m.div
                   initial={{ opacity: 0, scale: 0.9, y: -4 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9, y: -4 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-1.5 z-50 bg-black/70 backdrop-blur-xl rounded-xl shadow-xl border border-white/20 overflow-hidden min-w-[100px]"
+                  className={`absolute right-0 top-full mt-1.5 z-50 backdrop-blur-xl rounded-xl shadow-xl border overflow-hidden min-w-[100px] ${
+                    isSolidBg ? "bg-white border-[#E5E5E5]" : "bg-black/70 border-white/20"
+                  }`}
                 >
                   {(["en", "cn", "es"] as Lang[]).map((l) => (
                     <button
@@ -653,7 +671,7 @@ export default function App() {
                       type="button"
                       onClick={() => { handleLanguageChange(l); setLangOpen(false); }}
                       className={`w-full text-left px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors ${
-                        lang === l ? "bg-[#E62E2D] text-white" : "text-white/80 hover:bg-white/10 active:bg-white/20"
+                        lang === l ? "bg-[#E62E2D] text-white" : isSolidBg ? "text-[#4A2311] hover:bg-[#4A2311]/5 active:bg-[#4A2311]/10" : "text-white/80 hover:bg-white/10 active:bg-white/20"
                       }`}
                       style={{ WebkitTapHighlightColor: "transparent" }}
                     >
@@ -726,6 +744,7 @@ export default function App() {
               className="flex-1 flex flex-col py-2 max-w-xl mx-auto w-full"
             >
               {/* Progress step indicators */}
+              {/* TEAM_008: Adapt progress indicators for light theme */}
               <div className="flex items-center justify-center gap-3 pt-6">
                 {surveyQuestions.map((q, idx) => {
                   const isActive = idx === surveyIndex;
@@ -736,7 +755,7 @@ export default function App() {
                       className={`flex items-center justify-center rounded-full transition-all duration-500 ease-out font-bold text-xs ${
                         isActive ? "w-9 h-9 bg-[#E62E2D] text-white shadow-[0_0_20px_rgba(230,46,45,0.4)] scale-110" 
                         : isDone ? "w-8 h-8 bg-[#E62E2D]/80 text-white" 
-                        : "w-8 h-8 bg-white/20 text-white/50 backdrop-blur-sm border border-white/10"
+                        : "w-8 h-8 bg-white/80 text-[#4A2311]/50 border border-[#E5E5E5]"
                       }`}
                     >
                       {isDone ? "✓" : idx + 1}
@@ -757,7 +776,8 @@ export default function App() {
                   transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                   className="flex-1 flex flex-col px-6 mt-4"
                 >
-                  <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-6 sm:p-8 flex-1 flex flex-col my-4">
+                  {/* TEAM_008: Removed container, direct content on peach background */}
+                  <div className="flex-1 flex flex-col my-4 justify-between">
                   {(() => {
                     const question = surveyQuestions[surveyIndex];
                     const selectedValue = results[question.key];
@@ -770,7 +790,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.05 }}
-                            className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md"
+                            className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#4A2311] leading-[1.1]"
                           >
                             {question.title}
                           </m.h2>
@@ -778,7 +798,7 @@ export default function App() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.13 }}
-                            className="text-xs sm:text-sm text-white/60 mt-2 mx-auto max-w-[90%] leading-relaxed"
+                            className="text-xs sm:text-sm text-[#6D4C41] mt-2 mx-auto max-w-[90%] leading-relaxed"
                           >
                             {question.subtitle}
                           </m.p>
@@ -801,22 +821,16 @@ export default function App() {
                                 }}
                                 className={`card-enter relative overflow-hidden flex items-center p-4 sm:p-5 rounded-xl border transition-all duration-500 active:scale-[0.96] ${
                                   isSelected
-                                    ? "bg-white/95 border-[#E62E2D] shadow-[0_8px_30px_rgba(230,46,45,0.25)]"
-                                    : "bg-white/10 border-white/15 hover:bg-white/20 hover:border-white/30 shadow-sm backdrop-blur-sm"
+                                    ? "bg-white border-[#E62E2D] shadow-[0_8px_30px_rgba(230,46,45,0.2)]"
+                                    : "bg-white/80 border-[#E5E5E5] hover:bg-white hover:border-[#D1D1D1] shadow-sm"
                                 }`}
                               >
                                 {/* Text content — always centered, never shifts */}
                                 <div className="relative z-[1] w-full text-center">
-                                  <p className={`text-sm sm:text-base font-bold leading-tight ${isSelected ? "text-[#4A2311]" : "text-white"}`}>
+                                  <p className="text-sm sm:text-base font-bold leading-tight text-[#4A2311]">
                                     {opt.label}
                                   </p>
-                                  <p
-                                    className={`text-xs sm:text-sm mt-1 leading-snug ${
-                                      isSelected
-                                        ? "text-[#6D4C41]"
-                                        : "text-white/50"
-                                    }`}
-                                  >
+                                  <p className="text-xs sm:text-sm mt-1 leading-snug text-[#6D4C41]">
                                     {opt.description}
                                   </p>
                                 </div>
@@ -844,13 +858,13 @@ export default function App() {
                         >
                           <button
                             onClick={handleSurveyBack}
-                            className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 active:scale-95 transition-all"
+                            className="shrink-0 w-14 h-14 rounded-full flex items-center justify-center text-[#4A2311]/60 hover:text-[#4A2311] hover:bg-[#4A2311]/5 active:scale-95 transition-all"
                             aria-label="Back"
                           >
                             <ChevronLeft className="w-6 h-6" />
                           </button>
                           <div className={`flex items-center gap-4 transition-opacity duration-300 ${!selectedValue ? "opacity-30 pointer-events-none" : "opacity-100"}`}>
-                            <span className="font-bold text-sm text-white/80">{t[lang].next}</span>
+                            <span className="font-bold text-sm text-[#4A2311]/80">{t[lang].next}</span>
                             <button
                               disabled={!selectedValue}
                               onClick={handleSurveyNext}
@@ -892,16 +906,18 @@ export default function App() {
               exit={{ opacity: 0, x: -20 }}
               className="flex-1 flex flex-col py-4 justify-between max-w-xl mx-auto w-full"
             >
-              <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-6 sm:p-10 flex-1 flex flex-col my-4">
+              {/* TEAM_008: Removed container, adapted to light peach background */}
+              <div className="flex-1 flex flex-col my-4 justify-between">
                 <div className="pb-4 text-center">
-                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4A2311] leading-[1.1]">
                     {t[lang].commentsTitle}
                   </h2>
-                  <p className="text-sm sm:text-base text-white/60 mt-3 mx-auto max-w-[90%] leading-relaxed">
+                  <p className="text-sm sm:text-base text-[#6D4C41] mt-3 mx-auto max-w-[90%] leading-relaxed">
                     {t[lang].commentsSub}
                   </p>
                 </div>
 
+                {/* TEAM_008: Textarea styled as premium paper pad with elegant grey border */}
                 <div className="flex-1 flex flex-col min-h-[200px] my-2 relative">
                   <textarea
                     value={results.comments}
@@ -909,7 +925,7 @@ export default function App() {
                       handleOptionSelect("comments", e.target.value)
                     }
                     placeholder={t[lang].suggestions[suggestionIdx]}
-                    className="flex-1 w-full p-6 sm:p-8 bg-white/10 border border-white/15 rounded-2xl outline-none focus:border-[#E62E2D]/60 transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-[0_0_20px_rgba(230,46,45,0.15)] text-white placeholder-white/30 backdrop-blur-sm"
+                    className="flex-1 w-full p-6 sm:p-8 bg-white border border-[#E5E5E5] rounded-2xl outline-none focus:border-[#E62E2D]/60 transition-all duration-300 resize-none text-base sm:text-lg shadow-sm focus:shadow-[0_0_20px_rgba(230,46,45,0.1)] text-[#4A2311] placeholder-[#A8A29E]"
                   />
                 </div>
 
@@ -934,9 +950,10 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col justify-center items-center"
             >
-              <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-12 sm:p-16 text-center space-y-8">
+              {/* TEAM_008: Removed container, adapted spinner and texts to light theme */}
+              <div className="p-12 sm:p-16 text-center space-y-8">
                 <div className="relative w-16 h-16 flex items-center justify-center mx-auto">
-                  <div className="absolute inset-0 border-[3px] border-[#DC2626]/20 rounded-full" />
+                  <div className="absolute inset-0 border-[3px] border-[#E62E2D]/15 rounded-full" />
                   <m.div
                     className="absolute inset-0 border-[3px] border-[#E62E2D] rounded-full border-t-transparent"
                     animate={{ rotate: 360 }}
@@ -948,8 +965,8 @@ export default function App() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <p className="text-xl font-bold text-white">{t[lang].generatingTitle}</p>
-                  <p className="text-sm text-white/50">
+                  <p className="text-xl font-bold text-[#4A2311]">{t[lang].generatingTitle}</p>
+                  <p className="text-sm text-[#6D4C41]">
                     {t[lang].generatingSub}
                   </p>
                 </div>
@@ -1022,13 +1039,15 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               className="flex-1 flex flex-col py-4 justify-between space-y-4 max-w-2xl mx-auto w-full"
             >
-              <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] p-6 sm:p-8 flex-1 flex flex-col my-4">
+              {/* TEAM_008: Removed container, direct contents styled beautifully for solid peach */}
+              <div className="flex-1 flex flex-col my-4 justify-between">
               <div className="flex justify-between items-center mt-2 mb-4">
-                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white drop-shadow-md">
+                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#4A2311]">
                   {t[lang].resultTitle}
                 </h2>
               </div>
 
+              {/* TEAM_008: Review card text container styled as premium paper pad */}
               <div className="relative group flex-1 flex flex-col">
                 <textarea
                   value={(reviews && reviews[lang]) || ""}
@@ -1037,11 +1056,12 @@ export default function App() {
                       setReviews({ ...reviews, [lang]: e.target.value });
                     }
                   }}
-                  className="flex-1 bg-white/10 p-6 sm:p-8 rounded-2xl border border-white/15 shadow-sm leading-relaxed text-white text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#E62E2D]/50 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-[0_0_20px_rgba(230,46,45,0.15)] placeholder-white/30 backdrop-blur-sm"
+                  className="flex-1 bg-white p-6 sm:p-8 rounded-2xl border border-[#E5E5E5] shadow-sm leading-relaxed text-[#4A2311] text-lg sm:text-xl min-h-[160px] sm:min-h-[200px] outline-none focus:border-[#E62E2D]/50 transition-all duration-300 resize-none w-full block scrollbar-hide focus:shadow-[0_0_20px_rgba(230,46,45,0.1)] placeholder-[#A8A29E]"
                 />
+                {/* TEAM_008: Copy button adapted for light theme */}
                 <button
                   onClick={copyToClipboard}
-                  className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-sm p-3 rounded-xl shadow-md border border-white/20 hover:bg-[#E62E2D] hover:border-[#E62E2D] hover:text-white transition-all active:scale-95 text-white/60 disabled:opacity-50 disabled:pointer-events-none"
+                  className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-xl shadow-md border border-[#E5E5E5] hover:bg-[#E62E2D] hover:border-[#E62E2D] hover:text-white transition-all active:scale-95 text-[#4A2311]/60 disabled:opacity-50 disabled:pointer-events-none"
                 >
                   {isCopying ? (
                     <Check className="w-5 h-5 text-green-500 hover:text-white" />
@@ -1052,12 +1072,13 @@ export default function App() {
               </div>
 
               <div className="space-y-4 mt-4">
+                {/* TEAM_008: Refreshes count adapted for light theme text contrast */}
                 <div className="flex justify-between items-center">
-                  <p className="text-sm font-medium text-white/50 pl-4">
+                  <p className="text-sm font-medium text-[#4A2311]/50 pl-4">
                     {t[lang].refreshes}:{" "}
                     <span
                       className={
-                        refreshCount >= MAX_REFRESH ? "text-[#E62E2D]" : "text-white/70"
+                        refreshCount >= MAX_REFRESH ? "text-[#E62E2D]" : "text-[#4A2311]/70"
                       }
                     >
                       {refreshCount}/{MAX_REFRESH}
@@ -1070,10 +1091,11 @@ export default function App() {
                   )}
                 </div>
 
+                {/* TEAM_008: Regenerate button adapted for light theme */}
                 <button
                   onClick={handleRefresh}
                   disabled={refreshCount >= MAX_REFRESH}
-                  className="w-full flex items-center justify-center gap-2 font-bold text-base sm:text-lg text-white/50 hover:text-white disabled:opacity-30 p-2 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 font-bold text-base sm:text-lg text-[#4A2311]/50 hover:text-[#4A2311] disabled:opacity-30 p-2 transition-colors"
                 >
                   <RefreshCcw
                     className={`w-4 h-4 sm:w-5 ${refreshCount < MAX_REFRESH ? "hover:rotate-180 transition-transform duration-500" : ""}`}
@@ -1082,13 +1104,14 @@ export default function App() {
                 </button>
 
                 <div className="w-full pt-2 mt-auto relative z-[100]">
+                  {/* TEAM_008: Adapt floating share dropdown to premium light theme */}
                   <AnimatePresence>
                     {shareOpen && (
                       <m.div
                         initial={{ opacity: 0, scale: 0.9, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                        className="absolute bottom-full mb-3 left-0 w-full bg-black/80 backdrop-blur-2xl rounded-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.6)] border border-white/15 p-3 flex justify-center gap-4 z-[110]"
+                        className="absolute bottom-full mb-3 left-0 w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#E5E5E5] p-3 flex justify-center gap-4 z-[110]"
                       >
                         <button onClick={() => handleRedirect('google')} className="w-14 h-14 bg-white border border-[#E5E5E5] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><GoogleIcon className="w-7 h-7" /></button>
                         <button onClick={() => handleRedirect('yelp')} className="w-14 h-14 bg-[#E00707] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"><YelpIcon className="w-7 h-7 text-white" /></button>
@@ -1111,7 +1134,8 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        <p className="mt-auto pt-4 pb-0 text-center text-[10px] sm:text-[11px] font-medium tracking-wide text-white/20 select-none">
+        {/* TEAM_008: Dynamic bottom brand watermark color depending on light/dark backgrounds */}
+        <p className={`mt-auto pt-4 pb-0 text-center text-[10px] sm:text-[11px] font-medium tracking-wide select-none ${isSolidBg ? "text-[#4A2311]/20" : "text-white/20"}`}>
           Powered by Ezrefill
         </p>
       </main>
