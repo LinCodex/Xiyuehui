@@ -550,59 +550,64 @@ export default function App() {
   };
 
   return (
-    // TEAM_008: Keep overall dark background transparent (inheriting background video)
+    // TEAM_009: Keep overall dark background transparent (inheriting background video / solid dark layer)
     <div className="relative min-h-[100dvh] text-[#4A2311] font-sans selection:bg-[#E62E2D] selection:text-white overflow-x-hidden w-full bg-transparent">
       
       {/* Background Video Layer */}
-      {/* TEAM_008: Render background video layer constantly behind all steps */}
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black">
-        <video
-          ref={(el: HTMLVideoElement | null) => {
-            if (!el) return;
-            const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+      {/* TEAM_009: Solid dark background theme (#121212) active everywhere, with background video playing at 80% speed fading out smoothly when leaving the welcome step */}
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#121212]">
+        <div className={`absolute inset-0 transition-opacity duration-700 ${step === "welcome" ? "opacity-100" : "opacity-0"}`}>
+          <video
+            ref={(el: HTMLVideoElement | null) => {
+              if (!el) return;
+              const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
 
-            // Standard autoplay attempt
-            el.play().catch(() => {});
+              // TEAM_009: Slow down the video playback speed to 80% of normal
+              el.playbackRate = 0.8;
 
-            if (isWeChat) {
-              // WeChat X5 kernel exposes WeixinJSBridge which allows
-              // autoplay without user gesture. This code only runs
-              // inside WeChat's in-app browser.
-              const bridgePlay = () => el.play().catch(() => {});
-              if ((window as any).WeixinJSBridge) {
-                bridgePlay();
-              } else {
-                document.addEventListener("WeixinJSBridgeReady", bridgePlay, { once: true });
-              }
-            }
-
-            // Fallback: retry on first user gesture (works everywhere)
-            const tryPlay = () => {
+              // Standard autoplay attempt
               el.play().catch(() => {});
-              document.removeEventListener("touchstart", tryPlay);
-              document.removeEventListener("click", tryPlay);
-            };
-            document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
-            document.addEventListener("click", tryPlay, { once: true });
-          }}
-          onPlaying={(e) => {
-            (e.target as HTMLVideoElement).style.opacity = "1";
-          }}
-          src="/background.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          webkit-playsinline=""
-          x5-video-player-type="h5-page"
-          x5-playsinline=""
-          x5-video-player-fullscreen="false"
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-          style={{ opacity: 0 }}
-        />
-        {/* Cinematic dark overlay for premium contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
+
+              if (isWeChat) {
+                // WeChat X5 kernel exposes WeixinJSBridge which allows
+                // autoplay without user gesture. This code only runs
+                // inside WeChat's in-app browser.
+                const bridgePlay = () => el.play().catch(() => {});
+                if ((window as any).WeixinJSBridge) {
+                  bridgePlay();
+                } else {
+                  document.addEventListener("WeixinJSBridgeReady", bridgePlay, { once: true });
+                }
+              }
+
+              // Fallback: retry on first user gesture (works everywhere)
+              const tryPlay = () => {
+                el.play().catch(() => {});
+                document.removeEventListener("touchstart", tryPlay);
+                document.removeEventListener("click", tryPlay);
+              };
+              document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+              document.addEventListener("click", tryPlay, { once: true });
+            }}
+            onPlaying={(e) => {
+              (e.target as HTMLVideoElement).style.opacity = "1";
+            }}
+            src="/background.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            webkit-playsinline=""
+            x5-video-player-type="h5-page"
+            x5-playsinline=""
+            x5-video-player-fullscreen="false"
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+            style={{ opacity: 0 }}
+          />
+          {/* Cinematic dark overlay for premium contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
+        </div>
       </div>
 
       {/* Global Header */}
