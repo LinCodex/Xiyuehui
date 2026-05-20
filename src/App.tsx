@@ -525,21 +525,31 @@ export default function App() {
   const confirmRedirect = (target?: 'google' | 'yelp' | 'instagram' | 'xiaohongshu') => {
     const finalTarget = target || redirectTarget;
     if (finalTarget === 'yelp') {
+      // TEAM_010: Redirect to direct Yelp write review page
       window.open(
-        "https://www.yelp.com/",
+        "https://www.yelp.com/writeareview/biz/0oHgxYrn8DhPsMhJNQWapA",
         "_blank",
       );
     } else if (finalTarget === 'instagram') {
+      // TEAM_010: Redirect to official Instagram page
       window.open(
-        "https://www.instagram.com/",
+        "https://www.instagram.com/xiyuehui_nyc/",
         "_blank",
       );
     } else if (finalTarget === 'xiaohongshu') {
-      window.open(
-        "https://www.xiaohongshu.com/",
-        "_blank",
-      );
+      // TEAM_010: Try opening native Xiaohongshu app editor, fallback to Creator Studio web URL if app not installed
+      const start = Date.now();
+      window.location.href = "xhsdiscover://post";
+      setTimeout(() => {
+        if (!document.hidden && Date.now() - start < 1500) {
+          window.open(
+            "https://creator.xiaohongshu.com/publish/publish",
+            "_blank",
+          );
+        }
+      }, 1000);
     } else {
+      // TEAM_010: Redirect to Yelp/Google review page (standard fallback)
       window.open(
         "https://reviewthis.biz/xiyuehui",
         "_blank",
@@ -554,8 +564,8 @@ export default function App() {
     <div className="relative min-h-[100dvh] text-[#4A2311] font-sans selection:bg-[#E62E2D] selection:text-white overflow-x-hidden w-full bg-transparent">
       
       {/* Background Video Layer */}
-      {/* TEAM_009: Solid dark background theme (#121212) active everywhere, with background video playing at 80% speed fading out smoothly when leaving the welcome step */}
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#121212]">
+      {/* TEAM_010: Change solid dark background to a premium charcoal grey `#1E1E20` to make it slightly lighter, keeping cinematic styling */}
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#1E1E20]">
         <div className={`absolute inset-0 transition-opacity duration-700 ${step === "welcome" ? "opacity-100" : "opacity-0"}`}>
           <video
             ref={(el: HTMLVideoElement | null) => {
