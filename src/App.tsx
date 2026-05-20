@@ -537,14 +537,25 @@ export default function App() {
         "_blank",
       );
     } else if (finalTarget === 'xiaohongshu') {
-      // TEAM_010: Try opening native Xiaohongshu app editor. Fallback by navigating the current tab to Creator Studio web URL to bypass browser popup blockers in asynchronous callbacks.
+      // TEAM_010: Try opening native Xiaohongshu app editor in note (text/image) mode. Listen for visibility changes to detect if the app opened successfully, and if not, fallback to the Creator Studio web URL.
+      let openedApp = false;
+      const handleVisibilityChange = () => {
+        if (document.hidden) {
+          openedApp = true;
+        }
+      };
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+
       const start = Date.now();
-      window.location.href = "xhsdiscover://post";
+      window.location.href = "xhsdiscover://post_note";
+
       setTimeout(() => {
-        if (!document.hidden && Date.now() - start < 1500) {
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+        // If the app successfully launched, the page will have transitioned to hidden. If not, fallback to the website.
+        if (!openedApp && !document.hidden && Date.now() - start < 2000) {
           window.location.href = "https://creator.xiaohongshu.com/publish/publish";
         }
-      }, 1000);
+      }, 1200);
     } else {
       // TEAM_010: Redirect to Yelp/Google review page (standard fallback)
       window.open(
