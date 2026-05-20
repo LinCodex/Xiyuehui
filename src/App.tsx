@@ -537,15 +537,12 @@ export default function App() {
         "_blank",
       );
     } else if (finalTarget === 'xiaohongshu') {
-      // TEAM_010: Try opening native Xiaohongshu app editor, fallback to Creator Studio web URL if app not installed
+      // TEAM_010: Try opening native Xiaohongshu app editor. Fallback by navigating the current tab to Creator Studio web URL to bypass browser popup blockers in asynchronous callbacks.
       const start = Date.now();
       window.location.href = "xhsdiscover://post";
       setTimeout(() => {
         if (!document.hidden && Date.now() - start < 1500) {
-          window.open(
-            "https://creator.xiaohongshu.com/publish/publish",
-            "_blank",
-          );
+          window.location.href = "https://creator.xiaohongshu.com/publish/publish";
         }
       }, 1000);
     } else {
@@ -1173,7 +1170,9 @@ export default function App() {
                     ? (t[lang] as any).modalSubGoogle
                     : redirectTarget === 'yelp'
                       ? (t[lang] as any).modalSubYelp
-                      : (t[lang] as any).modalSubInstagram}
+                      : redirectTarget === 'xiaohongshu'
+                        ? (t[lang] as any).modalSubXiaohongshu
+                        : (t[lang] as any).modalSubInstagram}
                 </p>
               </div>
               <button
