@@ -537,25 +537,25 @@ export default function App() {
         "_blank",
       );
     } else if (finalTarget === 'xiaohongshu') {
-      // TEAM_010: Try opening native Xiaohongshu app editor in note (text/image) mode. Listen for visibility changes to detect if the app opened successfully, and if not, fallback to the Creator Studio web URL.
+      // TEAM_010: Try opening native Xiaohongshu app editor in note (text/image) mode. Listen for window blur and visibility changes to cleanly suppress the website fallback if the native app or OS confirmation dialog is opened.
       let openedApp = false;
-      const handleVisibilityChange = () => {
-        if (document.hidden) {
-          openedApp = true;
-        }
+      const handleStateChange = () => {
+        openedApp = true;
       };
-      document.addEventListener("visibilitychange", handleVisibilityChange);
+      window.addEventListener("blur", handleStateChange);
+      document.addEventListener("visibilitychange", handleStateChange);
 
       const start = Date.now();
       window.location.href = "xhsdiscover://post_note";
 
       setTimeout(() => {
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
-        // If the app successfully launched, the page will have transitioned to hidden. If not, fallback to the website.
-        if (!openedApp && !document.hidden && Date.now() - start < 2000) {
+        window.removeEventListener("blur", handleStateChange);
+        document.removeEventListener("visibilitychange", handleStateChange);
+        // If the app successfully launched, or the OS prompt blurred the window, openedApp will be true. If not, fallback to the website.
+        if (!openedApp && !document.hidden && Date.now() - start < 2500) {
           window.location.href = "https://creator.xiaohongshu.com/publish/publish";
         }
-      }, 1200);
+      }, 2000);
     } else {
       // TEAM_010: Redirect to Yelp/Google review page (standard fallback)
       window.open(
