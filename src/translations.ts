@@ -71,7 +71,8 @@ export const t = {
     modalTitle: "Review Copied!",
     modalSubGoogle: "We're opening Google Maps for you. Simply paste your review in the comment box.",
     modalSubYelp: "We're opening Yelp for you. Simply paste your review in the comment box.",
-    modalSubXiaohongshu: "We're opening Xiaohongshu for you. Simply paste your review in a new post.",
+    // TEAM_010: Update instruction to guide users to the "Text" tab to bypass native photo/video picker
+    modalSubXiaohongshu: "We're opening Xiaohongshu. To post text, select the 'Text' (文字) tab at the bottom of the camera screen and paste your review.",
     modalSubInstagram: "We're opening Instagram for you. Simply paste your review into a new post or story.",
     modalGoGoogle: "Go to Google Maps",
     modalGoYelp: "Go to Yelp",
@@ -140,7 +141,8 @@ export const t = {
     modalTitle: "评价已复制！",
     modalSubGoogle: "正在为您打开谷歌地图。只需将评价粘贴到评论框中即可。",
     modalSubYelp: "正在为您打开 Yelp。只需将评价粘贴到评论框中即可。",
-    modalSubXiaohongshu: "正在为您打开小红书。只需将评价粘贴到新帖子中即可。",
+    // TEAM_010: Update instruction to guide users to the "Text" tab to bypass native photo/video picker
+    modalSubXiaohongshu: "正在为您打开小红书。要发布纯文字，请在相机界面底部选择「文字」选项，然后粘贴您的评价。",
     modalSubInstagram: "正在为您打开 Instagram。只需将评价粘贴到新帖子或故事中即可。",
     modalGoGoogle: "前往谷歌地图",
     modalGoYelp: "前往 Yelp",
@@ -209,7 +211,8 @@ export const t = {
     modalTitle: "¡Reseña copiada!",
     modalSubGoogle: "Estamos abriendo Google Maps por ti. Simplemente pega tu reseña en la caja de comentarios.",
     modalSubYelp: "Estamos abriendo Yelp por ti. Simplemente pega tu reseña en la caja de comentarios.",
-    modalSubXiaohongshu: "Estamos abriendo Xiaohongshu por ti. Simplemente pega tu reseña en una nueva publicación.",
+    // TEAM_010: Update instruction to guide users to the "Text" tab to bypass native photo/video picker
+    modalSubXiaohongshu: "Estamos abriendo Xiaohongshu. Para publicar texto, selecciona la pestaña 'Texto' (文字) en la parte inferior y pega tu reseña.",
     modalSubInstagram: "Estamos abriendo Instagram por ti. Simplemente pega tu reseña en una nueva publicación o historia.",
     modalGoGoogle: "Ir a Google Maps",
     modalGoYelp: "Ir a Yelp",
