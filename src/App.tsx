@@ -249,8 +249,9 @@ const RatingStep = memo(function RatingStep({
                   className="absolute inset-0 p-1 pointer-events-none"
                   style={{ clipPath: `inset(0 ${100 - fillPercent}% 0 0)` }}
                 >
+                  {/* TEAM_010: Make active stars premium gold-yellow instead of white */}
                   <Star
-                    className="w-11 h-11 sm:w-14 sm:h-14 text-white fill-white"
+                    className="w-11 h-11 sm:w-14 sm:h-14 text-[#FFB800] fill-[#FFB800]"
                     strokeWidth={1.5}
                   />
                 </div>
