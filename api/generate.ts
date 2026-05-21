@@ -189,7 +189,7 @@ async function callGeminiOnce(
     model: "gemini-2.5-flash-lite",
     contents: prompt,
     config: {
-      maxOutputTokens: 600,
+      maxOutputTokens: 500,
       temperature: 0.9,
       responseMimeType: "application/json",
     },
