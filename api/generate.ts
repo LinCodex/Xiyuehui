@@ -114,7 +114,8 @@ function buildPrompt(results: SurveyResults, previousReview?: string): string {
     ? `7. ANTI-HALLUCINATION: You may reference a dish, drink, ingredient, server, or specific moment ONLY if it appears verbatim in "Their note". Do NOT invent any other specifics. If you mention something concrete, it must come directly from the note.`
     : `7. ANTI-HALLUCINATION: "Their note" is empty, so you have NO specifics to work with. Do NOT name any dish, drink, ingredient, server, or location detail. Speak about the food, service, and vibe in general terms only ("the food", "what we ordered", "the team", "the room"). Never invent menu items, flavors, or moments the customer did not mention.`;
 
-  let prompt = `Write a Google Maps review for "Xi Yue Hui" (禧悦會海鲜自助火锅) in Flushing, NY, in three languages.
+  // TEAM_012: Correct location from Flushing, NY to Brooklyn, NY to prevent AI review hallucinations
+  let prompt = `Write a Google Maps review for "Xi Yue Hui" (禧悦會海鲜自助火锅) in Brooklyn, NY, in three languages.
   
   Customer feedback:
   - Food/Hotpot: ${results.food}
