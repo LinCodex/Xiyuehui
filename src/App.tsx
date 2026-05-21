@@ -538,7 +538,7 @@ export default function App() {
         "_blank",
       );
     } else if (finalTarget === 'xiaohongshu') {
-      // TEAM_010: Try opening native Xiaohongshu app editor in note (text/image) mode. Listen for window blur and visibility changes to cleanly suppress the website fallback if the native app or OS confirmation dialog is opened.
+      // TEAM_011: Just open the native Xiaohongshu app directly. Listen for window blur and visibility changes to cleanly suppress the website fallback if the native app or OS confirmation dialog is opened.
       let openedApp = false;
       const handleStateChange = () => {
         openedApp = true;
@@ -547,14 +547,14 @@ export default function App() {
       document.addEventListener("visibilitychange", handleStateChange);
 
       const start = Date.now();
-      window.location.href = "xhsdiscover://post_note";
+      window.location.href = "xhsdiscover://";
 
       setTimeout(() => {
         window.removeEventListener("blur", handleStateChange);
         document.removeEventListener("visibilitychange", handleStateChange);
         // If the app successfully launched, or the OS prompt blurred the window, openedApp will be true. If not, fallback to the website.
         if (!openedApp && !document.hidden && Date.now() - start < 2500) {
-          window.location.href = "https://creator.xiaohongshu.com/publish/publish";
+          window.location.href = "https://www.xiaohongshu.com";
         }
       }, 2000);
     } else {
