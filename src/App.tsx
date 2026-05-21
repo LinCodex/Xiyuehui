@@ -611,7 +611,6 @@ export default function App() {
             onPlaying={(e) => {
               (e.target as HTMLVideoElement).style.opacity = "1";
             }}
-            src="/background.mp4"
             autoPlay
             muted
             loop
@@ -623,7 +622,12 @@ export default function App() {
             preload="auto"
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
             style={{ opacity: 0 }}
-          />
+          >
+            {/* TEAM_012: Optimize background video payload by using WebM and HEVC MP4 fallbacks */}
+            <source src="/background.webm" type="video/webm" />
+            <source src="/background_optimized.mp4" type="video/mp4" />
+            <source src="/background.mp4" type="video/mp4" />
+          </video>
           {/* Cinematic dark overlay for premium contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
         </div>
