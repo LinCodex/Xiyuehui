@@ -623,10 +623,10 @@ export default function App() {
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
             style={{ opacity: 0 }}
           >
-            {/* TEAM_012: Optimize background video payload by using WebM and HEVC MP4 fallbacks */}
-            <source src="/background.webm" type="video/webm" />
-            <source src="/background_optimized.mp4" type="video/mp4" />
-            <source src="/background.mp4" type="video/mp4" />
+            {/* TEAM_012: Optimize background video payload by using WebM and HEVC MP4 fallbacks (updated to background2) */}
+            <source src="/background2.webm" type="video/webm" />
+            <source src="/background2_optimized.mp4" type="video/mp4" />
+            <source src="/background2.mp4" type="video/mp4" />
           </video>
           {/* Cinematic dark overlay for premium contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
