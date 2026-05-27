@@ -8,7 +8,8 @@ export interface SurveyResults {
 }
 
 export type Lang = "en" | "cn" | "es";
-export type AllReviews = Record<Lang, string>;
+// TEAM_012: Extended response type now includes xhs-truncated versions for Xiaohongshu's 100-char limit
+export type AllReviews = Record<Lang, string> & { xhs_en?: string; xhs_cn?: string; xhs_es?: string };
 
 /**
  * TEAM_011: Generate all three languages by calling the secure Vercel backend.

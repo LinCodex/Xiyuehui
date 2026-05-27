@@ -496,8 +496,9 @@ export default function App() {
 
   // TEAM_001: Await clipboard API with legacy fallback for HTTP origins or
   // browsers that deny clipboard permission.
-  const copyToClipboard = async () => {
-    const text = (reviews && reviews[lang]) ? reviews[lang] : "";
+  // TEAM_012: Added optional overrideText param for Xiaohongshu truncated reviews.
+  const copyToClipboard = async (overrideText?: string) => {
+    const text = overrideText ?? ((reviews && reviews[lang]) ? reviews[lang] : "");
     try {
       await navigator.clipboard.writeText(text);
       setIsCopying(true);
@@ -519,7 +520,14 @@ export default function App() {
   const handleRedirect = (target: 'google' | 'yelp' | 'instagram' | 'xiaohongshu') => {
     setRedirectTarget(target);
     setShareOpen(false);
-    copyToClipboard();
+    // TEAM_012: For Xiaohongshu, copy the truncated ≤100 char version instead of the full review
+    if (target === 'xiaohongshu' && reviews) {
+      const xhsKey = `xhs_${lang}` as keyof typeof reviews;
+      const xhsText = reviews[xhsKey] || reviews[lang] || "";
+      copyToClipboard(xhsText);
+    } else {
+      copyToClipboard();
+    }
     setShowRedirectModal(true);
   };
 
